@@ -2,7 +2,7 @@
 \alias{as.strings}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Coerce an Object to an Strings Class
+Coerce an Object to a Strings Class
 }
 \description{
 A generic function for coercing an R object to a \code{Rel.Strings} class.

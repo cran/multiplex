@@ -464,6 +464,7 @@ FUL <- Fl
 #if(isTRUE(is.numeric(dimnames(m)[[1]])==TRUE)==FALSE) { 
 if(isTRUE(is.null(dimnames(m)[[1]])==TRUE)==FALSE) {
 #tmp<-AS
+if(length(AS)>0) {
 for(k in 1:length(AS)) {
 for(i in 1:length(AS[[k]])) {
 #print(paste(dimnames(m)[[1]][as.numeric(strsplit(AS[[k]][i], ", ")[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(AS[[k]][i], ", ")[[1]][2])], sep=", "))
@@ -472,7 +473,9 @@ AS[[k]][i]<-paste(dimnames(m)[[1]][as.numeric(strsplit(AS[[k]][i], ", ")[[1]][1]
 }
 };rm(i)
 };rm(k)
+}
 #
+if(length(RP)>0) {
 for(k in 1:length(RP)) {
 for(i in 1:length(RP[[k]])) {
 #print(paste(dimnames(m)[[1]][as.numeric(strsplit(RP[[k]][i], ", ")[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(RP[[k]][i], ", ")[[1]][2])], sep=", "))
@@ -481,7 +484,11 @@ RP[[k]][i]<-paste(dimnames(m)[[1]][as.numeric(strsplit(RP[[k]][i], ", ")[[1]][1]
 }
 };rm(i)
 };rm(k)
+}
 #
+if(isTRUE(is.na(dim(m)[3]))==FALSE) {
+#
+if(length(XCH)>0) {
 for(k in 1:length(XCH)) {
 for(i in 1:length(XCH[[k]])) {
 #print(paste(dimnames(m)[[1]][as.numeric(strsplit(XCH[[k]][i], ", ")[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(XCH[[k]][i], ", ")[[1]][2])], sep=", "))
@@ -490,7 +497,9 @@ XCH[[k]][i]<-paste(dimnames(m)[[1]][as.numeric(strsplit(XCH[[k]][i], ", ")[[1]][
 }
 };rm(i)
 };rm(k)
+}
 #
+if(length(ENT)>0) {
 for(k in 1:length(ENT)) {
 for(i in 1:length(ENT[[k]])) {
 #print(paste(dimnames(m)[[1]][as.numeric(strsplit(ENT[[k]][i], ", ")[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(ENT[[k]][i], ", ")[[1]][2])], sep=", "))
@@ -499,7 +508,9 @@ ENT[[k]][i]<-paste(dimnames(m)[[1]][as.numeric(strsplit(ENT[[k]][i], ", ")[[1]][
 }
 };rm(i)
 };rm(k)
+}
 #
+if(length(MIX)>0) {
 for(k in 1:length(MIX)) {
 for(i in 1:length(MIX[[k]])) {
 #print(paste(dimnames(m)[[1]][as.numeric(strsplit(MIX[[k]][i], ", ")[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(MIX[[k]][i], ", ")[[1]][2])], sep=", "))
@@ -508,7 +519,9 @@ MIX[[k]][i]<-paste(dimnames(m)[[1]][as.numeric(strsplit(MIX[[k]][i], ", ")[[1]][
 }
 };rm(i)
 };rm(k)
+}
 #
+if(length(FUL)>0) {
 for(k in 1:length(FUL)) {
 for(i in 1:length(FUL[[k]])) {
 #print(paste(dimnames(m)[[1]][as.numeric(strsplit(FUL[[k]][i], ", ")[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(FUL[[k]][i], ", ")[[1]][2])], sep=", "))
@@ -517,6 +530,9 @@ FUL[[k]][i]<-paste(dimnames(m)[[1]][as.numeric(strsplit(FUL[[k]][i], ", ")[[1]][
 }
 };rm(i)
 };rm(k)
+}
+#
+}
 #
 }
 #}

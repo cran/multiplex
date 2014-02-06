@@ -2,7 +2,7 @@
 \alias{as.semigroup}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Coerce to an Semigroup Object
+Coerce to a Semigroup Object
 }
 \description{
 A generic function for coercing an R object to a \code{\link{semigroup}} class.

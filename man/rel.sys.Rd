@@ -25,12 +25,13 @@ When the type of bonds chosen is \code{entire} then the nodes with ties are cons
 \value{
 An object of `\code{Rel.System}' class.
 The items are:
-   \item{ord}{the order of the relational system}
+   \item{ord}{order of the network relational system}
    \item{nodes}{the nodes in the relational system}
    \item{sys.ord}{the order of the relational system with the chosen bond type}
    \item{incl}{the nodes included the relational system with the chosen bond type}
    \item{excl}{the nodes excluded the relational system with the chosen bond type}
    \item{bond.type}{the type of bonds used in the relational system creation}
+   \item{size}{number of ties in the relational system}
    \item{ties}{the ties in the relational system}
 %% ...
 }
