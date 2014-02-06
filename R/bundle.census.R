@@ -1,6 +1,8 @@
 bundle.census <-
 function(m) {
 
+if(isTRUE(is.array(m)==FALSE)==TRUE) stop("\'m\' should be an array object")
+
 ### LABELS 
 ifelse(isTRUE(is.null(dimnames(m)[1])==TRUE)==TRUE, LBS<-1:nrow(m), LBS<-dimnames(m)[[1]])
 ifelse(sum(as.numeric(dimnames(m)[[1]])==0)==0, lbs<-as.numeric(LBS), lbs<-seq(LBS))

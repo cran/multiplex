@@ -4,6 +4,12 @@ function(x, diag.incl=TRUE)#
 
 if(isTRUE(dim(x)[3]>1)==TRUE) {
 
+tmp<-x
+
+ifelse(isTRUE(is.null(dimnames(x)[[1]]))==TRUE & isTRUE(is.null(dimnames(x)[[2]]))==TRUE, dimnames(x)[[2]]<-dimnames(x)[[1]]<-1:dim(x)[1], NA)
+#warning("No labels are provided in \'x\'")
+
+
 mpx<-data.frame(matrix(0,ncol=ncol(x),nrow=nrow(x)))
 #
 mpx<-x[,,1]+x[,,2]
@@ -68,6 +74,14 @@ mx[,,m] <- as.matrix(na.exclude(npx)) #as.matrix(npx)   #
 };rm(m)
 #
 if(is.null(dimnames(x))==FALSE) dimnames(mx)[[1]] <- dimnames(mx)[[2]] <- as.vector(na.exclude(lb))
+
+if(isTRUE(is.null(dimnames(tmp)[[1]]))==TRUE & isTRUE(is.null(dimnames(tmp)[[2]]))==TRUE) {
+dimnames(mx) <- NULL
+warning("No labels are provided in \'x\'")
+}
+#attr(mx,"dimnames")[[3]] <- NULL
+
+
 if(is.null(dimnames(x)[[3]])==FALSE) dimnames(mx)[[3]] <- dimnames(x)[[3]]
 
 return(mx)
@@ -112,6 +126,9 @@ for (i in 1:nrow(px)) {
 }; rm(i)
 mx<-as.matrix(na.exclude(npx))
 dimnames(mx)[[1]]<-dimnames(mx)[[2]]<-as.vector(na.exclude(lb))
+
+#ifelse(isTRUE(is.null(dimnames(tmp)[[1]]))==TRUE & isTRUE(is.null(dimnames(tmp)[[2]]))==TRUE, dimnames(mx) <- NULL, NA)
+
 mx
 }
 }

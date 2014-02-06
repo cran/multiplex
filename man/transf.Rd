@@ -43,7 +43,7 @@ Depending on the input data, the result is either a list of pair relations or a 
 Antonio Rivero Ostoic
 }
 \note{
-High dimensional arrays are not accepted as input data.
+High dimensional arrays are not accepted as input data. Use \code{\link{rel.sys}} for that.
 }
 \seealso{
 \code{\link{read.srt}}, \code{\link{bundles}}, \code{\link{reduc}}, \code{\link{rel.sys}}

@@ -4,7 +4,7 @@
 Remove Isolates
 }
 \description{
-Function to remove isolate nodes in simple and networks.
+Function to remove isolate nodes in simple and multiple networks.
 }
 \usage{
 rm.isol(x, diag.incl = TRUE)
