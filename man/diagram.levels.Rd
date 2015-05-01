@@ -1,14 +1,14 @@
-\name{po.levels}
-\alias{po.levels}
+\name{diagram.levels}
+\alias{diagram.levels}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Levels in the Partial Order
+Levels in the Lattice Diagram
 }
 \description{
-This is a function that reads the different levels in the partial order structure among actors and ties in the network
+This is a function that reads the different levels in the lattice diagram of the partial order structure among actors and ties in the network
 }
 \usage{
-po.levels(x, perm = FALSE)
+diagram.levels(x, perm = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -47,8 +47,8 @@ data("incubA")
 ## given e.g. a partial order table in the object 'po'
 po <- partial.order(as.strings(incubA))
 
-## find the levels in the partial order structure
-po.levels(po)
+## find the levels in the lattice diagram
+diagram.levels(po)
 }
 \keyword{ algebra }
 \keyword{ manip }

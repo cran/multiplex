@@ -1,19 +1,20 @@
 \name{partial.order}
 \alias{partial.order}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-The Partial Order of Strings of Relations
+The Partial Order of Strings or Galois derivations
 }
 \description{
-Construct the partial order table of unique relations of the semigroup.
+Construct the partial order table of unique relations of the semigroup, or else of the concepts produced by Galois derivations.
 }
 \usage{
-partial.order(x, labels = NULL)
+partial.order(x, type = c("strings", "galois"), labels = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-   an object of a `\code{Strings}' class
+   an object of a `\code{Strings}' or a `\code{Galois}' class
+}
+  \item{type}{
+   whether the object corresponds to strings of relations or Galois derivations
 }
   \item{labels}{
    (optional) the labels of the unique relations
@@ -21,12 +22,16 @@ partial.order(x, labels = NULL)
 }
 \details{
 To get the partial order of an entire semigroup, both generators and compound relations must be considered. This information and the labels of the unique relations are given by the \code{\link{strings}} function. cf. \code{\link{semigroup}} to see how the \code{x} should be specified properly.
+
+Galois derivations are now possible to be partially ordered as well, and this option is based on the output given by the \code{\link{galois}} function.
 }
 \value{
 The partial order table in a matrix form.
 }
 \references{
 Pattison, P.E. \emph{Algebraic Models for Social Networks}. Cambridge University Press. 1993.
+
+Ganter, B. and R. Wille  \emph{Formal Concept Analysis - Mathematical Foundations}. Springer. 1996.
 }
 \author{
 Antonio Rivero Ostoic
@@ -35,10 +40,9 @@ Antonio Rivero Ostoic
 %%  ~~further notes~~
 %}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{as.strings}}, \code{\link{strings}}, \code{\link{perm}}, \code{\link{diagram}}.
+\code{\link{as.strings}}, \code{\link{strings}}, \code{\link{galois}}, \code{\link{perm}}, \code{\link{diagram}}.
 }
 \examples{
 ## Load the data, and obtain the partial order
@@ -51,8 +55,6 @@ st <- strings(incubA)
 partial.order(st)
 
 }
-%% Add one or more standard keywords, see file 'KEYWORDS' in the
-%% R documentation directory.
 \keyword{ algebra }
-%
+\keyword{ math }
 %

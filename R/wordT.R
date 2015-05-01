@@ -1,14 +1,12 @@
 wordT <-
-function(x)
+function (x) 
 {
     if (is.array(x) == FALSE) 
         stop("Data must be a stacked array of square matrices.")
-
-#
-if (is.na(dim(x)[3]) == TRUE) {
+    if (is.na(dim(x)[3]) == TRUE) {
         s0 <- data.frame(matrix(ncol = 1, nrow = 1))
-        if (isTRUE(all.equal(replace(x %*% x, x %*% x >= 
-            1, 1), x) == TRUE)) 
+        if (isTRUE(all.equal(replace(x %*% x, x %*% x >= 1, 1), 
+            x) == TRUE)) 
             s0[1, 1] <- 1
         Bx <- array(dim = c(dim(x)[1], dim(x)[2], 2))
         Bx[, , 1] <- as.matrix(x)
@@ -44,9 +42,9 @@ if (is.na(dim(x)[3]) == TRUE) {
         for (k in 1:dim(x)[3]) {
             for (j in 1:dim(x)[3]) {
                 for (i in dim(x)[3]:1) {
-                  if (isTRUE(all.equal(replace(x[, , j] %*% 
-                    x[, , k], x[, , j] %*% x[, , k] >= 1, 
-                    1), x[, , i]) == TRUE)) 
+                  if (isTRUE(all.equal(replace(x[, , j] %*% x[, 
+                    , k], x[, , j] %*% x[, , k] >= 1, 1), x[, 
+                    , i]) == TRUE)) 
                     s0[j, k] <- i
                 }
             }
@@ -64,8 +62,7 @@ if (is.na(dim(x)[3]) == TRUE) {
                   if (length(which(is.na(s0[i, ]))) > 0) 
                     Bx <- zbnd(Bx, (replace(x[, , i] %*% x[, 
                       , which(is.na(s0[i, ]))[j]], x[, , i] %*% 
-                      x[, , which(is.na(s0[i, ]))[j]] >= 1, 
-                      1)))
+                      x[, , which(is.na(s0[i, ]))[j]] >= 1, 1)))
                 }
             }
             rm(i, j)

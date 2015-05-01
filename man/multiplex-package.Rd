@@ -14,8 +14,8 @@ It is also possible to take the attributes of the actors in the analysis of mult
 \tabular{ll}{
 Package: \tab multiplex\cr
 Type: \tab Package\cr
-Version: \tab 1.2\cr
-Date: \tab 6 February 2014\cr
+Version: \tab 1.5\cr
+Date: \tab 30 April 2015\cr
 License: \tab GPL-3\cr
 LazyLoad: \tab yes\cr
 }
@@ -29,7 +29,7 @@ There are other capabilities in the package that are not strictly algebraic. For
 
 The `\code{multiplex}' package creates a Relation-Box with the \code{rbox} function, and it implements the Partial Structural Equivalence expressed in the cumulated person hierarchy of the network calculated via the \code{cph} function.
 
-Relational bundles are identified through the \code{bundles} function, which provides lists of pair relations. The \code{transf} function serves to transform such data into a matrix form. The enumeration of the different bundle classes is given by \code{bundle.census}. An advantage of counting with the bundle patterns is that the different types of bundles serve to establish a system inside the network, in which it is possible to measure the network exposure in multivariate relational systems. Such features can be realized via the \code{rel.sys} and \code{expos} functions respectively.
+Relational bundles are identified through the \code{bundles} function, which provides lists of pair relations. The \code{transf} function serves to transform such data into a matrix form. The enumeration of the different bundle classes is given by \code{bundle.census}. An advantage of counting with the bundle patterns is that the different types of bundles serve to establish a system inside the network, in which it is possible to measure the network exposure in multivariate relational systems. Such features can be realized via the \code{rel.sys} and \code{expos} functions respectively. Several attributes can be derived by \code{galois}, which provides an algebraic approach for two-mode networks.
 
 Finally, multivariate network data can be created through the (s)end (r)eceive (t)ies format that can be loaded and transformed via the \code{read.srt} function. Other formats for multiple network data like Ucinet \code{dl} or Visone \code{gml} can be imported and exported as well with the `\code{multiplex}' package.
 }

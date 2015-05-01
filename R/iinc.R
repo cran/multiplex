@@ -1,5 +1,5 @@
 iinc <-
-function(inc, PO, prsep = ", ", print.eqs = FALSE) 
+function (inc, PO, prsep = ", ", print.eqs = FALSE) 
 {
     pi <- (transf(inc, "listmat", ord = dim(PO)[1], prsep = prsep) + 
         PO)

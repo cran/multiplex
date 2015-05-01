@@ -1,7 +1,7 @@
 cph <-
-function(W, labels=NULL) 
+function (W, labels = NULL) 
 {
-    if(isTRUE(attr(W, "class")=="Rel.Box")==FALSE) 
+    if (isTRUE(attr(W, "class") == "Rel.Box") == FALSE) 
         stop("\"W$W\" must be a \"Rel.Box\" class.")
     rls <- array(dim = c(dim(W$W)[3], dim(W$W)[1], dim(W$W)[1]))
     for (i in 1:dim(W$W)[3]) {
@@ -42,17 +42,13 @@ function(W, labels=NULL)
         tmp <- outer(phu[, i], phu[i, ], pmin.int)
         phu <- pmax(phu, tmp)
     }
-
-if(isTRUE(is.null(labels))==FALSE) {
-
-ifelse(isTRUE(length(labels)==dim(phu)[1])==TRUE, dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- labels, NA)
-
-} else if(isTRUE(is.null(labels))==TRUE) {
-	dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- W$lbs
-}
-
-#ifelse(isTRUE(is.null(labels))==TRUE, dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- W$lbs, dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- labels )
-    
-
+    if (isTRUE(is.null(labels)) == FALSE) {
+        ifelse(isTRUE(length(labels) == dim(phu)[1]) == TRUE, 
+            dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- labels, 
+            NA)
+    }
+    else if (isTRUE(is.null(labels)) == TRUE) {
+        dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- W$lbs
+    }
     return(phu)
 }

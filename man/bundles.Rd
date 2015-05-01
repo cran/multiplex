@@ -1,6 +1,5 @@
 \name{bundles}
 \alias{bundles}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Bundle Class Patterns
 }
@@ -8,18 +7,33 @@ Bundle Class Patterns
 Classify the Bundle class patterns in a system of multiple relations
 }
 \usage{
-bundles(m, collapse = FALSE)
+bundles(m, loops = FALSE, prsep = ", ", smpl = FALSE, 
+           lb2lb = TRUE, collapse = FALSE)
 }
 \arguments{
   \item{m}{
    an array; usually with three dimensions of stacked matrices where the multiple relations are placed.
 }
-  \item{collapse}{
-   whether or not the distinct levels of relations in the network should be collapsed.
+  \item{loops}{
+   (logical) whether or not the loops should be considered
 }
+  \item{smpl}{
+   (logical) simplify the strings of relations? Default no.
+}
+  \item{lb2lb}{
+   (logical) should the labels of the nodes be included in the output? Default yes.
+}
+  \item{collapse}{
+   (logical) collapse the distinct levels of relations in the network? Default no.
+}
+  \item{prsep}{
+   (optional) the pair separator for the pairwise relations
+  }
 }
 \details{
-A bundle is a special type of pattern made of relations at different levels that is binding a pair of nodes or actors in a network of relations, and a bundle class is a dyadic configuration resulting from the mixture of the direction and the types of tie between the nodes or actors. There are in total seven dyadic configuration classes, which are null, asymmetric, reciprocal, tie entrainment, tie exchange, mixed, and the full bundle pattern. This function provides the detailed information about the bundle class patterns in the multiple network as lists of pair relations among the nodes or actors, except for the `null' pattern. In case that the nodes are not labeled, then an identification number will be assigned according to the nodes' location in the array representation.  The function assumes that the network is directed.
+A bundle is a special type of pattern made of relations at different levels that is binding a pair of nodes or actors in a network of relations, and a bundle class is a dyadic configuration resulting from the mixture of the direction and the types of tie between the nodes or actors. There are in total seven dyadic configuration classes, which are null, asymmetric, reciprocal, tie entrainment, tie exchange, mixed, and the full bundle pattern. This function provides the detailed information about the bundle class patterns in the multiple network as lists of pair relations among the nodes or actors, except for the `null' pattern. 
+In case that the nodes are not labeled, then an identification number will be assigned according to the nodes' location in the array representation and as well when the \code{lb2lb} option is set to \code{FALSE}. This function assumes that the network is directed, and self ties can also be considered in the output.
+Long string labels can be simplified with \code{smpl}, whereas the \code{collapse} option blurs the levels in the strings.
 }
 \value{
 An object of `\code{Rel.Bundles}' class with the distinct bundle class patterns.
@@ -29,6 +43,8 @@ An object of `\code{Rel.Bundles}' class with the distinct bundle class patterns.
 \item{txch }{tie exchange}
 \item{mixed}{mixed}
 \item{full }{full}
+\item{loops }{loops (if chosen)}
+
 %% ...
 }
 \references{

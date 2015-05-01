@@ -4,7 +4,7 @@
 Convert Format of a Semigroup Object
 }
 \description{
-A function to convert an object representing a semigroup of relations from Numerical to Symbolic format or vice versa.
+A function to convert an object representing a semigroup of relations from Numerical to Symbolic format and vice versa.
 }
 \usage{
 convert(x, labels = NULL, SemigroupClass = FALSE)

@@ -7,7 +7,7 @@ Summary of Bundle Classes
 Pretty printing of the bundle class patterns results.
 }
 \usage{
-summaryBundles(x, file = NULL, latex = FALSE)
+summaryBundles(x, file = NULL, latex = FALSE, prsep = ", ")
 
 }
 \arguments{
@@ -20,15 +20,15 @@ summaryBundles(x, file = NULL, latex = FALSE)
   \item{latex}{
    (logical) whether the output sholud be in latex format or not
 }
-%  \item{prsep}{
-%   the pair separation to be used
-%}
+  \item{prsep}{
+   (optional) the pair separator for the pairwise relations
+}
 %  \item{...}{
 %   additional arguments
 %}
 }
 \details{
-This function prints the bundle census patterns existing in the network with an option to export such information in a friendly format. The dyadic bundle patterns are provide by the function \code{\link{bundles}}; however the outcome of this function provides a list of pair lists for each bundle with the involved types of relations and nodes in the network. This form for presentation, although is convenient for further computation, it is not always easy to read for a human eye.
+This function prints the bundle census patterns existing in the network with an option to export such information in a friendly format. The dyadic bundle patterns are provide by the function \code{\link{bundles}}; however the outcome of this function provides a list of pair lists for each bundle with the involved types of relations and nodes in the network. This form for presentation, although is convenient for further computation, it is not always easy to read for a human eye. Naturally the pair separator chosen must match the one of \code{bundles}.
 
 If \code{latex} is set to \code{TRUE}, then the path file is activated to obtain a \code{tex} file with the different bundle class patterns.
 }

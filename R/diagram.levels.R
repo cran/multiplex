@@ -1,7 +1,7 @@
-po.levels <-
+diagram.levels <-
 function(x, perm = FALSE) {
 
-if (require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
+if (requireNamespace("Rgraphviz", quietly = TRUE)) {
 
 pictex()
 
@@ -12,7 +12,7 @@ for (i in seq_len(ncol(po))) {
     po <- pmin(po, (1 - tmp))
 }
 
-X <- plot(as(po, "graphNEL"))
+X <- Rgraphviz::plot(as(po, "graphNEL"))
 
 alt <- vector()
 nam <- vector()

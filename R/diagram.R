@@ -1,7 +1,7 @@
 diagram <-
-function(x, unord = TRUE, attrs = NULL, main = NULL, cex.main = par()$cex.main)
+function (x, unord = TRUE, attrs = NULL, main = NULL, cex.main = par()$cex.main) 
 {
-    if (require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
+    if (requireNamespace("Rgraphviz", quietly = TRUE)) {
         if (is.null(dimnames(x)[[1]]) == TRUE) 
             rownames(x) <- colnames(x) <- as.character(as.roman(c(1:dim(x)[1])))
         if (is.null(attrs) == TRUE) 
@@ -10,11 +10,16 @@ function(x, unord = TRUE, attrs = NULL, main = NULL, cex.main = par()$cex.main)
                 color = "white", fixedsize = FALSE))
         po <- x & (1 - t(x))
         diag(po) <- 0
-        for (i in seq_len(ncol(po))) {
-            tmp <- outer(po[, i], po[i, ], pmin.int)
-            po <- pmin(po, (1 - tmp))
+        if (isTRUE(ncol(x) == nrow(x)) == TRUE) {
+            for (i in seq_len(ncol(po))) {
+                tmp <- outer(po[, i], po[i, ], pmin.int)
+                po <- pmin(po, (1 - tmp))
+            }
+            rm(tmp)
         }
-        rm(tmp)
+        else {
+            stop("binary operation on non-conformable arrays")
+        }
         if (unord == FALSE) {
             px <- po
             out <- vector()
@@ -50,8 +55,8 @@ function(x, unord = TRUE, attrs = NULL, main = NULL, cex.main = par()$cex.main)
             po <- as.matrix(na.exclude(npx))
             dimnames(po)[[1]] <- dimnames(po)[[2]] <- as.vector(na.exclude(lb))
         }
-        plot(as(po, "graphNEL"), attrs = attrs, main = main, 
+        Rgraphviz::plot(as(po, "graphNEL"), attrs = attrs, main = main, 
             cex.main = cex.main)
     }
-    else stop("Package 'Rgraphviz' needs to be properly installed.")
+    else stop("Package 'Rgraphviz' needs to be properly installed")
 }

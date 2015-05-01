@@ -7,20 +7,25 @@ Read \code{gml} Files
 A function to read files with the \code{gml} format.
 }
 \usage{
-read.gml(file, directed = TRUE)
+read.gml(file, as = c("srt", "array"), directed = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{file}{  character vector containing a file name or path
+  \item{file}{  
+   character vector containing a file name or path
 }
-  \item{directed}{  (logical) whether the graph is directed or undirected.
+  \item{as}{
+   should the data be given as a \code{srt} or with an \code{array} format?
+}
+  \item{directed}{
+   (logical) whether the graph is directed or undirected.
 }
 }
 \details{
 The \code{gml} format, an acronym for \emph{graph modelling language}, provides capabilities to represent multiple networks and add arguments both to the nodes and the edges for visualization purposes.
 }
 \value{
-An array representing the multigraph.
+Depending the option chosen, the output is either a data frame or an array representing the multigraph.
 }
 \references{
 \code{visone} Software for the analysis and visualization of social networks. \emph{http://visone.info}
@@ -28,11 +33,11 @@ An array representing the multigraph.
 \author{
 Antonio Rivero Ostoic
 }
-%\note{
-%
-%}
+\note{
+For the multiplexity in the ties the \code{gml} file distinguishes ``graphics'' arguments inside ``edge''. Both ``style'' and ``fill'' are supported here and the former has priority over the latter in case the two are given; otherwise when these arguments are absent, the function separates up to a couple of relational levels when several pairwise ties are specified.
+}
 \seealso{
-\code{\link{write.gml}}
+\code{\link{write.gml}}, \code{\link{read.srt}}
 }
 %\examples{
 %

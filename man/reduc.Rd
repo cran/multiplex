@@ -1,6 +1,5 @@
 \name{reduc}
 \alias{reduc}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Reduce a matrix or array
 }

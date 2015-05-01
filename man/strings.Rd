@@ -1,6 +1,5 @@
 \name{strings}
 \alias{strings}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Strings of Relations
 }
@@ -25,9 +24,9 @@ length of the strings
 }
 }
 \details{
-The strings are the unique relations which constitutes the elements of the complete semigroup. These are both the generators and the compound relations after applying the Axiom of Quality, which means that even some generators can be diregarded. 
+The strings are the unique relations which constitutes the elements of the complete semigroup. These are both the generators and the compound relations after applying the Axiom of Quality, which means that even some generators can be disregarded.
 
-This function is specially useful to construct the partial order of relations, and to establish the set of equations in the relational structure.
+This function is especially useful to construct the partial order of relations, and to establish the set of equations in the relational structure.
 }
 \value{
 An object of `\code{Strings}' class.
@@ -68,6 +67,5 @@ arr <- round( replace( array(runif(18), c(3,3,2)), array(runif(18),
 strings(arr)
 
 }
-%% Add one or more standard keywords, see file 'KEYWORDS' in the
 \keyword{ algebra }
 \keyword{ array }

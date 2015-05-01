@@ -1,6 +1,5 @@
 \name{rel.sys}
 \alias{rel.sys}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Relational System
 }
@@ -8,7 +7,7 @@ Relational System
 Create the Relation System of a multiple network.
 }
 \usage{
-rel.sys(x, bonds = c("entire", "strong", "weak"))
+rel.sys(x, bonds = c("entire", "strong", "weak"), prsep = ", ")
 }
 \arguments{
   \item{x}{
@@ -17,6 +16,9 @@ rel.sys(x, bonds = c("entire", "strong", "weak"))
   \item{bonds}{
    the type of bonds to be used in the creation of the relational system
 }
+  \item{prsep}{
+   (optional) the pair separator for the pairwise relations
+  }
 }
 \details{
 When the type of bonds chosen is \code{entire} then the nodes with ties are considered in the relational system without isolated nodes. \code{strong} bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those pattern exclusively without mutual character.

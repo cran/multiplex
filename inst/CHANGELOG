@@ -1,8 +1,44 @@
 
 'multiplex' PACKAGE
 
-version 1.2 (6-Feb-2014)
+version 1.5 (30-Apr-2015)
 ------------------------
+ADDED FEATURES:
+	+ NEW FUNCTION 'galois' provides Galois derivations between two subsets
+	+ 'partial.order' has new argument to handle the Galois derivations
+	+ Adjustments in 'read.srt' for attribute data files (to work with 'galois')
+	+ Function 'transf' now transforms non-square arrays into lists
+	+ Equations within generators are now reported in 'strings'
+	+ Loops are now supported both in 'bundles' and 'bundle.census'
+	+ 'bundles', 'summaryBundles' & 'rel.sys' allow specifying pairwise separator
+	+ Now it is possible to disable the nodes' labels in 'bundles'
+	+ Function 'read.gml' has a new argument for reading as srt or as array, and
+	  now it can read GML files without the "graphics" tag used for multiplex ties
+	+ Some needed internal functions now handle empty vectors or large semigroups
+
+BUGS FIXED:
+	* Fixed a small bug in 'cngr' when elements in a numerical semigroup are taken
+	  sometimes(?) as characters
+	* Bug fixed in 'bundle.census' when networks without actor labels have labeled
+	  relations
+	* 'bundles' handles properly two dimensional arrays with the form [n,m,1]
+
+OTHER CHANGES:
+	-+ For consistency reasons 'po.levels' is RENAMED into 'diagram.levels'
+	- Internal function 'orden' is DEPREACTED
+
+
+version 1.2 (5-Feb-2014)
+------------------------
+ADDED FEATURES:
+	+ NEW FUNCTION 'po.levels' for classifying the elements in the partial order 
+	  structure resulted from 'diagram'
+	+ Function 'rels.sys' now includes the number of ties in the chosen relational
+	  system (as size)
+	+ Function 'read.srt' works now with valued data including reals
+	+ Function 'rm.isol' now includes arrays with NULL labels (which usually 
+	  results from the 'reduc' function)
+
 BUGS FIXED:
 	* Function 'read.srt' works now properly with single networks
 	* Fixed a bug in 'bundles' for simple patterns not occurring in the network
@@ -10,17 +46,6 @@ BUGS FIXED:
 	* Function 'bundle.census' now stops when the input data is not an array
 
 
-ADDED FEATURES:
-	* New function 'po.levels' for classifying the elements in the partial order 
-	  structure resulted from 'diagram'
-	* Function 'rels.sys' now includes the number of ties in the chosen relational 
-	  system (as size)
-	* Function 'read.srt' works now with valued data including reals
-	* Function 'rm.isol' now includes arrays with NULL labels 
-	  (which usually results from the 'reduc' function)
-
-
 version 1.0 (28-Aug-2013)
 -------------------------
-* Package is released
-
+	+ Package is RELEASED

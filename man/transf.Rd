@@ -24,14 +24,16 @@ transf(x, type = c("matlist", "listmat"), lb2lb = FALSE,
    the labels in the transformation
   }
   \item{prsep}{
-   the pair separator
+   (optional) the pair separator for the pairwise relations
   }
   \item{ord}{
-   the order of the resulted structure
+   the order of the resulted structure (`\code{listmat}' option, otherwise ignored)
   }
 }
 \details{
 `\code{matlist}' is the option to transform a matrix to a list of pair elements. In case that the \code{lb2lb} is enabled in this type of transformation, then \code{labels} must be provided, whereas the pair separator is optional. On the other hand `\code{listmat}' will produce a matrix from a list of pair elements, and in this case is advisable to specify the order of the structure.
+
+For high dimensional arrays use the \code{\link{rel.sys}} function in order to get the list of pair relations of the entire structure.
 }
 \value{
 Depending on the input data, the result is either a list of pair relations or a matrix of relations.
@@ -43,7 +45,7 @@ Depending on the input data, the result is either a list of pair relations or a 
 Antonio Rivero Ostoic
 }
 \note{
-High dimensional arrays are not accepted as input data. Use \code{\link{rel.sys}} for that.
+Data frames are also accepted for the `\code{matlist}' option, but in case that this information is given as a list of pair relations the output will be a square matrix.
 }
 \seealso{
 \code{\link{read.srt}}, \code{\link{bundles}}, \code{\link{reduc}}, \code{\link{rel.sys}}
