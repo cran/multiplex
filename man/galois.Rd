@@ -37,7 +37,10 @@ Full labeling implies first objects and then attributes, whereas the reduced opt
 \code{\link{partial.order}}, \code{\link{diagram}}
 }
 \examples{
+## Create a data frame
 dfr <- data.frame(x=1:3, y=5:7)
+
+## Find Galois derivations
 galois(dfr)
 }
 \keyword{ algebra }

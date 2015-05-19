@@ -48,7 +48,7 @@ data("incubA")
 po <- partial.order(as.strings(incubA))
 
 ## find the levels in the lattice diagram
-diagram.levels(po)
+\dontrun{diagram.levels(po)}
 }
 \keyword{ algebra }
 \keyword{ manip }

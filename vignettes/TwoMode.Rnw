@@ -12,16 +12,17 @@
 \renewcommand{\baselinestretch}{1.2}
 %
 \renewcommand\abstractname{}
+%\lstset{breaklines=true}
 
 \begin{document}
 \title{\LARGE Working with Two-Mode Networks in `multiplex'}
 \author{ {\Large Antonio Rivero Ostoic} \\
-{\small School of Business and Social Sciences} \\{\large Aarhus University} }
+{\normalsize School of Business and Social Sciences} \\{\large Aarhus University} }
 \maketitle
 
-Social networks are systems defined by a collection of relationships among collective actors. In terms of set theory, a relation is an ordered pair such as $(x, y)$ that refers to a directed linkage from an element $x$ to an element $y$, where $x \in X$ and $y \in Y$ called the domain and codomain of the relation. The context of a binary relation $R$ is the overall relation set that result from the Cartesian product of the domain and codomain or $X \times Y$ of all ordered pairs $(x, y)$ where $R$ is a subset of the context. % X \times Y.
+Social networks are systems defined by a collection of relationships among collective actors. In terms of set theory, a relation is an ordered pair such as $(x, y)$ that refers to a directed linkage from an element $x$ to an element $y$, where $x \in X$ and $y \in Y$ called the domain and codomain of the relation. The context of a binary relation $R$ is the overall relation set that result from the Cartesian product of the domain and codomain or $X \times Y$ of all ordered pairs $(x, y)$ where $R$ is a subset of the context.
 
-Normally a social network refers to a domain with a set of relations on such domain, which is the generic term used to name the social entities in the system, and in such case, the system of relations is said to be a one-mode network. However, when the domain and the codomain are not equal there are two sets of entities that describe the entire social system, which are known as affiliation, bipartite, or else two-mode networks. %With this kind of networks the entities can be related only to the elements placed in the other set.
+Normally a social network refers to a domain with a set of relations on such domain, which is the generic term used to name the social entities in the system, and in such case, the system of relations is said to be a one-mode network. However, when the domain and the codomain are not equal there are two sets of entities that describe the entire social system, which are known as affiliation, bipartite, or else two-mode networks. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,12 +51,12 @@ frt
 \newpage
 Certainly another way to obtain such data table of objects and attributes can be with the command \texttt{read.table()} and specifying the names of the rows. Alternatively the function \texttt{read.srt()} will accomplish almost the same by setting the \texttt{attr} argument to \texttt{TRUE} and the \texttt{toarray} argument to \texttt{FALSE}.
 <<readtable, eval=FALSE>>=
-read.table(file, header=TRUE, 
+read.table(file, header = TRUE, 
   row.names=c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime"))
 @
 \vspace{-10pt}
 <<readsrt, eval=FALSE>>=
-read.srt(file, header=TRUE, attr=TRUE, toarray=FALSE)
+read.srt(file, header = TRUE, attr = TRUE, toarray = FALSE)
 @
 The advantage of the \texttt{read.srt()} function is that the first column does not appear as a ``Factor'' but it is automatically taken as the names of the rows in the data table.
 
@@ -70,8 +71,8 @@ B^\prime \;=\; { g \in G \;\mid\; (g, m) \in I \quad(\text{for all } m \in B) }
 \end{equation*}
 where $A$ and $B$ are said to be the extent and intent of the formal concept respectively, whereas $A^\prime$ is the set of attributes common to all the objects in the intent and $B^\prime$ the set of objects possessing the attributes in the extent.
 
-Starting with version 1.5 it is possible to perform an algebraic analysis of two-mode networks with the function \texttt{galois()} of \textbf{multiplex}.
-This command produces an adjunction between the two sets partially ordered by inclusion, and we obtain the complete list of concepts of the context, which can be assigned into an object with the class named \texttt{"Galois"} and \texttt{"full"}.
+Starting with version $1.5$ it is possible to perform an algebraic analysis of two-mode networks with the function \texttt{galois()} of \textbf{multiplex}.
+This command produces an adjunction between the two sets partially ordered by inclusion, and we obtain the complete list of concepts of the context, which can be assigned into an object with the class named ``\texttt{Galois}'' and ``\texttt{full}''.
 
 <<loadmultiplex>>=
 ## Load first the package
@@ -83,14 +84,14 @@ library("multiplex")
 galois(frt)
 @
 
-It is also possible to condense the labeling of the objects and attributes with the option \texttt{"reduced"} in the argument \texttt{labeling} of the \texttt{galois()} function. 
+It is also possible to condense the labeling of the objects and attributes with the option ``\texttt{reduced}'' in the argument \texttt{labeling} of the \texttt{galois()} function. 
 <<galoisReduc, echo=-2>>=
-gc <- galois(frt, labeling="reduced")
-galois(frt, labeling="reduced")
+gc <- galois(frt, labeling = "reduced")
+galois(frt, labeling = "reduced")
 @
 
 
-However the full labeling is useful for the construction of the hierarchy of concepts, and it is kept in the structure of the output given by the Galois derivation
+However the full labeling is useful for the construction of the hierarchy of concepts, and it is kept in the structure of the output given by the Galois derivation.
 <<strgaloisReduc, size='scriptsize'>>=
 str(gc$full)
 @
@@ -103,10 +104,10 @@ $$
 (A, B) \leq (A_2, B_2) \quad\Leftrightarrow\quad A_1 \subseteq A_2 \qquad (\Leftrightarrow\quad B_1 \subseteq B_2)
 $$
 
-For this, the function \texttt{partial.order()} now supports the \texttt{"galois"} option in the \texttt{type} argument where the hierarchy of the concepts is constructed. In this case, even though the concepts have the ``reduced'' option, it is the ``full'' labeling of the formal concepts that is the base of the ordering among these concepts that can be designated in different ways.
+For this, the function \texttt{partial.order()} now supports the ``\texttt{galois}'' option in the \texttt{type} argument where the hierarchy of the concepts is constructed. In this case, even though the concepts have the ``reduced'' option, it is the ``full'' labeling of the formal concepts that is the base of the ordering among these concepts that can be designated in different ways.
 <<partialorder>>=
 ## Partial ordering of the formal concepts with established labels
-partial.order(gc, type="galois", labels=paste('c', 1:length(gc$full), sep="_"))
+partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
 @
 
 In the partial order table we can see that all concepts are included in concept $12$, whereas concept $7$ is included in the rest of the concepts, and hence these are the maxima and the minima of a complete lattice that includes all these concepts. From the outputs given with the Galois derivation of this context we can see as well that these concepts correspond to the set of objects and the set of attributes, which are completely abridged in the reduced formal context.
@@ -125,10 +126,10 @@ The concept lattice of the formal context is a system of concepts partially orde
 We plot this type of lattice diagram with the labeling corresponding to the reduced context.
 <<pogc>>= 
 ## First we assign to an object the partial order of the reduced context
-pogc <- partial.order(gc, type="galois")
+pogc <- partial.order(gc, type = "galois")
 @
 \vspace{-10pt}
-<<diagrampogc, fig.pos="H", fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of the fruits and their characteristics', echo=-1, small.mar=TRUE>>=  %
+<<diagrampogc, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of the fruits and their characteristics', echo=-1, small.mar=TRUE>>=  %
 par(mar=c(0,0,0,0))
 ## Plot the lattice diagram
 if( require("Rgraphviz", quietly = TRUE)) {
@@ -136,24 +137,26 @@ diagram(pogc)
 }
 @
 
+
 Notice that the both objects and attributes not only are given just once (since this is a reduced representation of the context), but the labels are placed instead of the nodes rather than next to them as the typical representation of formal context. Moreover in case that a concept does not have a label, which happens in reduced contexts, then the number of the concept is placed rather than leave blank the node.
 
 
 \section{Bipartite graphs}
 
-Two-mode network are depicted through bipartite graphs, where the entities can be related only to the elements placed in the other set. One way to produce bipartite graphs with multiplex is by plotting an isomorphic lattice diagram to the bipartite graph. For this we need to construct a square matrix with both the domain and codomain where the binary ties among these are taken as inclusion relations.
+Two-mode network are depicted through bipartite graphs, where the entities can be related only to the elements placed in the other set. One way to produce bipartite graphs with \textbf{multiplex} is by plotting an isomorphic lattice diagram to the bipartite graph. For this we need to construct a square matrix with both the domain and codomain where the binary ties among these are taken as inclusion relations.
 
-For the creation of such matrix we can use the \texttt{transf()} function that starting with version 1.5 supports rectangular arrays. Hence with the option \texttt{"matlist"} of this function we transform the data frame of the formal context into a ``list of pairs'' with the relations between objects and their attributes. It is convenient to preserve the labels in the transformation, and when assigning the output into an object we make sure that the option \texttt{lb2lb} is set to \texttt{TRUE}.
+
+For the creation of such matrix we can use the \texttt{transf()} function that starting with version $1.5$ supports rectangular arrays. Hence with the option ``\texttt{matlist}'' of this function we transform the data frame of the formal context into a ``list of pairs'' with the relations between objects and their attributes. It is convenient to preserve the labels in the transformation, and when assigning the output into an object we make sure that the option \texttt{lb2lb} is set to \texttt{TRUE}.
 
 <<lstfrt, echo=-2>>= 
-lstfrt <- transf(frt, type="matlist", lb2lb=TRUE)
+lstfrt <- transf(frt, type = "matlist", lb2lb = TRUE)
 lstfrt
 @
 
-Now if we transform again the list of pairs into a ``matrix'' then we obtain the square array that can be used to produce a lattice diagram isomorphic to the bipartite graph of the network. Since \scalebox{1.6}[1.0]{R} is case sensitive, the output of this transformation differentiates ``orange'' from ``Orange''; otherwise there is a mix of the color with the fruit that will not produce a diagram isomorphic to the bipartite graph. 
+Now if we transform again the list of pairs into a ``matrix'' then we obtain the square array that can be used to produce a lattice diagram isomorphic to the bipartite graph of the network. Since \scalebox{1.5}[1.0]{R} is case sensitive, the output of this transformation differentiates ``orange'' from ``Orange''; otherwise there is a mix of the color with the fruit that will not produce a diagram isomorphic to the bipartite graph. 
 
 <<matlstfrt, echo=TRUE>>=
-mlstfrt <- transf(lstfrt, type="listmat", lb2lb=TRUE)
+mlstfrt <- transf(lstfrt, type = "listmat", lb2lb = TRUE)
 @
 
 
@@ -175,18 +178,18 @@ Notice that this array is a matrix that is asymmetric, and this condition is ess
 
 If we plot the diagram corresponding to this table, we obtain the lattice diagram that is isomorphic to the bipartite graph of the network. Obviously by transposing the matrix we produce inclusions from the attributes into the objects.
 
-<<bipgraph, fig.pos="H", fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph of the fruit characteristics ', small.mar=TRUE>>=
+<<bipgraph, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph of the fruit characteristics ', small.mar=TRUE>>=
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram(mlstfrt)
 }
 @
 
-<<bipgraphB, fig.pos="H", fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Transpose depiction of the Bipartite graph', small.mar=TRUE>>=
+
+<<bipgraphB, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Transpose depiction of the Bipartite graph', small.mar=TRUE>>=
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram(t(mlstfrt))
 }
 @
-
 
 
 \bigbreak
@@ -196,8 +199,8 @@ diagram(t(mlstfrt))
 \begin{thebibliography}{5}
 %
 \bibitem{Gant-Will96} Ganter, B. and R. Wille~\emph{ Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
-\bibitem{rgpahviz} Gentry, J, L. Long, R. Gentleman, S. Falcon, F. Hahne, D. Sarkar, and K.D. Hansen  ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package version 2.6.0
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Analysis of Multiple Social Networks with Algebra}. R package version 1.5
+\bibitem{rgpahviz} Gentry, J, L. Long, R. Gentleman, S. Falcon, F. Hahne, D. Sarkar, and K.D. Hansen  ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package version 2.12.0
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Analysis of Multiple Social Networks with Algebra}. R package version 1.6
 %
 \end{thebibliography}
 

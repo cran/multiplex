@@ -14,11 +14,11 @@ rownames(frt) <- c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Le
 frt
 
 ## ----readtable, eval=FALSE----------------------------------------------------------------------------------
-#  read.table(file, header=TRUE,
+#  read.table(file, header = TRUE,
 #    row.names=c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime"))
 
 ## ----readsrt, eval=FALSE------------------------------------------------------------------------------------
-#  read.srt(file, header=TRUE, attr=TRUE, toarray=FALSE)
+#  read.srt(file, header = TRUE, attr = TRUE, toarray = FALSE)
 
 ## ----loadmultiplex------------------------------------------------------------------------------------------
 ## Load first the package
@@ -29,21 +29,21 @@ library("multiplex")
 galois(frt)
 
 ## ----galoisReduc, echo=-2-----------------------------------------------------------------------------------
-gc <- galois(frt, labeling="reduced")
-galois(frt, labeling="reduced")
+gc <- galois(frt, labeling = "reduced")
+galois(frt, labeling = "reduced")
 
 ## ----strgaloisReduc, size='scriptsize'----------------------------------------------------------------------
 str(gc$full)
 
 ## ----partialorder-------------------------------------------------------------------------------------------
 ## Partial ordering of the formal concepts with established labels
-partial.order(gc, type="galois", labels=paste('c', 1:length(gc$full), sep="_"))
+partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
 
 ## ----pogc---------------------------------------------------------------------------------------------------
 ## First we assign to an object the partial order of the reduced context
-pogc <- partial.order(gc, type="galois")
+pogc <- partial.order(gc, type = "galois")
 
-## ----diagrampogc, fig.pos="H", fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of the fruits and their characteristics', echo=-1, small.mar=TRUE----
+## ----diagrampogc, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of the fruits and their characteristics', echo=-1, small.mar=TRUE----
 par(mar=c(0,0,0,0))
 ## Plot the lattice diagram
 if( require("Rgraphviz", quietly = TRUE)) {
@@ -51,11 +51,11 @@ diagram(pogc)
 }
 
 ## ----lstfrt, echo=-2----------------------------------------------------------------------------------------
-lstfrt <- transf(frt, type="matlist", lb2lb=TRUE)
+lstfrt <- transf(frt, type = "matlist", lb2lb = TRUE)
 lstfrt
 
 ## ----matlstfrt, echo=TRUE-----------------------------------------------------------------------------------
-mlstfrt <- transf(lstfrt, type="listmat", lb2lb=TRUE)
+mlstfrt <- transf(lstfrt, type = "listmat", lb2lb = TRUE)
 
 ## ----setup2, include=FALSE------------------------------------------------------------------------------------------------------
 # smaller font size for chunks
@@ -64,12 +64,12 @@ options(width=130)
 ## ----matlstfrtecho, echo=FALSE, size='scriptsize'-------------------------------------------------------------------------------
 mlstfrt
 
-## ----bipgraph, fig.pos="H", fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph of the fruit characteristics ', small.mar=TRUE----
+## ----bipgraph, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph of the fruit characteristics ', small.mar=TRUE----
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram(mlstfrt)
 }
 
-## ----bipgraphB, fig.pos="H", fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Transpose depiction of the Bipartite graph', small.mar=TRUE----
+## ----bipgraphB, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Transpose depiction of the Bipartite graph', small.mar=TRUE----
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram(t(mlstfrt))
 }

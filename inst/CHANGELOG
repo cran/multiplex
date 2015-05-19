@@ -1,6 +1,18 @@
 
 'multiplex' PACKAGE
 
+
+version 1.6 (19-May-2015)
+------------------------
+ADDED FEATURES:
+	+ NEW FUNCTION 'fltr' to find principal filters (or ideals) in partial orders
+	+ Small improvements in internal functions
+
+BUG FIXED:
+	* Fixed bug in the full labeling of 'galois', which can have consequences in
+	  the partial ordering of the concepts
+
+
 version 1.5 (30-Apr-2015)
 ------------------------
 ADDED FEATURES:

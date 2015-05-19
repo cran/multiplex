@@ -1,5 +1,6 @@
 print.reduced <-
-function(x, ...){
-  x = x["reduc"]
-  NextMethod()
+function (x, ...) 
+{
+    x = x["reduc"]
+    NextMethod()
 }

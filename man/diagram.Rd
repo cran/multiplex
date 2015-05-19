@@ -62,9 +62,9 @@ po <- partial.order(as.strings(incubA), type="strings")
 
 
 ## plot the order relation as a Hasse diagram.
-if(require(Rgraphviz)) {
+\dontrun{if(require(Rgraphviz)) {
 plot(diagram(po))
-}
+}}
 }
 
 \keyword{graphs}
