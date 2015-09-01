@@ -1,18 +1,51 @@
 ngbs <-
-function (x, type = c("und", "dir")) 
+function (x, rs, type = c("und", "inn", "out")) 
 {
-    x <- as.list(unlist(x))
-    nx <- vector()
-    for (i in 1:length(x)) {
-        if (isTRUE(length(x[[i]]) > 0) == TRUE) {
-            for (j in 1:length(x[[i]])) {
-                nx <- append(nx, strsplit(x[[i]][j], ", ")[[1]][1])
-                switch(match.arg(type), und = nx <- append(nx, 
-                  strsplit(x[[i]][j], ", ")[[1]][2]), dir = NA)
+    if (isTRUE(attr(rs, "class") == "Rel.System") == FALSE) 
+        stop("'rs' must be a relational system of a \"Rel.System\" class.")
+    if (isTRUE(all(x %in% unique(unlist(dhc(as.character(rs$nodes)))))) == 
+        TRUE) {
+        rst <- as.list(unlist(rs$Ties))
+        srs <- list()
+        for (i in 1:length(rst)) {
+            tmp <- vector()
+            if (length(rst[[i]]) > 0) {
+                for (n in 1:length(x)) {
+                  for (j in 1:length(rst[[i]])) {
+                    if (x[n] %in% c(c(strsplit(rst[[i]][j], rs$prsep)[[1]][1], 
+                      strsplit(rst[[i]][j], rs$prsep)[[1]][2]))) {
+                      tmp <- append(tmp, rst[[i]][j])
+                    }
+                  }
+                  rm(j)
+                }
+                rm(n)
             }
-            rm(j)
+            srs[[i]] <- as.vector(unlist(tmp))
         }
+        rm(i)
+        attr(srs, "names") <- attr(rst, "names")
+        nrs <- vector()
+        for (i in 1:length(srs)) {
+            if (isTRUE(length(srs[[i]]) > 0) == TRUE) {
+                for (j in 1:length(srs[[i]])) {
+                  switch(match.arg(type), und = nrs <- append(nrs, 
+                    strsplit(srs[[i]][j], rs$prsep)[[1]][1]), 
+                    inn = nrs <- append(nrs, strsplit(srs[[i]][j], 
+                      rs$prsep)[[1]][1]), out = nrs <- append(nrs, 
+                      (strsplit(srs[[i]][j], rs$prsep)[[1]][2])))
+                  switch(match.arg(type), und = nrs <- append(nrs, 
+                    strsplit(srs[[i]][j], rs$prsep)[[1]][2]), 
+                    inn = NA, out = NA)
+                }
+                rm(j)
+            }
+        }
+        rm(i)
+        nb <- levels(factor(nrs))
+        return(nb[which(!(nb %in% x))])
     }
-    rm(i)
-    return(levels(factor(nx)))
+    else {
+        x
+    }
 }

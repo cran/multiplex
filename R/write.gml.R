@@ -10,7 +10,7 @@ function (x, file = NULL)
     suppressWarnings(file.remove(file = file))
     cat(paste("Creator", "\"multiplex\"", sep = "\t"), file = file, 
         sep = "\n", append = TRUE)
-    cat(paste("Version", paste("\"", packageDescription("multiplex")["Version"]$Version, 
+    cat(paste("Version", paste("\"", utils::packageDescription("multiplex")["Version"]$Version, 
         "\"", sep = ""), sep = "\t"), file = file, sep = "\n", 
         append = TRUE)
     cat("graph", file = file, sep = "\n", append = TRUE)
@@ -35,9 +35,9 @@ function (x, file = NULL)
             sep = "\n", append = TRUE)
         cat(paste("\t", "[", sep = "\t"), file = file, sep = "\n", 
             append = TRUE)
-        cat(paste("\t\t", "x", runif(1) * 10, sep = "\t"), file = file, 
+        cat(paste("\t\t", "x", stats::runif(1) * 10, sep = "\t"), file = file, 
             sep = "\n", append = TRUE)
-        cat(paste("\t\t", "y", runif(1) * 10, sep = "\t"), file = file, 
+        cat(paste("\t\t", "y", stats::runif(1) * 10, sep = "\t"), file = file, 
             sep = "\n", append = TRUE)
         cat(paste("\t\t", "type", "\"ellipse\"", sep = "\t"), 
             file = file, sep = "\n", append = TRUE)

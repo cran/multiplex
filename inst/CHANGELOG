@@ -2,6 +2,31 @@
 'multiplex' PACKAGE
 
 
+version 1.7 (1-Sep-2015)
+---------------------------
+ADDED FEATURES:
+	+ NEW FUNCTION 'neighb' for finding the neighbourhood of an actor or a group
+	  of actors with customized distances
+	+ NEW FUNCTION 'as.signed' for coercing an object into a "Signed" class
+	+ Function 'expos' depends only from the output of 'rel.sys', it has new 
+	  arguments, and it is generalized to various kinds of node attributes
+	+ 'rel.sys' supports loops, actor attributes, and reports pairwise separator
+	+ Function 'fltr' has new argument to make explicit finding principal ideals,
+	  and now the reference element can be a named object or an atribute as well
+	+ Data sets include also the original matrices with their images
+	+ 'dichot' supports non-positive cut-off real values
+	+ 'summaryBundles' has new argument for expanding tie patterns and collapsing
+	  tie labels
+	+ Small improvements in internal functions; 'flt' is added
+
+BUG FIXED:
+	* 'write.srt' failed to process networks without isolated actors
+
+OTHER CHANGES:
+	+ Namespaces for needed global functions have been added (CRAN request)
+	- Internal function 'slc' is DEPREACTED
+
+
 version 1.6 (19-May-2015)
 ------------------------
 ADDED FEATURES:

@@ -1,5 +1,5 @@
-\name{slc}
-\alias{slc}
+\name{flt}
+\alias{flt}
 \title{
 internal function
 }
@@ -7,7 +7,7 @@ internal function
 internal function
 }
 %\usage{
-%slc(w, slct)
+%flt(e, PO)
 %}
 %
 \keyword{internal}

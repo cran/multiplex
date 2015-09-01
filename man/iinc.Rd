@@ -40,7 +40,7 @@ Antonio Rivero Ostoic
 \examples{
 ## Load the data, and obtain the partial order
 data("incubA")
-po <- partial.order(strings(incubA))
+po <- partial.order(strings(incubA$IM))
 
 ## Get a cluster vector given induced inclusion on the PO
 iinc("0,0", po, prsep=",")

@@ -9,7 +9,7 @@ A function to plot the Hasse Diagram of partially ordered relations.
 }
 \usage{
 diagram(x, unord = TRUE, attrs = NULL, main = NULL, 
-        cex.main = par()$cex.main)
+        cex.main = graphics::par()$cex.main)
 }
 \arguments{
   \item{x}{
@@ -58,7 +58,7 @@ This function requires that the \emph{Rgraphviz} package is available.
 data("incubA")
 
 ## given e.g. a partial order table in the object 'po'
-po <- partial.order(as.strings(incubA), type="strings")
+po <- partial.order(as.strings(incubA$IM), type="strings")
 
 
 ## plot the order relation as a Hasse diagram.

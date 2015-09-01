@@ -1,206 +1,239 @@
 expos <-
-function (rs, bh, adopters = FALSE) 
+function (rs, classes = FALSE, allClasses = FALSE, allNodes = TRUE) 
 {
-    if (isTRUE(attr(rs$ties, "class") == "Rel.System") == FALSE) 
+    if (isTRUE(attr(rs, "class") == "Rel.System") == FALSE) 
         stop("Relational system must be a \"Rel.System\" class.")
-    if (isTRUE(rs$sys.ord == 0) == TRUE) 
+    if (isTRUE(rs$sys.ord == 0L) == TRUE) 
         stop("Relational system chosen is empty!")
-    At <- data.frame(matrix(0, ncol = rs$ord, nrow = 0))
-    if (isTRUE(is.array(bh) == TRUE) == TRUE) {
-        if (dim(bh)[1] != rs$ord) 
-            stop("'rs' and 'bh' have a different order")
-        if (is.na(dim(bh)[3]) == FALSE) {
-            for (i in 1:dim(bh)[3]) At[i, ] <- diag(bh[, , i])
+    if (isTRUE(rs$Attrs.ord == 0L) == TRUE | is.null(rs$Attrs.ord) == 
+        TRUE) 
+        return("There are no attributes in the relational system.")
+    if (isTRUE(any(duplicated(attr(rs$Attrs, "names")))) == TRUE) {
+        rs$attrs <- rs$Attrs[which(!(duplicated(attr(rs$Attrs, 
+            "names"))))]
+        dpl <- which(duplicated(attr(rs$Attrs, "names")))
+        for (i in 1:length(dpl)) {
+            rs$attrs[which(attr(rs$attrs, "names") == attr(rs$Attrs, 
+                "names")[dpl[i]])] <- jnt(dhc(unlist(rs$attrs[which(attr(rs$attrs, 
+                "names") == attr(rs$Attrs, "names")[dpl[i]])], 
+                rs$Attrs[dpl[i]]), prsep = rs$prsep), prsep = rs$prsep)
         }
-        else if (is.na(dim(bh)[3]) == TRUE) {
-            At <- diag(bh)
-        }
-    }
-    else if (isTRUE(is.data.frame(bh) == TRUE) == TRUE) {
-        if (ncol(as.vector(bh)) != rs$ord) 
-            stop("'rs' and 'bh' have a different order")
-        ifelse(isTRUE(all(as.character(bh[, 1]) %in% rs$nodes)) == 
-            TRUE, At <- t(bh[, 2:ncol(bh)]), At <- t(bh))
-        if (is.null(attr(bh, "names")) == TRUE) 
-            attr(At, "names") <- rs$nodes
+        rm(i)
     }
     else {
-        stop("'bh' must be either data frame, vector, or array")
+        rs$attrs <- rs$Attrs
     }
-    if (isTRUE(is.null(nrow(At)) == FALSE) == TRUE) {
-        ifelse(is.null(rs$nodes) == TRUE, colnames(At) <- 1:rs$ord, 
-            colnames(At) <- rs$nodes)
-        rownames(At) <- LETTERS[1:nrow(At)]
+    rs$attrs2 <- list()
+    attrs2 <- vector()
+    for (i in 1:length(rs$attrs)) {
+        if (isTRUE(is.null(rs$attrs[[i]])) == FALSE) {
+            rs$attrs2[[length(rs$attrs2) + 1L]] <- rs$attrs[[i]]
+            attrs2 <- append(attrs2, attr(rs$attrs, "names")[i])
+        }
+        else {
+            NA
+        }
     }
-    ifelse(isTRUE(is.vector(At) == TRUE) == TRUE, at <- dichot(At), 
-        at <- dichot(At[, 1:ncol(At)]))
+    rm(i)
+    attr(rs$attrs2, "names") <- attrs2
+    if (isTRUE(length(rs$attrs2) == 0L) == TRUE) 
+        stop("There are no attributes in the relational system.")
+    natt <- length(unique(attr(rs$attrs2, "names")))
+    At <- data.frame(matrix(0L, ncol = rs$ord, nrow = natt))
+    colnames(At) <- rs$nodes
+    rownames(At) <- unique(attr(rs$attrs2, "names"))
+    for (i in 1:natt) {
+        At[i, which(colnames(At) %in% dhc(rs$attrs2[[i]], prsep = rs$prsep))] <- 1L
+    }
+    rm(i)
     if (is.null(rs$incl) == FALSE) {
-        ifelse(isTRUE(is.null(nrow(at)) == TRUE) == TRUE, at <- at[which(attr(at, 
-            "names") %in% rs$incl)], at <- as.data.frame(at)[, 
-            which(colnames(at) %in% rs$incl)])
+        ifelse(isTRUE(is.null(nrow(At)) == TRUE) == TRUE, at <- At[which(attr(At, 
+            "names") %in% rs$incl)], at <- as.data.frame(At)[, 
+            which(colnames(At) %in% rs$incl)])
     }
-    adpt <- list()
-    if (isTRUE(is.vector(at) == FALSE) == TRUE) {
-        adpt[[1]] <- colnames(at)[setdiff(1:length(colnames(at)), 
-            union(which(at[1, ] == 1), which(at[2, ] == 1)))]
-        adpt[[2]] <- colnames(at)[setdiff(which(at[1, ] == 1), 
-            which(at[2, ] == 1))]
-        adpt[[3]] <- colnames(at)[setdiff(which(at[2, ] == 1), 
-            which(at[1, ] == 1))]
-        adpt[[4]] <- colnames(at)[intersect(which(at[1, ] == 
-            1), which(at[2, ] == 1))]
-        attr(adpt, "names") <- c("none", "only_A", "only_B", 
-            "both_A_B")
-    }
-    else if (isTRUE(is.vector(at) == TRUE) == TRUE) {
-        adpt[[1]] <- attr(which(at == 0), "names")
-        adpt[[2]] <- attr(which(at != 0), "names")
-        attr(adpt, "names") <- c("Non-adopters", "Adopters")
-    }
-    expA <- list()
-    if (isTRUE(is.vector(at) == FALSE) == TRUE) {
-        expB <- list()
-        for (l in 1:(length(adpt) - 1)) {
-            if (isTRUE(length(adpt[[l]]) > 0) == TRUE) {
-                for (i in 1:length(adpt[[l]])) {
-                  if (isTRUE(adpt[[l]][i] %in% ngbs(rs$ties, 
-                    type = "und")) == TRUE) {
-                    if (sum(slc(at, ngbs(slc(rs$ties, adpt[[l]][i]), 
-                      type = "und"))) > 0) {
-                      if (isTRUE(rs$bond.type == "weak") == TRUE) {
-                        if (length(setdiff(ngbs(slc(rs$ties, 
-                          adpt[[l]][i]), type = "dir"), adpt[[l]][i])) > 
-                          0) {
-                          tmp <- setdiff(ngbs(slc(rs$ties, adpt[[l]][i]), 
-                            type = "dir"), adpt[[l]][i])
-                          if (slc(at, adpt[[l]][i])[1] != 1) {
-                            if (is.null(nrow(slc(at, tmp)))) {
-                              if (slc(at, tmp)[1] != 0) 
-                                expA[[(length(expA) + 1)]] <- paste(adpt[[l]][i], 
-                                  slc(at, tmp)[1], sep = " - ")
-                            }
-                            else {
-                              if ((round(sum(slc(at, tmp)[1, 
-                                ])/ncol(slc(at, tmp)), 2)) != 
-                                0) 
-                                expA[[(length(expA) + 1)]] <- paste(adpt[[l]][i], 
-                                  round(sum(slc(at, tmp)[1, ])/ncol(slc(at, 
-                                    tmp)), 2), sep = " - ")
-                            }
-                          }
-                        }
+    if (isTRUE(nrow(at) > 0L) == TRUE) {
+        Adpt <- list()
+        Adpt[[1]] <- colnames(at)[which(apply(at, 2, sum) == 
+            0L)]
+        Adpt[[2]] <- colnames(at)[which(apply(at, 2, sum) == 
+            nrow(at))]
+        if (isTRUE(nrow(at) > 1L) == TRUE) {
+            rst <- which(!(colnames(at) %in% unlist(Adpt)))
+            if (isTRUE(length(rst) >= 1L) == TRUE) {
+                aat <- at[, rst]
+                bnch <- as.data.frame(t(expand.grid(rep(list(0L:1L), 
+                  natt))))
+                rownames(bnch) <- unique(attr(rs$attrs2, "names"))
+                colnames(bnch)[1] <- "Null"
+                for (i in 2:ncol(bnch)) colnames(bnch)[i] <- jnt(rownames(bnch)[which(bnch[, 
+                  i] == 1L)], prsep = ", ")
+                rm(i)
+                bn <- bnch[, 2:(ncol(bnch) - 1L)]
+                tmp <- vector()
+                for (k in 1:ncol(bn)) {
+                  if (isTRUE(is.null(ncol(aat)) == FALSE) == 
+                    TRUE) {
+                    for (i in 1:ncol(aat)) {
+                      if (isTRUE(all(bn[, k] == aat[, i])) == 
+                        TRUE) {
+                        tmp <- append(tmp, colnames(aat)[i])
                       }
                       else {
-                        if (slc(at, adpt[[l]][i])[1] != 1) {
-                          tmp <- ngbs(slc(rs$ties, adpt[[l]][i]), 
-                            type = "und")
-                          if (sum(slc(at, tmp)[1, ])/(ncol(slc(at, 
-                            tmp)) - 1) > 0) 
-                            expA[[(length(expA) + 1)]] <- paste(adpt[[l]][i], 
-                              round(sum(slc(at, tmp)[1, ])/(ncol(slc(at, 
-                                tmp)) - 1), 2), sep = " - ")
-                        }
-                      }
-                      if (isTRUE(rs$bond.type == "weak") == TRUE) {
-                        if (length(setdiff(ngbs(slc(rs$ties, 
-                          adpt[[l]][i]), type = "dir"), adpt[[l]][i])) > 
-                          0) {
-                          tmp <- setdiff(ngbs(slc(rs$ties, adpt[[l]][i]), 
-                            type = "dir"), adpt[[l]][i])
-                          if (slc(at, adpt[[l]][i])[2] != 1) {
-                            if (is.null(nrow(slc(at, tmp)))) {
-                              if (slc(at, tmp)[2] != 0) 
-                                expB[[(length(expB) + 1)]] <- paste(adpt[[l]][i], 
-                                  slc(at, tmp)[2], sep = " - ")
-                            }
-                            else {
-                              if ((round(sum(slc(at, tmp)[2, 
-                                ])/ncol(slc(at, tmp)), 2)) != 
-                                0) 
-                                expB[[(length(expB) + 1)]] <- paste(adpt[[l]][i], 
-                                  round(sum(slc(at, tmp)[2, ])/ncol(slc(at, 
-                                    tmp)), 2), sep = " - ")
-                            }
-                          }
-                        }
-                      }
-                      else {
-                        if (slc(at, adpt[[l]][i])[2] != 1) {
-                          tmp <- ngbs(slc(rs$ties, adpt[[l]][i]), 
-                            type = "und")
-                          if (sum(slc(at, tmp)[2, ])/(ncol(slc(at, 
-                            tmp)) - 1) > 0) 
-                            expB[[(length(expB) + 1)]] <- paste(adpt[[l]][i], 
-                              round(sum(slc(at, tmp)[2, ])/(ncol(slc(at, 
-                                tmp)) - 1), 2), sep = " - ")
-                        }
+                        NA
                       }
                     }
+                    rm(i)
                   }
+                  else {
+                    ifelse(isTRUE(all(as.vector(bn[, k]) == aat)) == 
+                      TRUE, tmp <- append(tmp, colnames(aat)[rst]), 
+                      NA)
+                  }
+                  Adpt[[k + 2L]] <- as.character(tmp)
+                  tmp <- vector()
+                }
+                rm(k)
+                attr(Adpt, "names") <- c("NONE", "ALL", colnames(bn))
+            }
+            else {
+                NA
+            }
+            adpt <- Adpt[c(1, 3:length(Adpt))]
+        }
+        else if (isTRUE(nrow(at) == 1L) == TRUE) {
+            attr(Adpt, "names") <- c("NONE", "ALL")
+            adpt <- Adpt[1]
+        }
+    }
+    else if (isTRUE(nrow(at) > 0L) == FALSE) {
+        Adpt <- NULL
+    }
+    if (isTRUE(length(unlist(adpt)) > 0L) == TRUE) {
+        ladpt <- list()
+        for (l in 1:length(adpt)) {
+            if (isTRUE(length(adpt[[l]]) != 0L) == TRUE) {
+                ex <- list()
+                for (i in 1:length(adpt[[l]])) {
+                  ngbsadpt <- ngbs(adpt[[l]][i], rs, type = "und")
+                  if (isTRUE(length(ngbsadpt) == 1L) == TRUE) {
+                    ex <- at[, which(colnames(at) %in% ngbsadpt)]
+                    ex <- dichot(ex - at[, which(adpt[[l]][i] == 
+                      colnames(at))])
+                    attr(ex, "names") <- rownames(at)
+                  }
+                  else {
+                    tmp <- at[, which(colnames(at) %in% ngbsadpt)]
+                    tmp <- dichot(tmp - at[, which(adpt[[l]][i] == 
+                      colnames(at))])
+                    ex <- apply(tmp, 1, sum)/ncol(tmp)
+                  }
+                  ladpt[[length(ladpt) + 1L]] <- ex
                 }
                 rm(i)
             }
-        }
-        rm(l)
-    }
-    else if (isTRUE(is.vector(at) == TRUE) == TRUE) {
-        for (i in 1:length(adpt[[1]])) {
-            if (isTRUE(adpt[[1]][i] %in% ngbs(rs$ties, type = "und")) == 
-                TRUE) {
-                if (sum(slc(at, ngbs(slc(rs$ties, adpt[[1]][i]), 
-                  type = "und"))) > 0) {
-                  if (isTRUE(rs$bond.type == "weak") == TRUE) {
-                    if (length(setdiff(ngbs(slc(rs$ties, adpt[[1]][i]), 
-                      type = "dir"), adpt[[1]][i])) > 0) {
-                      tmp <- setdiff(ngbs(slc(rs$ties, adpt[[1]][i]), 
-                        type = "dir"), adpt[[1]][i])
-                      if (slc(at, adpt[[1]][i])[1] != 1) {
-                        if (is.null(nrow(slc(at, tmp)))) {
-                          if (slc(at, tmp)[1] != 0) 
-                            expA[[(length(expA) + 1)]] <- paste(adpt[[l]][i], 
-                              slc(at, tmp)[1], sep = " - ")
-                        }
-                        else {
-                          if ((round(sum(slc(at, tmp))/length(slc(at, 
-                            tmp)), 2)) != 0) 
-                            expA[[(length(expA) + 1)]] <- paste(adpt[[l]][i], 
-                              round(sum(slc(at, tmp))/length(slc(at, 
-                                tmp)), 2), sep = " - ")
-                        }
-                      }
-                    }
-                  }
-                  else {
-                    if (slc(at, adpt[[1]][i])[1] != 1) {
-                      tmp <- ngbs(slc(rs$ties, adpt[[1]][i]), 
-                        type = "und")
-                      if (sum(slc(at, tmp))/(length(slc(at, tmp)) - 
-                        1) > 0) 
-                        expA[[(length(expA) + 1)]] <- paste(adpt[[1]][i], 
-                          round(sum(slc(at, tmp))/(length(slc(at, 
-                            tmp)) - 1), 2), sep = " - ")
-                    }
-                  }
-                }
+            else {
+                NA
             }
         }
+        rm(l)
+        attr(ladpt, "names") <- as.vector(unlist(adpt))
+        uladpt <- unlist(ladpt)
+        slct <- (1:length(uladpt))%%nrow(at)
+        slct <- replace(slct, slct == 0L, nrow(at))
+        Exps <- list()
+        for (i in 1:nrow(at)) {
+            temp <- uladpt[slct == i]
+            Exps[[i]] <- round(temp[which(temp > 0L)], 2)
+        }
+        rm(i)
+        exx <- list()
+        exx2 <- list()
+        for (i in 1:length(Exps)) {
+            if (isTRUE(length(Exps[[i]]) > 0L) == TRUE) {
+                exx[[i]] <- dhc(names(Exps[[i]]), "[.]")[which(1:(length(Exps[[i]]) * 
+                  2L)%%2L == 1L)]
+                exx2[[i]] <- noquote(as.vector(Exps[[i]]))
+            }
+            else {
+                exx2[[i]] <- exx[[i]] <- NULL
+            }
+        }
+        rm(i)
+        exps <- list()
+        for (i in 1:length(Exps)) {
+            if (isTRUE(length(Exps[[i]]) > 0L) == TRUE) {
+                exps[[i]] <- paste(exx[[i]], paste0(exx2[[i]] * 
+                  100L, "%"), sep = "=")
+            }
+        }
+        rm(i)
+        attr(exps, "names") <- paste0("to_", rownames(at))
+        exps <- noquote(exps)
     }
-    if (isTRUE(is.vector(at) == FALSE) == TRUE) {
-        exp <- list()
-        length(exp) <- 2
-        if (is.null(unlist(expA)) == FALSE) 
-            exp[[1]] <- unlist(expA)
-        if (is.null(unlist(expB)) == FALSE) 
-            exp[[2]] <- unlist(expB)
-        attr(exp, "names") <- c("to_A", "to_B")
-        if (adopters) {
-            return(list(Adoption = noquote(adpt), Exposure = noquote(exp)))
+    else {
+        exps <- NULL
+    }
+    if (classes) {
+        if (allNodes) {
+            Adpt[[1]] <- colnames(At)[which(apply(At, 2, sum) == 
+                0L)]
+            Adpt[[2]] <- colnames(At)[which(apply(At, 2, sum) == 
+                nrow(At))]
+            rst <- which(!(colnames(At) %in% unlist(Adpt)))
+            if (isTRUE(length(rst) >= 1L) == TRUE) {
+                Aat <- At[, rst]
+                tmp <- vector()
+                for (k in 1:ncol(bn)) {
+                  if (isTRUE(is.null(ncol(Aat)) == FALSE) == 
+                    TRUE) {
+                    for (i in 1:ncol(Aat)) {
+                      if (isTRUE(all(bn[, k] == Aat[, i])) == 
+                        TRUE) {
+                        tmp <- append(tmp, colnames(Aat)[i])
+                      }
+                      else {
+                        NA
+                      }
+                    }
+                    rm(i)
+                  }
+                  else {
+                    ifelse(isTRUE(all(as.vector(bn[, k]) == Aat)) == 
+                      TRUE, tmp <- append(tmp, colnames(At)[rst]), 
+                      NA)
+                  }
+                  Adpt[[k + 2L]] <- as.vector(c(Adpt[[k + 2L]], 
+                    tmp))
+                  tmp <- vector()
+                }
+                rm(k)
+            }
+            else {
+                NA
+            }
+        }
+        if (allClasses) {
+            clss <- Adpt
         }
         else {
-            return(list(Exposure = noquote(exp)))
+            clss <- list()
+            ncls <- vector()
+            for (i in 1:length(Adpt)) {
+                if (isTRUE(length(Adpt[[i]]) > 0L) == TRUE) {
+                  clss[[length(clss) + 1L]] <- Adpt[[i]]
+                  ncls <- append(ncls, attr(Adpt, "names")[i])
+                }
+                else {
+                  NA
+                }
+            }
+            rm(i)
+            attr(clss, "names") <- ncls
         }
+        return(list(Classes = noquote(clss), Bonds=rs$bond.type, 
+          Exposure = exps))
     }
-    else if (isTRUE(is.vector(at) == TRUE) == TRUE) {
-        return(list(Adoption = noquote(adpt), Exposure = noquote(unlist(expA))))
+    else {
+        return(list(Bonds=rs$bond.type, Exposure = exps))
     }
 }

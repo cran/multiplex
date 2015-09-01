@@ -2,19 +2,19 @@ diagram.levels <-
 function (x, perm = FALSE) 
 {
     if (requireNamespace("Rgraphviz", quietly = TRUE)) {
-        pictex()
-        po <- x & (1 - t(x))
-        diag(po) <- 0
+        grDevices::pictex()
+        po <- x & (1L - t(x))
+        diag(po) <- 0L
         for (i in seq_len(ncol(po))) {
             tmp <- outer(po[, i], po[i, ], pmin.int)
-            po <- pmin(po, (1 - tmp))
+            po <- pmin(po, (1L - tmp))
         }
-        X <- Rgraphviz::plot(as(po, "graphNEL"))
+        X <- Rgraphviz::plot(methods::as(po, "graphNEL"))
         alt <- vector()
         nam <- vector()
         for (i in 1:length(X@AgNode)) {
-            alt[length(alt) + 1] <- X@AgNode[[i]]@center@y
-            nam[length(nam) + 1] <- X@AgNode[[i]]@name
+            alt[length(alt) + 1L] <- X@AgNode[[i]]@center@y
+            nam[length(nam) + 1L] <- X@AgNode[[i]]@name
         }
         rm(i)
         cls <- (rbind(nam, rep(0, length(nam))))
@@ -24,11 +24,11 @@ function (x, perm = FALSE)
         for (i in 1:length(X@AgEdge)) ord <- append(ord, c(X@AgEdge[[i]]@head, 
             X@AgEdge[[i]]@tail))
         cls[2, ][which(!(cls[1, ] %in% (unique(ord))))] <- as.numeric(max(levels(factor(cls[2, 
-            ])))) + 1
+            ])))) + 1L
         attr(cls, "dimnames") <- NULL
         colnames(cls) <- cls[2, ]
         cls <- as.data.frame(cls)
-        dev.off()
+        grDevices::dev.off()
         unlink("Rplots.tex")
         if (perm) {
             clu <- as.numeric(as.vector(unlist(cls[2, ])))

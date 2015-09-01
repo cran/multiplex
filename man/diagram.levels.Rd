@@ -45,7 +45,7 @@ This function requires that the \emph{Rgraphviz} package is available.
 data("incubA")
 
 ## given e.g. a partial order table in the object 'po'
-po <- partial.order(as.strings(incubA))
+po <- partial.order(as.strings(incubA$IM))
 
 ## find the levels in the lattice diagram
 \dontrun{diagram.levels(po)}

@@ -3,45 +3,45 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
     transp = FALSE) 
 {
     arx <- scan(file, what = "character", nlines = -1, quiet = TRUE)
-    if (isTRUE(length(grep("ALPHA", arx, fixed = TRUE)) == 0) == 
+    if (isTRUE(length(grep("ALPHA", arx, fixed = TRUE)) == 0L) == 
         TRUE) {
         if (isTRUE(length(grep("ATOM", arx, fixed = TRUE)) == 
-            0) == TRUE) 
+            0L) == TRUE) 
             stop("Input data does not have 'Generating and Induced Inclusions'")
     }
-    ifelse(isTRUE(arx[1] == "FACTORIZATION") == TRUE, X <- arx[(head(grep("Inclusions", 
-        arx, fixed = TRUE), 1) + 1):(tail(grep("THERE", arx, 
-        fixed = TRUE), 1) - 1)], X <- arx[(tail(grep("ALPHA", 
-        arx, fixed = TRUE), 1) + 5):(tail(grep("THERE", arx, 
-        fixed = TRUE), 1) - 1)])
-    x <- arx[tail(grep("THERE", arx, fixed = TRUE), 1):length(arx)]
+    ifelse(isTRUE(arx[1] == "FACTORIZATION") == TRUE, X <- arx[(utils::head(grep("Inclusions", 
+        arx, fixed = TRUE), 1) + 1L):(utils::tail(grep("THERE", 
+        arx, fixed = TRUE), 1) - 1L)], X <- arx[(utils::tail(grep("ALPHA", 
+        arx, fixed = TRUE), 1) + 5L):(utils::tail(grep("THERE", 
+        arx, fixed = TRUE), 1) - 1L)])
+    x <- arx[utils::tail(grep("THERE", arx, fixed = TRUE), 1):length(arx)]
     v <- vector()
     for (i in 1:length(X)) {
         ifelse((isTRUE(as.logical(grep("(", X[i], fixed = TRUE))) == 
             FALSE & isTRUE(as.logical(grep(")", X[i], fixed = TRUE))) == 
-            FALSE), v[length(v) + 1] <- i, NA)
+            FALSE), v[length(v) + 1L] <- i, NA)
     }
     rm(i)
-    m <- v[which(v%%2 == 0)]
-    n <- v[which(v%%2 != 0)]
+    m <- v[which(v%%2L == 0L)]
+    n <- v[which(v%%2L != 0L)]
     n <- n[2:length(n)]
     rm(v)
     lt <- list()
     for (i in 1:length(m)) {
-        if (is.na((n[i] - 1)) == FALSE) 
-            lt[[i]] <- X[(m[i] + 1):(n[i] - 1)]
+        if (is.na((n[i] - 1L)) == FALSE) 
+            lt[[i]] <- X[(m[i] + 1):(n[i] - 1L)]
     }
     rm(i)
     rm(X)
     rm(n, m)
-    ifelse(isTRUE(arx[1] == "FACTORIZATION") == TRUE, n <- as.numeric(arx[(head(grep("Order", 
-        arx, fixed = TRUE), 1) + 4)]), n <- as.numeric(arx[(grep("(Semigroup", 
-        arx, fixed = TRUE) - 1)]))
+    ifelse(isTRUE(arx[1] == "FACTORIZATION") == TRUE, n <- as.numeric(arx[(utils::head(grep("Order", 
+        arx, fixed = TRUE), 1) + 4L)]), n <- as.numeric(arx[(grep("(Semigroup", 
+        arx, fixed = TRUE) - 1L)]))
     a <- grep("Inclusions:", x, fixed = TRUE)
     z <- grep("Atom", x, fixed = TRUE)
     lt2 <- list()
     for (i in 1:length(z)) {
-        lt2[[i]] <- x[(a[i] + 1):(z[i] - 1)]
+        lt2[[i]] <- x[(a[i] + 1L):(z[i] - 1L)]
     }
     rm(i)
     for (i in 1:length(lt)) {
@@ -55,7 +55,7 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
     ii <- list()
     length(ii) <- length(lt)
     for (i in 1:length(lt)) {
-        for (j in 1:(length(lt[[i]])/2)) {
+        for (j in 1:(length(lt[[i]])/2L)) {
             ii[[i]] <- append(ii[[i]], paste(lt[[i]][seq(1, length(lt[[i]]), 
                 by = 2)[j]], lt[[i]][seq(2, length(lt[[i]]), 
                 by = 2)[j]], sep = prsep))
@@ -67,7 +67,7 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
     at <- list()
     length(at) <- length(lt2)
     for (i in 1:length(lt2)) {
-        for (j in 1:(length(lt2[[i]])/2)) {
+        for (j in 1:(length(lt2[[i]])/2L)) {
             at[[i]] <- append(at[[i]], paste(lt2[[i]][seq(1, 
                 length(lt2[[i]]), by = 2)[j]], lt2[[i]][seq(2, 
                 length(lt2[[i]]), by = 2)[j]], sep = prsep))
@@ -75,32 +75,32 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
         rm(j)
     }
     rm(i)
-    f <- tail(grep("-|-", arx, fixed = TRUE), length(lt2))
+    f <- utils::tail(grep("-|-", arx, fixed = TRUE), length(lt2))
     if (isTRUE(as.numeric(x[grep("-|-", x, fixed = TRUE)[1] - 
-        1]) != n) == TRUE) {
-        g <- tail(grep("-|-", x, fixed = TRUE))
-        p <- as.numeric(x[grep("-|-", x, fixed = TRUE)[1] - 1])
+        1L]) != n) == TRUE) {
+        g <- utils::tail(grep("-|-", x, fixed = TRUE))
+        p <- as.numeric(x[grep("-|-", x, fixed = TRUE)[1] - 1L])
         q <- n - p
         arr1 <- array(NA, dim = c(n, p))
         arr2 <- array(NA, dim = c(n, q))
         for (i in 1:length(g)) {
             for (j in 1:n) {
-                if (isTRUE((i%%2) == 1) == TRUE) 
-                  arr1[j, ] <- as.numeric(x[(g[i] + 3 + ((j - 
-                    1) * p + ((j - 1) * 2))):(g[i] + (j * p) + 
-                    (j * 2))])
+                if (isTRUE((i%%2L) == 1L) == TRUE) 
+                  arr1[j, ] <- as.numeric(x[(g[i] + 3L + ((j - 
+                    1) * p + ((j - 1) * 2L))):(g[i] + (j * p) + 
+                    (j * 2L))])
             }
             rm(j)
             for (j in 1:n) {
-                if (isTRUE((i%%2) == 0) == TRUE) 
-                  arr2[j, ] <- as.numeric(x[(g[i] + 3 + ((j - 
-                    1) * q + ((j - 1) * 2))):(g[i] + (j * q) + 
-                    (j * 2))])
+                if (isTRUE((i%%2L) == 0L) == TRUE) 
+                  arr2[j, ] <- as.numeric(x[(g[i] + 3L + ((j - 
+                    1) * q + ((j - 1) * 2L))):(g[i] + (j * q) + 
+                    (j * 2L))])
             }
             rm(j)
-            if (isTRUE((i%%2) == 0) == TRUE && isTRUE(i > 1) == 
+            if (isTRUE((i%%2L) == 0L) == TRUE && isTRUE(i > 1) == 
                 TRUE) {
-                if (isTRUE(i == 2) == TRUE) {
+                if (isTRUE(i == 2L) == TRUE) {
                   arr <- data.frame(arr1, arr2)
                 }
                 else if (isTRUE(i > 2) == TRUE) {
@@ -112,13 +112,13 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
         rm(i)
     }
     else if (isTRUE(as.numeric(x[grep("-|-", x, fixed = TRUE)[1] - 
-        1]) == n) == TRUE) {
+        1L]) == n) == TRUE) {
         arr <- array(NA, dim = c(n, n, length(f)))
         for (i in 1:length(f)) {
             for (j in 1:n) {
-                arr[j, , i] <- as.numeric(arx[(f[i] + 3 + ((j - 
-                  1) * n + ((j - 1) * 2))):(f[i] + (j * n) + 
-                  (j * 2))])
+                arr[j, , i] <- as.numeric(arx[(f[i] + 3L + ((j - 
+                  1) * n + ((j - 1) * 2L))):(f[i] + (j * n) + 
+                  (j * 2L))])
             }
             rm(j)
         }
@@ -157,7 +157,7 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
         }
         rm(i)
         tmp <- data.frame(matrix(ncol = dim(iiarrs)[1] * dim(iiarrs)[2], 
-            nrow = 0))
+            nrow = 0L))
         for (i in 1:dim(iiarrs)[3]) {
             tmp[i, ] <- as.vector(iiarrs[, , i])
         }

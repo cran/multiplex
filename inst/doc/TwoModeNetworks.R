@@ -35,12 +35,13 @@ galois(frt, labeling = "reduced")
 ## ----strgaloisReduc, size='scriptsize'----------------------------------------------------------------------
 str(gc$full)
 
-## ----partialorder-------------------------------------------------------------------------------------------
+## ----partialorder, echo=-2----------------------------------------------------------------------------------
 ## Partial ordering of the formal concepts with established labels
-partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
+pogcc <- partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
+pogcc
 
 ## ----pogc---------------------------------------------------------------------------------------------------
-## First we assign to an object the partial order of the reduced context
+## First we assign the partial order of the reduced context to 'pogc'
 pogc <- partial.order(gc, type = "galois")
 
 ## ----diagrampogc, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of the fruits and their characteristics', echo=-1, small.mar=TRUE----
@@ -49,6 +50,31 @@ par(mar=c(0,0,0,0))
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram(pogc)
 }
+
+## ----diaglevels, echo=TRUE----------------------------------------------------------------------------------
+## Diagram levels
+if( require("Rgraphviz", quietly = TRUE)) {
+diagram.levels(pogcc) }
+
+## ----diaglevelsperm, echo=TRUE------------------------------------------------------------------------------
+## Diagram levels with permutation
+if( require("Rgraphviz", quietly = TRUE)) {
+diagram.levels(pogcc, perm = TRUE) }
+
+## ----princfltr, echo=TRUE-----------------------------------------------------------------------------------
+## Principal filter of third concept
+fltr(3, pogcc)
+
+## ----princfltrlbs, echo=TRUE--------------------------------------------------------------------------------
+## Principal filter of third concept with labels
+fltr(3, pogc)
+
+## ----princfltrlbs2, echo=TRUE, eval=FALSE-------------------------------------------------------------------
+#  fltr("red", pogc)
+
+## ----princideal, echo=TRUE----------------------------------------------------------------------------------
+## Principal ideal of the third concept
+fltr(3, pogc, ideal = TRUE)
 
 ## ----lstfrt, echo=-2----------------------------------------------------------------------------------------
 lstfrt <- transf(frt, type = "matlist", lb2lb = TRUE)
@@ -71,6 +97,6 @@ diagram(mlstfrt)
 
 ## ----bipgraphB, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Transpose depiction of the Bipartite graph', small.mar=TRUE----
 if( require("Rgraphviz", quietly = TRUE)) {
-diagram(t(mlstfrt))
+diagram(t(mlstfrt)) 
 }
 

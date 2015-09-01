@@ -22,10 +22,10 @@ function (S, x, type = c("mc", "pi", "cc"), reduc = FALSE)
         lb <- list()
         length(lb) <- length(clu) <- dim(poi)[3]
         for (i in 1:dim(poi)[3]) {
-            ifelse(isTRUE(all(as.vector(poi[, , i]) == 1) == 
-                TRUE) == TRUE, clu[[i]] <- rep(1, S$ord), clu[[i]] <- cutree(hclust(dist(poi[, 
-                , i])), k = length(cut(as.dendrogram(hclust(dist(poi[, 
-                , i]))), h = 0)$lower)))
+            ifelse(isTRUE(all(as.vector(poi[, , i]) == 1L) == 
+                TRUE) == TRUE, clu[[i]] <- rep(1, S$ord), clu[[i]] <- stats::cutree(stats::hclust(stats::dist(poi[, 
+                , i])), k = length(cut(stats::as.dendrogram(stats::hclust(stats::dist(poi[, 
+                , i]))), h = 0L)$lower)))
             attr(clu[[i]], "names") <- S$st
             lb[[i]] <- list()
             for (j in 1:length(tabulate(clu[[i]]))) {

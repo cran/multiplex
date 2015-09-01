@@ -14,11 +14,11 @@ function (x, labeling = c("full", "reduced"))
             }
         }
         rm(j)
-        eq0[[length(eq0) + 1]] <- paste(rownames(x)[i], jnt(tmp), 
+        eq0[[length(eq0) + 1L]] <- paste(rownames(x)[i], jnt(tmp), 
             sep = ", ")
     }
     rm(i)
-    if (isTRUE(length(eq0) > 0) == TRUE) {
+    if (isTRUE(length(eq0) > 0L) == TRUE) {
         for (i in 1:length(eq0)) {
             eq0[[i]] <- jnt(dhc(eq0[[i]]))
         }
@@ -33,34 +33,34 @@ function (x, labeling = c("full", "reduced"))
     conj <- list()
     length(conj) <- ncol(x)
     for (i in 1:ncol(x)) {
-        conj[[i]] <- jnt(rownames(x)[which(x[, i] != 0)])
+        conj[[i]] <- jnt(rownames(x)[which(x[, i] != 0L)])
     }
     rm(i)
     attr(conj, "names") <- colnames(x)
     conj1 <- list()
     length(conj1) <- nrow(x)
     for (i in 1:nrow(x)) {
-        conj1[[i]] <- jnt(colnames(x)[which(x[i, ] != 0)])
+        conj1[[i]] <- jnt(colnames(x)[which(x[i, ] != 0L)])
     }
     rm(i)
     attr(conj1, "names") <- rownames(x)
     conj2 <- list()
     conj2n <- vector()
-    if (isTRUE(length(conj) > 1) == TRUE) {
+    if (isTRUE(length(conj) > 1L) == TRUE) {
         for (k in 2:length(conj)) {
             for (i in k:length(conj)) {
                 if (isTRUE(length(intersect(dhc(conj[[k - 1]]), 
-                  dhc(conj[[i]]))) > 1) == TRUE) {
-                  conj2[[length(conj2) + 1]] <- jnt(intersect(dhc(conj[[k - 
+                  dhc(conj[[i]]))) > 1L) == TRUE) {
+                  conj2[[length(conj2) + 1L]] <- jnt(intersect(dhc(conj[[k - 
                     1]]), dhc(conj[[i]])))
                 }
                 else if (isTRUE(length(intersect(dhc(conj[[k - 
-                  1]]), dhc(conj[[i]]))) > 1) == FALSE) {
-                  conj2[[length(conj2) + 1]] <- intersect(dhc(conj[[k - 
-                    1]]), dhc(conj[[i]]))
+                  1L]]), dhc(conj[[i]]))) > 1L) == FALSE) {
+                  conj2[[length(conj2) + 1L]] <- intersect(dhc(conj[[k - 
+                    1L]]), dhc(conj[[i]]))
                 }
-                conj2n[length(conj2n) + 1] <- paste(attr(conj, 
-                  "names")[k - 1], attr(conj, "names")[i], sep = ", ")
+                conj2n[length(conj2n) + 1L] <- paste(attr(conj, 
+                  "names")[k - 1L], attr(conj, "names")[i], sep = ", ")
             }
             rm(i)
         }
@@ -70,7 +70,7 @@ function (x, labeling = c("full", "reduced"))
     else {
         conj2 <- conj
     }
-    if (isTRUE(length(which(conj2 %in% conj == FALSE)) != 0) == 
+    if (isTRUE(length(which(conj2 %in% conj == FALSE)) != 0L) == 
         TRUE) {
         if (isTRUE(jnt(rownames(x)) %in% c(conj, conj2)) == TRUE) {
             conj3 <- list(conj, unique(conj2[which(conj2 %in% 
@@ -83,12 +83,12 @@ function (x, labeling = c("full", "reduced"))
         }
     }
     else if (isTRUE(length(which(conj2 %in% conj == FALSE)) != 
-        0) == FALSE) {
+        0L) == FALSE) {
         conj3 <- list(conj, jnt(rownames(x)))
     }
     for (i in 1:length(conj)) {
         if (isTRUE(length(which(conj2 %in% conj[[i]] == TRUE)) != 
-            0) == TRUE) {
+            0L) == TRUE) {
             attr(conj3[[1]], "names")[i] <- jnt(attr(conj2, "names")[which(conj2 %in% 
                 conj[[i]])])
         }
@@ -99,13 +99,13 @@ function (x, labeling = c("full", "reduced"))
     rm(i)
     for (i in 1:length(conj3[[2]])) {
         if (isTRUE(length(attr(conj2, "names")[which(conj3[[2]][[i]] == 
-            conj2)]) != 0) == TRUE) {
-            if (isTRUE(length(dhc(conj3[[2]][[i]])) == 1) == 
+            conj2)]) != 0L) == TRUE) {
+            if (isTRUE(length(dhc(conj3[[2]][[i]])) == 1L) == 
                 TRUE) {
                 attr(conj3[[2]], "names")[i] <- conj1[[which(conj3[[2]][[i]] == 
                   attr(conj1, "names"))]]
             }
-            else if (isTRUE(length(dhc(conj3[[2]][[i]])) == 1) == 
+            else if (isTRUE(length(dhc(conj3[[2]][[i]])) == 1L) == 
                 FALSE) {
                 attr(conj3[[2]], "names")[i] <- jnt(attr(conj2, 
                   "names")[which(conj3[[2]][[i]] == conj2)])
@@ -118,7 +118,7 @@ function (x, labeling = c("full", "reduced"))
     }
     rm(i)
     if (isTRUE(jnt(rownames(x)) %in% c(conj, conj2)) == FALSE) {
-        ifelse(isTRUE(length(conj3) > 2) == TRUE, con <- c(conj3[[1]], 
+        ifelse(isTRUE(length(conj3) > 2L) == TRUE, con <- c(conj3[[1]], 
             conj3[[2]], conj3[[3]]), con <- c(conj3[[1]], conj3[[2]]))
     }
     else {
@@ -126,21 +126,21 @@ function (x, labeling = c("full", "reduced"))
     }
     der <- unique(con)
     attr(der, "names") <- unique(attr(con, "names"))
-    po <- matrix(0, nrow = length(der), ncol = length(der))
+    po <- matrix(0L, nrow = length(der), ncol = length(der))
     for (j in 1:length(der)) {
         for (i in 1:length(der)) {
             ifelse(isTRUE(all(dhc(der[[i]]) %in% dhc(der[[j]]))) == 
-                TRUE, po[i, j] <- 1, NA)
+                TRUE, po[i, j] <- 1L, NA)
         }
     }
     rm(i, j)
     ints <- attr(der, "names")
     exts <- der
     rownames(po) <- colnames(po) <- ints
-    for (i in (length(conj3[[1]]) + 1):length(der)) {
+    for (i in (length(conj3[[1]]) + 1L):length(der)) {
         if (isTRUE(length(der) > length(conj3[[1]])) == TRUE) {
-            ifelse(isTRUE(length(fltr(i, po, rclos = FALSE)) > 
-                0) == TRUE, ints[i] <- jnt(dhc(ints[fltr(i, po, 
+            ifelse(isTRUE(length(flt(i, po, rclos = FALSE)) > 
+                0L) == TRUE, ints[i] <- jnt(dhc(ints[flt(i, po, 
                 rclos = FALSE)])), NA)
         }
         else {
@@ -149,51 +149,52 @@ function (x, labeling = c("full", "reduced"))
     }
     rm(i)
     attr(der, "names") <- attr(exts, "names") <- ints
-    if (isTRUE(length(der) > 2) == TRUE) {
+    if (isTRUE(length(der) > 2L) == TRUE) {
         for (k in 2:length(der)) {
             for (i in k:length(der)) {
-                if (isTRUE((k - 1) == i) == FALSE) {
+                if (isTRUE((k - 1L) == i) == FALSE) {
                   if (isTRUE(any(isTRUE(all(po[, i] - po[, (k - 
-                    1)] != -1)) == TRUE | isTRUE(all(po[, (k - 
-                    1)] - po[, i] != -1)) == TRUE)) == TRUE) {
-                    if (isTRUE(all(po[, i] - po[, (k - 1)] != 
+                    1L)] != -1)) == TRUE | isTRUE(all(po[, (k - 
+                    1L)] - po[, i] != -1)) == TRUE)) == TRUE) {
+                    if (isTRUE(all(po[, i] - po[, (k - 1L)] != 
                       -1)) == TRUE) {
-                      if (isTRUE(ints[(k - 1)] == "") == FALSE) {
-                        ints[(k - 1)] <- jnt(dhc(ints[(k - 1)])[which(!(dhc(ints[(k - 
-                          1)]) %in% dhc(ints[i])))])
+                      if (isTRUE(ints[(k - 1L)] == "") == FALSE) {
+                        ints[(k - 1L)] <- jnt(dhc(ints[(k - 1L)])[which(!(dhc(ints[(k - 
+                          1L)]) %in% dhc(ints[i])))])
                       }
                       else {
                         NA
                       }
-                      if (isTRUE(length(exts[[i]]) == 0) == FALSE) {
+                      if (isTRUE(length(exts[[i]]) == 0L) == 
+                        FALSE) {
                         exts[[i]] <- jnt(dhc(exts[[i]])[which(!(dhc(exts[[i]]) %in% 
-                          dhc(exts[[(k - 1)]])))])
+                          dhc(exts[[(k - 1L)]])))])
                       }
                       else {
                         NA
                       }
                     }
-                    else if (isTRUE(all(po[, i] - po[, (k - 1)] != 
+                    else if (isTRUE(all(po[, i] - po[, (k - 1L)] != 
                       -1)) == FALSE) {
                       if (isTRUE(all.equal(dhc(ints[i]), dhc(ints[(k - 
-                        1)]))) == TRUE) {
+                        1L)]))) == TRUE) {
                         ints[i] <- ""
                       }
                       else if (isTRUE(all.equal(dhc(ints[i]), 
-                        dhc(ints[(k - 1)]))) == FALSE) {
+                        dhc(ints[(k - 1L)]))) == FALSE) {
                         ifelse(isTRUE(length(jnt(dhc(ints[i])[which(!(dhc(ints[i]) %in% 
-                          dhc(ints[(k - 1)])))])) == 0) == TRUE, 
-                          NA, ints[i] <- jnt(dhc(ints[i])[which(!(dhc(ints[i]) %in% 
-                            dhc(ints[(k - 1)])))]))
+                          dhc(ints[(k - 1L)])))])) == 0L) == 
+                          TRUE, NA, ints[i] <- jnt(dhc(ints[i])[which(!(dhc(ints[i]) %in% 
+                          dhc(ints[(k - 1L)])))]))
                       }
-                      if (isTRUE(all.equal(dhc(exts[[(k - 1)]]), 
+                      if (isTRUE(all.equal(dhc(exts[[(k - 1L)]]), 
                         dhc(exts[[i]]))) == TRUE) {
-                        exts[[(k - 1)]] <- ""
+                        exts[[(k - 1L)]] <- ""
                       }
                       else if (isTRUE(all.equal(dhc(exts[[(k - 
-                        1)]]), dhc(exts[[i]]))) == FALSE) {
-                        exts[[(k - 1)]] <- jnt(dhc(exts[[(k - 
-                          1)]])[which(!(dhc(exts[[(k - 1)]]) %in% 
+                        1L)]]), dhc(exts[[i]]))) == FALSE) {
+                        exts[[(k - 1L)]] <- jnt(dhc(exts[[(k - 
+                          1L)]])[which(!(dhc(exts[[(k - 1L)]]) %in% 
                           dhc(exts[[i]])))])
                       }
                     }
@@ -210,7 +211,7 @@ function (x, labeling = c("full", "reduced"))
         }
         rm(k)
     }
-    else if (isTRUE(length(der) == 2) == TRUE) {
+    else if (isTRUE(length(der) == 2L) == TRUE) {
         if (isTRUE(any(isTRUE(all(po[, 2] - po[, 1] != -1)) == 
             TRUE | isTRUE(all(po[, 1] - po[, 2] != -1)) == TRUE)) == 
             TRUE) {
@@ -222,7 +223,7 @@ function (x, labeling = c("full", "reduced"))
                 else {
                   NA
                 }
-                if (isTRUE(length(exts[[2]]) == 0) == FALSE) {
+                if (isTRUE(length(exts[[2]]) == 0L) == FALSE) {
                   exts[[2]] <- jnt(dhc(exts[[2]])[which(!(dhc(exts[[2]]) %in% 
                     dhc(exts[[1]])))])
                 }
@@ -239,7 +240,7 @@ function (x, labeling = c("full", "reduced"))
                 else if (isTRUE(all.equal(dhc(ints[2]), dhc(ints[1]))) == 
                   FALSE) {
                   ifelse(isTRUE(length(jnt(dhc(ints[2])[which(!(dhc(ints[2]) %in% 
-                    dhc(ints[1])))])) == 0) == TRUE, NA, ints[2] <- jnt(dhc(ints[2])[which(!(dhc(ints[2]) %in% 
+                    dhc(ints[1])))])) == 0L) == TRUE, NA, ints[2] <- jnt(dhc(ints[2])[which(!(dhc(ints[2]) %in% 
                     dhc(ints[1])))]))
                 }
                 if (isTRUE(all.equal(dhc(exts[[1]]), dhc(exts[[2]]))) == 
@@ -263,8 +264,8 @@ function (x, labeling = c("full", "reduced"))
     dupl <- levels(factor(unlist(dhc(exts))[which(duplicated(unlist(dhc(exts))) == 
         TRUE)]))
     dder <- der
-    if (isTRUE(length(dupl) > 0) == TRUE) {
-        for (i in 1:length(dupl)) dder[[(length(dder) + 1)]] <- dupl[i]
+    if (isTRUE(length(dupl) > 0L) == TRUE) {
+        for (i in 1:length(dupl)) dder[[(length(dder) + 1L)]] <- dupl[i]
         for (i in 1:length(dupl)) {
             for (j in 1:nrow(x)) {
                 if (isTRUE(any(isTRUE(all(x[j, ] - x[which(rownames(x) == 
@@ -281,11 +282,11 @@ function (x, labeling = c("full", "reduced"))
             rm(j)
         }
         rm(i)
-        dpo <- matrix(0, nrow = length(dder), ncol = length(dder))
+        dpo <- matrix(0L, nrow = length(dder), ncol = length(dder))
         for (j in 1:length(dder)) {
             for (i in 1:length(dder)) {
                 ifelse(isTRUE(all(dhc(dder[[i]]) %in% dhc(dder[[j]]))) == 
-                  TRUE, dpo[i, j] <- 1, NA)
+                  TRUE, dpo[i, j] <- 1L, NA)
             }
         }
         rm(i, j)
@@ -295,10 +296,10 @@ function (x, labeling = c("full", "reduced"))
         exts <- dder
         rownames(dpo) <- colnames(dpo) <- ints
         PO <- dpo
-        for (i in (length(der) + 1):length(dder)) {
+        for (i in (length(der) + 1L):length(dder)) {
             if (isTRUE(length(dder) > length(der)) == TRUE) {
-                ifelse(isTRUE(length(fltr(i, dpo, rclos = FALSE)) > 
-                  0) == TRUE, ints[i] <- jnt(dhc(ints[fltr(i, 
+                ifelse(isTRUE(length(flt(i, dpo, rclos = FALSE)) > 
+                  0L) == TRUE, ints[i] <- jnt(dhc(ints[flt(i, 
                   dpo, rclos = FALSE)])), NA)
             }
             else {
@@ -309,49 +310,50 @@ function (x, labeling = c("full", "reduced"))
         attr(dder, "names") <- ints
         for (k in 2:length(dder)) {
             for (i in k:length(dder)) {
-                if (isTRUE((k - 1) == i) == FALSE) {
+                if (isTRUE((k - 1L) == i) == FALSE) {
                   if (isTRUE(any(isTRUE(all(dpo[, i] - dpo[, 
-                    (k - 1)] != -1)) == TRUE | isTRUE(all(dpo[, 
-                    (k - 1)] - dpo[, i] != -1)) == TRUE)) == 
+                    (k - 1L)] != -1)) == TRUE | isTRUE(all(dpo[, 
+                    (k - 1L)] - dpo[, i] != -1)) == TRUE)) == 
                     TRUE) {
-                    if (isTRUE(all(dpo[, i] - dpo[, (k - 1)] != 
+                    if (isTRUE(all(dpo[, i] - dpo[, (k - 1L)] != 
                       -1)) == TRUE) {
-                      if (isTRUE(ints[(k - 1)] == "") == FALSE) {
-                        ints[(k - 1)] <- jnt(dhc(ints[(k - 1)])[which(!(dhc(ints[(k - 
-                          1)]) %in% dhc(ints[i])))])
+                      if (isTRUE(ints[(k - 1L)] == "") == FALSE) {
+                        ints[(k - 1L)] <- jnt(dhc(ints[(k - 1L)])[which(!(dhc(ints[(k - 
+                          1L)]) %in% dhc(ints[i])))])
                       }
                       else {
                         NA
                       }
-                      if (isTRUE(length(exts[[i]]) == 0) == FALSE) {
+                      if (isTRUE(length(exts[[i]]) == 0L) == 
+                        FALSE) {
                         exts[[i]] <- jnt(dhc(exts[[i]])[which(!(dhc(exts[[i]]) %in% 
-                          dhc(exts[[(k - 1)]])))])
+                          dhc(exts[[(k - 1L)]])))])
                       }
                       else {
                         NA
                       }
                     }
                     else if (isTRUE(all(dpo[, i] - dpo[, (k - 
-                      1)] != -1)) == FALSE) {
+                      1L)] != -1)) == FALSE) {
                       if (isTRUE(all.equal(dhc(ints[i]), dhc(ints[(k - 
-                        1)]))) == TRUE) {
+                        1L)]))) == TRUE) {
                         ints[i] <- ""
                       }
                       else if (isTRUE(all.equal(dhc(ints[i]), 
-                        dhc(ints[(k - 1)]))) == FALSE) {
+                        dhc(ints[(k - 1L)]))) == FALSE) {
                         ifelse(isTRUE(length(jnt(dhc(ints[i])[which(!(dhc(ints[i]) %in% 
-                          dhc(ints[(k - 1)])))])) == 0) == TRUE, 
-                          NA, ints[i] <- jnt(dhc(ints[i])[which(!(dhc(ints[i]) %in% 
-                            dhc(ints[(k - 1)])))]))
+                          dhc(ints[(k - 1L)])))])) == 0L) == 
+                          TRUE, NA, ints[i] <- jnt(dhc(ints[i])[which(!(dhc(ints[i]) %in% 
+                          dhc(ints[(k - 1L)])))]))
                       }
-                      if (isTRUE(all.equal(dhc(exts[[(k - 1)]]), 
+                      if (isTRUE(all.equal(dhc(exts[[(k - 1L)]]), 
                         dhc(exts[[i]]))) == TRUE) {
-                        exts[[(k - 1)]] <- ""
+                        exts[[(k - 1L)]] <- ""
                       }
                       else if (isTRUE(all.equal(dhc(exts[[(k - 
-                        1)]]), dhc(exts[[i]]))) == FALSE) {
-                        exts[[(k - 1)]] <- jnt(dhc(exts[[(k - 
-                          1)]])[which(!(dhc(exts[[(k - 1)]]) %in% 
+                        1L)]]), dhc(exts[[i]]))) == FALSE) {
+                        exts[[(k - 1L)]] <- jnt(dhc(exts[[(k - 
+                          1L)]])[which(!(dhc(exts[[(k - 1L)]]) %in% 
                           dhc(exts[[i]])))])
                       }
                     }
@@ -368,10 +370,10 @@ function (x, labeling = c("full", "reduced"))
         }
         rm(k)
     }
-    else if (isTRUE(length(dupl) > 0) == FALSE) {
+    else if (isTRUE(length(dupl) > 0L) == FALSE) {
         PO <- po
     }
-    if (isTRUE(length(eq0) > 0) == TRUE) {
+    if (isTRUE(length(eq0) > 0L) == TRUE) {
         for (k in 1:length(eq0)) {
             cmb <- which(exts %in% dhc(eq0)[[k]])
             exts[[cmb]] <- eq0[[k]]
@@ -386,16 +388,16 @@ function (x, labeling = c("full", "reduced"))
     }
     mi <- NULL
     for (i in 1:dim(PO)[1]) {
-        flt <- fltr(i, PO, rclos = TRUE)
+        flt <- flt(i, PO, rclos = TRUE)
         ifelse(isTRUE(length(flt) == dim(PO)[1]) == TRUE, mi <- i, 
             NA)
     }
     rm(i)
     if (isTRUE(jnt(colnames(x)) %in% attr(dder, "names")) == 
         FALSE) {
-        if (isTRUE(length(mi) == 0) == TRUE) {
-            dder[[length(dder) + 1]] <- exts[[length(exts) + 
-                1]] <- ints[length(ints) + 1] <- ""
+        if (isTRUE(length(mi) == 0L) == TRUE) {
+            dder[[length(dder) + 1L]] <- exts[[length(exts) + 
+                1L]] <- ints[length(ints) + 1L] <- ""
             attr(dder, "names")[length(dder)] <- jnt(colnames(x))
         }
         else {

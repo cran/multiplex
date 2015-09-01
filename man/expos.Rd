@@ -4,30 +4,42 @@
 Network Exposure for Multiple Networks
 }
 \description{
-Function to measure the network exposure of the nodes accroding to a chosen relational system representing a multiple network.
+Function to measure the network exposure of the nodes according to a chosen relational system representing the multiple network.
 }
 \usage{
-expos(rs, bh, adopters = FALSE)
+expos(rs, classes = FALSE, allClasses = FALSE, allNodes = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{rs}{
-   an object of `\code{Rel.System}'
+   an object of `\code{Rel.System}', typically with actor attributes.
 }
-  \item{bh}{
-   a data frame, or a diagonal matrix of binary data with the behaviour of the nodes
+  \item{classes}{
+   (optional) whether or not should be included in the outputthe categories of adopters 
 }
-  \item{adopters}{
-   (optional) whether the adopters should be included or not in the output
+  \item{allClasses}{
+   (optional) whether or not to include empty classes within the categories of adopters. Ignored if \code{classes} is \code{FALSE}
+}
+  \item{allNodes}{
+   (optional) whether or not to include all actors in the network regardless they are in the chosen system. Ignored if \code{classes} is \code{FALSE}
 }
 }
 \details{
-This is a generalization of the network exposure measure for multiple networks with the characteristics chosen for the representative relational system. It is possible to specify up to two different behaviours for the nodes, from which the measure is calculated.
+This is a generalization of the network exposure measure for multiple networks with the characteristics chosen for the representative relational system. 
+Such system can be the entire network or configuration with strong or weak bonds among the actors.
+It is possible to specify different behaviours of the nodes representing social actors, which are indicated in the form of a relational system. 
+The network exposure measure is calculated according to the immediate neighbours to the reference actor.
 }
 \value{
 %%
-\item{Adoption}{the adoption membership for the type of relational system chosen}
-\item{Exposure}{the exposure to the behaviour}
+\item{Classes}{
+        if \code{classes} is set to \code{TRUE}, the adoption membership for the type of relational system chosen, including isolated actors in the system. 
+}
+\item{Bonds}{
+        the type of bonds of the relational system (cf. \code{\link{rel.sys}})
+}
+\item{Exposure}{
+        the exposure to the attribute(s) for acquisition through immediate neighbour relations 
+}
 }
 \references{
 Ostoic, J.A.R. Algebraic Methods for the Analysis of Multiple Social Networks and Actors Attributes. PhD thesis. University of Southern Denmark. 2013.
@@ -39,22 +51,24 @@ Rogers, E. \emph{The Diffusion of Innovations}. 5th ed. (1st ed. 1964) The Free 
 \author{
 Antonio Rivero Ostoic
 }
-\note{
-In case of specifying more than two types of behaviour, only the first two are considered in the computation, where both the data frame and the diagonal matrix are dichotomized.
-}
+%\note{
+%}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{rel.sys}}
+\code{\link{rel.sys}}, \code{\link{neighb}}, \code{\link{bundles}}
 }
 \examples{
 ## Create the data: two binary relations among three elements
 arr <- round( replace( array( runif(18), c(3 ,3, 2) ), array( runif(18),
 c(3, 3, 2) ) > .9, 3 ) )
 
-## Calculate the exposure measure for two behaviours
-expos(rel.sys(arr), arr)
+## the first array is for attributes
+rs <- rel.sys(arr, att = 1)
+
+## Calculate the exposure measure for an attribute type with adopter categories
+expos(rs, classes = TRUE)
 
 }
 \keyword{ attribute }

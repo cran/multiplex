@@ -13,14 +13,14 @@ dichot(x, c = 1)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-   some data in a numeric form (usually arrays).
+   some data in a numeric form (usually arrays)
 }
   \item{c}{
-   the cutoff value to perform the dichotomization.
+   the cutoff value to perform the dichotomization (default 1)
 }
 }
 \details{
-This is basically the \code{\link[base:replace]{replace}} function here aimed to specify the cutoff value for the dichotomization of the data. The values equal or higher to the cutoff values are converted to one, otherwise they are set to zero. The default value of the cutoff is 1.
+This is a convenient function (or wrapper if you like) of the \code{\link[base:replace]{replace}} function. In this case the function is aimed to specify a cutoff value for the dichotomization of the data where the values equal or higher to the cutoff are converted to one, while the others are set to zero. The cutoff can be any real number.
 }
 \value{
 Binary values of the input data.
@@ -46,7 +46,5 @@ arr <- round( replace( array(runif(18), c(3,3,2)), array(runif(18),
 ## dichotomize it with a cutoff value of 2
 dichot(arr, c = 2)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ manip }
 %

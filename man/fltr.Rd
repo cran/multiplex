@@ -1,19 +1,17 @@
 \name{fltr}
 \alias{fltr}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Principal filter
+Principal filters
 }
 \description{
-A function to find principal filter in a partial order
+A function to find principal filters in a partial order
 }
 \usage{
-fltr(e, PO, rclos = TRUE)
+fltr(x, PO, rclos = TRUE, ideal = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{e}{
-the reference element in the partial order
+  \item{x}{
+the reference element in the partial order (integer or character)
 }
   \item{PO}{
 the partial order
@@ -21,27 +19,31 @@ the partial order
   \item{rclos}{
 (logical) apply reflexive closure?
 }
+  \item{ideal}{
+(logical) whether or not the ``filter'' is an ideal
+}
 }
 \details{
-This function helps to find principal filters in a partial order structure, or else principal ideals in case we use the transpose of the partial order.
+This function helps to find principal filters or principal ideals for an element in a partial order structure. Such inputs are typically a concept or an object or attribute in the concept together with the associated partial ordering structure of the concepts, which results from Galois derivations. Typically if the reference element refers to a concept, then it is given as a positive integer indicating the concept label. Another option is to refer an object or an attribute by a character name, which should be part in the labels of the dimensions of the partial order table with a reduced labeling. Principal filters with a full labelling are not allowed if the reference element is an object or an attributes. Use an integer for the concept instead.
 }
 \value{
-A vector with elements belonging to the principal filter (or ideal) of the reference node in the partial order.
+A named list with the elements in the upset or downset of the principal filter or ideal corresponding to the reference element in the partial order.
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
+\references{
+Ganter, B. and R. Wille  \emph{Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
+}
 \author{
 Antonio Rivero Ostoic
 }
-%\note{
-%%  ~~further notes~~
+\note{
+Only \emph{principal} filters/ideals are supported at the moment.
+}
+%\section{Warning }{
+%
 %}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-\code{\link{galois}}, \code{\link{partial.order}}, \code{\link{diagram}}
+\code{\link{galois}}, \code{\link{partial.order}}, \code{\link{diagram}}.
 }
 \examples{
 ## Create a data frame

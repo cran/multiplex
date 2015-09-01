@@ -1,26 +1,26 @@
 rm.isol <-
 function (x, diag.incl = TRUE) 
 {
-    if (isTRUE(dim(x)[3] > 1) == TRUE) {
+    if (isTRUE(dim(x)[3] > 1L) == TRUE) {
         tmp <- x
         ifelse(isTRUE(is.null(dimnames(x)[[1]])) == TRUE & isTRUE(is.null(dimnames(x)[[2]])) == 
             TRUE, dimnames(x)[[2]] <- dimnames(x)[[1]] <- 1:dim(x)[1], 
             NA)
-        mpx <- data.frame(matrix(0, ncol = ncol(x), nrow = nrow(x)))
+        mpx <- data.frame(matrix(0L, ncol = ncol(x), nrow = nrow(x)))
         mpx <- x[, , 1] + x[, , 2]
-        if (isTRUE(dim(x)[3] > 2) == TRUE) {
+        if (isTRUE(dim(x)[3] > 2L) == TRUE) {
             for (m in 3:dim(x)[3]) {
                 mpx <- mpx + x[, , m]
             }
             rm(m)
         }
         if (isTRUE(diag.incl == FALSE) == TRUE) 
-            diag(mpx) <- 0
+            diag(mpx) <- 0L
         px <- mpx
         rm(mpx)
         out <- vector()
         for (i in 1:nrow(px)) {
-            if (isTRUE(sum(px[i, ] + px[, i]) == 0) == TRUE) {
+            if (isTRUE(sum(px[i, ] + px[, i]) == 0L) == TRUE) {
                 out[length(out) + 1] <- i
             }
         }
@@ -47,20 +47,20 @@ function (x, diag.incl = TRUE)
         mx <- array(dim = c((nrow(px) - length(out)), (nrow(px) - 
             length(out)), dim(x)[3]))
         for (m in 1:dim(x)[3]) {
-            npx <- data.frame(matrix(0, ncol = (nrow(px) - length(out)), 
-                nrow = 0))
-            colnames(npx) <- as.vector(na.exclude(lb))
+            npx <- data.frame(matrix(0L, ncol = (nrow(px) - length(out)), 
+                nrow = 0L))
+            colnames(npx) <- as.vector(stats::na.exclude(lb))
             for (i in 1:nrow(px)) {
                 ifelse(isTRUE(all(is.na(pxx[i, , m])) == FALSE) == 
-                  TRUE, npx[i, ] <- as.vector(na.exclude(pxx[i, 
+                  TRUE, npx[i, ] <- as.vector(stats::na.exclude(pxx[i, 
                   , m])), NA)
             }
             rm(i)
-            mx[, , m] <- as.matrix(na.exclude(npx))
+            mx[, , m] <- as.matrix(stats::na.exclude(npx))
         }
         rm(m)
         if (is.null(dimnames(x)) == FALSE) 
-            dimnames(mx)[[1]] <- dimnames(mx)[[2]] <- as.vector(na.exclude(lb))
+            dimnames(mx)[[1]] <- dimnames(mx)[[2]] <- as.vector(stats::na.exclude(lb))
         if (isTRUE(is.null(dimnames(tmp)[[1]])) == TRUE & isTRUE(is.null(dimnames(tmp)[[2]])) == 
             TRUE) {
             dimnames(mx) <- NULL
@@ -73,16 +73,16 @@ function (x, diag.incl = TRUE)
     else {
         if (isTRUE(diag.incl == FALSE) == TRUE) {
             dg <- diag
-            diag(x) <- 0
+            diag(x) <- 0L
         }
-        if (isTRUE(sum(x) == 0) == TRUE) {
+        if (isTRUE(sum(x) == 0L) == TRUE) {
             x
         }
         else {
             px <- x
             out <- vector()
             for (i in 1:nrow(px)) {
-                if (isTRUE(sum(px[i, ] + px[, i]) == 0) == TRUE) {
+                if (isTRUE(sum(px[i, ] + px[, i]) == 0L) == TRUE) {
                   out[length(out) + 1] <- i
                 }
             }
@@ -98,17 +98,17 @@ function (x, diag.incl = TRUE)
                 lb[l] <- NA
             }
             rm(l)
-            npx <- data.frame(matrix(0, ncol = (nrow(px) - length(out)), 
-                nrow = 0))
-            colnames(npx) <- as.vector(na.exclude(lb))
+            npx <- data.frame(matrix(0L, ncol = (nrow(px) - length(out)), 
+                nrow = 0L))
+            colnames(npx) <- as.vector(stats::na.exclude(lb))
             for (i in 1:nrow(px)) {
                 ifelse(isTRUE(all(is.na(px[i, ])) == FALSE) == 
-                  TRUE, npx[i, ] <- as.vector(na.exclude(px[i, 
+                  TRUE, npx[i, ] <- as.vector(stats::na.exclude(px[i, 
                   ])), NA)
             }
             rm(i)
-            mx <- as.matrix(na.exclude(npx))
-            dimnames(mx)[[1]] <- dimnames(mx)[[2]] <- as.vector(na.exclude(lb))
+            mx <- as.matrix(stats::na.exclude(npx))
+            dimnames(mx)[[1]] <- dimnames(mx)[[2]] <- as.vector(stats::na.exclude(lb))
             mx
         }
     }

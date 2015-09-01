@@ -24,23 +24,23 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         x <- transf(dichot(m), "matlist", labels = lbs, prsep = prsep, 
             lb2lb = lb2lb)
     }
-    dfl <- data.frame(matrix(ncol = 2, nrow = 0))
+    dfl <- data.frame(matrix(ncol = 2L, nrow = 0L))
     for (i in 1:length(x)) {
         dfl[i, 1] <- strsplit(x[i], prsep)[[1]][1]
         dfl[i, 2] <- strsplit(x[i], prsep)[[1]][2]
     }
     rm(i)
     DF <- dfl
-    DF <- data.frame(matrix(ncol = 2, nrow = 0))
+    DF <- data.frame(matrix(ncol = 2L, nrow = 0L))
     k <- 1
     for (i in 1:nrow(dfl)) {
         if (isTRUE(dfl[i, 1] != dfl[i, 2]) == TRUE) 
             DF[k, ] <- dfl[i, ]
-        k <- k + 1
+        k <- k + 1L
     }
     rm(i)
     rm(k)
-    DF <- na.omit(DF)
+    DF <- stats::na.omit(DF)
     out <- list()
     inn <- list()
     All <- list()
@@ -67,14 +67,14 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     rm(finn, fout)
     asym <- list()
     for (i in seq(lbs)) {
-        asym[[i]] <- which(tabulate(All[[i]]) == 1)
+        asym[[i]] <- which(tabulate(All[[i]]) == 1L)
     }
     rm(i)
     dobl <- list()
     dout <- list()
     for (i in seq(lbs)) {
-        dobl[[i]] <- which(tabulate(All[[i]]) == 2)
-        dout[[i]] <- which(tabulate(out[[i]]) == 2)
+        dobl[[i]] <- which(tabulate(All[[i]]) == 2L)
+        dout[[i]] <- which(tabulate(out[[i]]) == 2L)
     }
     rm(i)
     rete <- list()
@@ -82,9 +82,9 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         tmprte <- vector()
         for (j in 1:length(dobl[[i]])) {
             if (isTRUE(dobl[[i]][j] %in% which(tabulate(inn[[i]]) == 
-                1)) == TRUE && isTRUE(dobl[[i]][j] %in% which(tabulate(out[[i]]) == 
+                1L)) == TRUE && isTRUE(dobl[[i]][j] %in% which(tabulate(out[[i]]) == 
                 1)) == TRUE) 
-                tmprte[length(tmprte) + 1] <- dobl[[i]][j]
+                tmprte[length(tmprte) + 1L] <- dobl[[i]][j]
         }
         rm(j)
         rete[[i]] <- tmprte
@@ -111,7 +111,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                 labels = lbs, prsep = prsep, lb2lb = lb2lb))
             tmp <- transf(dichot(m)[, , k], "matlist", labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb)
-            tDF <- data.frame(matrix(ncol = 2, nrow = 0))
+            tDF <- data.frame(matrix(ncol = 2L, nrow = 0L))
             for (i in 1:length(tmp)) {
                 tDF[i, 1] <- strsplit(tmp[i], prsep)[[1]][1]
                 tDF[i, 2] <- strsplit(tmp[i], prsep)[[1]][2]
@@ -136,7 +136,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         rm(k)
     }
     else if (isTRUE(is.na(dim(m)[3])) == FALSE | isTRUE(dim(m)[3] == 
-        1) == TRUE) {
+        1L) == TRUE) {
         tt <- "R"
         tmp <- x
     }
@@ -149,7 +149,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                 tmpxchr <- vector()
                 for (j in 1:length(rete[[i]])) {
                   ifelse(isTRUE(rete[[i]][j] %in% which(tabulate(eval(as.name(allr))[[i]]) == 
-                    1)) == TRUE, tmpxchr[length(tmpxchr) + 1] <- rete[[i]][j], 
+                    1)) == TRUE, tmpxchr[length(tmpxchr) + 1L] <- rete[[i]][j], 
                     NA)
                 }
                 rm(j)
@@ -204,7 +204,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
             tmpout <- vector()
             for (j in 1:length(dobl[[i]])) {
                 if (isTRUE(dobl[[i]][j] %in% dout[[i]]) == TRUE) 
-                  tmpout[length(tmpout) + 1] <- dobl[[i]][j]
+                  tmpout[length(tmpout) + 1L] <- dobl[[i]][j]
             }
             rm(j)
             Eout[[i]] <- tmpout
@@ -214,9 +214,9 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         tinn <- list()
         tout <- list()
         for (i in seq(lbs)) {
-            trpr[[i]] <- which(tabulate(All[[i]]) > 2)
-            tinn[[i]] <- which(tabulate(inn[[i]]) > 2)
-            tout[[i]] <- which(tabulate(out[[i]]) > 2)
+            trpr[[i]] <- which(tabulate(All[[i]]) > 2L)
+            tinn[[i]] <- which(tabulate(inn[[i]]) > 2L)
+            tout[[i]] <- which(tabulate(out[[i]]) > 2L)
         }
         rm(i)
         teinn <- list()
@@ -245,10 +245,10 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
             for (j in 1:length(trpr[[i]])) {
                 if (isTRUE(!(teinn[[i]][j] %in% out[[i]])) == 
                   TRUE) 
-                  tmpinn[length(tmpinn) + 1] <- teinn[[i]][j]
+                  tmpinn[length(tmpinn) + 1L] <- teinn[[i]][j]
                 if (isTRUE(!(teout[[i]][j] %in% inn[[i]])) == 
                   TRUE) 
-                  tmpout[length(tmpout) + 1] <- teout[[i]][j]
+                  tmpout[length(tmpout) + 1L] <- teout[[i]][j]
             }
             rm(j)
             TEinn[[i]] <- tmpinn
@@ -279,7 +279,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     As <- vector()
     for (i in 1:length(asym)) {
         for (j in 1:length(asym[[i]])) {
-            if (isTRUE(length(asym[[i]]) != 0) == TRUE) {
+            if (isTRUE(length(asym[[i]]) != 0L) == TRUE) {
                 if (isTRUE(is.na(dim(m)[3])) == FALSE) {
                   As <- append(As, paste(lbs[i], asym[[i]][j], 
                     sep = prsep))
@@ -313,7 +313,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     Rp <- vector()
     for (i in 1:length(recp)) {
         for (j in 1:length(recp[[i]])) {
-            if (isTRUE(length(recp[[i]]) != 0) == TRUE) {
+            if (isTRUE(length(recp[[i]]) != 0L) == TRUE) {
                 Rp <- append(Rp, paste(lbs[i], recp[[i]][j], 
                   sep = prsep))
             }
@@ -341,7 +341,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     if (isTRUE(is.na(dim(m)[3])) == FALSE) {
         for (i in 1:length(xchg)) {
             for (j in 1:length(xchg[[i]])) {
-                if (isTRUE(length(xchg[[i]]) != 0) == TRUE) {
+                if (isTRUE(length(xchg[[i]]) != 0L) == TRUE) {
                   if (isTRUE(lbs[i] < xchg[[i]][j]) == TRUE) 
                     Xc <- append(Xc, paste(lbs[i], xchg[[i]][j], 
                       sep = prsep))
@@ -383,7 +383,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     if (isTRUE(is.na(dim(m)[3])) == FALSE) {
         for (i in 1:length(Eout)) {
             for (j in 1:length(Eout[[i]])) {
-                if (isTRUE(length(Eout[[i]]) != 0) == TRUE) {
+                if (isTRUE(length(Eout[[i]]) != 0L) == TRUE) {
                   Et <- append(Et, paste(lbs[i], Eout[[i]][j], 
                     sep = prsep))
                 }
@@ -393,8 +393,8 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         rm(i)
         for (i in 1:length(TEout)) {
             for (j in 1:length(TEout[[i]])) {
-                if (isTRUE(is.na(na.omit(TEout[[i]])) == FALSE) == 
-                  TRUE) {
+                if (isTRUE(is.na(stats::na.omit(TEout[[i]])) == 
+                  FALSE) == TRUE) {
                   Et <- append(Et, paste(lbs[i], TEout[[i]][j], 
                     sep = prsep))
                 }
@@ -421,7 +421,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     if (isTRUE(is.na(dim(m)[3])) == FALSE) {
         for (i in 1:length(mixe)) {
             for (j in 1:length(mixe[[i]])) {
-                if (isTRUE(length(mixe[[i]]) != 0) == TRUE) {
+                if (isTRUE(length(mixe[[i]]) != 0L) == TRUE) {
                   if (isTRUE(lbs[i] < mixe[[i]][j]) == TRUE) 
                     Mx <- append(Mx, paste(lbs[i], mixe[[i]][j], 
                       sep = prsep))
@@ -463,7 +463,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     if (isTRUE(is.na(dim(m)[3])) == FALSE) {
         for (i in 1:length(full)) {
             for (j in 1:length(full[[i]])) {
-                if (isTRUE(length(full[[i]]) != 0) == TRUE) {
+                if (isTRUE(length(full[[i]]) != 0L) == TRUE) {
                   if (isTRUE(lbs[i] < full[[i]][j]) == TRUE) 
                     Fl <- append(Fl, paste(lbs[i], full[[i]][j], 
                       sep = prsep))
@@ -503,10 +503,10 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     }
     if (lb2lb) {
         if (isTRUE(is.null(dimnames(m)[[1]]) == TRUE) == FALSE) {
-            if (length(AS) > 0) {
+            if (length(AS) > 0L) {
                 for (k in 1:length(AS)) {
                   for (i in 1:length(AS[[k]])) {
-                    if (length(AS[[k]]) > 0) {
+                    if (length(AS[[k]]) > 0L) {
                       AS[[k]][i] <- paste(dimnames(m)[[1]][as.numeric(strsplit(AS[[k]][i], 
                         prsep)[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(AS[[k]][i], 
                         prsep)[[1]][2])], sep = prsep)
@@ -516,10 +516,10 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                 }
                 rm(k)
             }
-            if (length(RP) > 0) {
+            if (length(RP) > 0L) {
                 for (k in 1:length(RP)) {
                   for (i in 1:length(RP[[k]])) {
-                    if (length(RP[[k]]) > 0) {
+                    if (length(RP[[k]]) > 0L) {
                       RP[[k]][i] <- paste(dimnames(m)[[1]][as.numeric(strsplit(RP[[k]][i], 
                         prsep)[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(RP[[k]][i], 
                         prsep)[[1]][2])], sep = prsep)
@@ -530,10 +530,10 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                 rm(k)
             }
             if (isTRUE(is.na(dim(m)[3])) == FALSE) {
-                if (length(XCH) > 0) {
+                if (length(XCH) > 0L) {
                   for (k in 1:length(XCH)) {
                     for (i in 1:length(XCH[[k]])) {
-                      if (length(XCH[[k]]) > 0) {
+                      if (length(XCH[[k]]) > 0L) {
                         XCH[[k]][i] <- paste(dimnames(m)[[1]][as.numeric(strsplit(XCH[[k]][i], 
                           prsep)[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(XCH[[k]][i], 
                           prsep)[[1]][2])], sep = prsep)
@@ -543,10 +543,10 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                   }
                   rm(k)
                 }
-                if (length(ENT) > 0) {
+                if (length(ENT) > 0L) {
                   for (k in 1:length(ENT)) {
                     for (i in 1:length(ENT[[k]])) {
-                      if (length(ENT[[k]]) > 0) {
+                      if (length(ENT[[k]]) > 0L) {
                         ENT[[k]][i] <- paste(dimnames(m)[[1]][as.numeric(strsplit(ENT[[k]][i], 
                           prsep)[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(ENT[[k]][i], 
                           prsep)[[1]][2])], sep = prsep)
@@ -556,10 +556,10 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                   }
                   rm(k)
                 }
-                if (length(MIX) > 0) {
+                if (length(MIX) > 0L) {
                   for (k in 1:length(MIX)) {
                     for (i in 1:length(MIX[[k]])) {
-                      if (length(MIX[[k]]) > 0) {
+                      if (length(MIX[[k]]) > 0L) {
                         MIX[[k]][i] <- paste(dimnames(m)[[1]][as.numeric(strsplit(MIX[[k]][i], 
                           prsep)[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(MIX[[k]][i], 
                           prsep)[[1]][2])], sep = prsep)
@@ -569,10 +569,10 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                   }
                   rm(k)
                 }
-                if (length(FUL) > 0) {
+                if (length(FUL) > 0L) {
                   for (k in 1:length(FUL)) {
                     for (i in 1:length(FUL[[k]])) {
-                      if (length(FUL[[k]]) > 0) {
+                      if (length(FUL[[k]]) > 0L) {
                         FUL[[k]][i] <- paste(dimnames(m)[[1]][as.numeric(strsplit(FUL[[k]][i], 
                           prsep)[[1]][1])], dimnames(m)[[1]][as.numeric(strsplit(FUL[[k]][i], 
                           prsep)[[1]][2])], sep = prsep)
@@ -590,8 +590,8 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
             LOP <- list()
             length(LOP) <- dim(m)[3]
             for (i in 1:dim(m)[3]) {
-                lp <- which(diag(m[, , i]) != 0)
-                if (isTRUE(length(lp) > 0) == TRUE) {
+                lp <- which(diag(m[, , i]) != 0L)
+                if (isTRUE(length(lp) > 0L) == TRUE) {
                   for (j in 1:length(lp)) {
                     if (lb2lb) {
                       if (isTRUE(is.null(dimnames(m)[[1]])) == 
@@ -621,7 +621,7 @@ function (m, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         }
         else {
             LOP <- vector()
-            lp <- which(diag(m) != 0)
+            lp <- which(diag(m) != 0L)
             for (j in 1:length(lp)) {
                 LOP <- append(LOP, paste(dimnames(m)[[1]][lp][j], 
                   dimnames(m)[[1]][lp][j], sep = prsep))

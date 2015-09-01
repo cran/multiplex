@@ -43,14 +43,14 @@ A warning message is shown when the \code{N} argument has more than two dimensio
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{semiring}}
+\code{\link{semiring}}, \code{\link{as.signed}}
 }
 \examples{
 ## Load the data
 data("incubA")
 
 ## Make the signed matrix with two types of relations
-signed(incubA)
+signed(incubA$IM)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

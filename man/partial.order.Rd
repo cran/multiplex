@@ -42,14 +42,14 @@ Antonio Rivero Ostoic
 
 
 \seealso{
-\code{\link{as.strings}}, \code{\link{strings}}, \code{\link{galois}}, \code{\link{perm}}, \code{\link{diagram}}.
+\code{\link{as.strings}}, \code{\link{strings}}, \code{\link{galois}}, \code{\link{perm}}, \code{\link{diagram}}, \code{\link{fltr}}.
 }
 \examples{
 ## Load the data, and obtain the partial order
 data("incubA")
 
 ## the strings in the structure
-st <- strings(incubA) 
+st <- strings(incubA$IM) 
 
 ## Get the partial order
 partial.order(st)

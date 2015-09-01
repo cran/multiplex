@@ -14,34 +14,34 @@ function (P, N = NULL, labels = NULL)
     }
     if (isTRUE(is.na(dim(P)[3]) == TRUE) == TRUE) {
         if (isTRUE(is.null(N) == TRUE) == FALSE) {
-            ifelse(isTRUE(length(which(P + N > 1)) > 0) == TRUE, 
-                ambiv <- TRUE, ambiv <- FALSE)
+            ifelse(isTRUE(length(which(P + N > 1L)) > 0L) == 
+                TRUE, ambiv <- TRUE, ambiv <- FALSE)
         }
         else if (isTRUE(is.null(N) == TRUE) == TRUE) {
             ifelse(isTRUE(("-1" %in% P) == TRUE || ("1" %in% 
                 P) == TRUE) == TRUE, ambiv <- FALSE, ambiv <- TRUE)
-            ifelse(isTRUE((sum(P) == 0) == TRUE) == TRUE, ambiv <- FALSE, 
+            ifelse(isTRUE((sum(P) == 0L) == TRUE) == TRUE, ambiv <- FALSE, 
                 NA)
             N <- P
-            N[which(N == 1)] <- 0
-            N[which(N == 0)] <- 0
-            N[which(N == -1)] <- 1
-            P[which(P == 1)] <- 1
-            P[which(P == 0)] <- 0
-            P[which(P == -1)] <- 0
+            N[which(N == 1)] <- 0L
+            N[which(N == 0)] <- 0L
+            N[which(N == -1)] <- 1L
+            P[which(P == 1)] <- 1L
+            P[which(P == 0)] <- 0L
+            P[which(P == -1)] <- 0L
         }
     }
     else if (isTRUE(is.na(dim(P)[3]) == TRUE) == FALSE) {
         if (isTRUE(is.null(N) == TRUE) == TRUE) {
             ifelse(isTRUE(length(which(P[, , 1] + P[, , 2] > 
-                1)) > 0) == TRUE, ambiv <- TRUE, ambiv <- FALSE)
+                1)) > 0L) == TRUE, ambiv <- TRUE, ambiv <- FALSE)
             N <- P[, , 2]
             P <- P[, , 1]
         }
         else if (isTRUE(is.null(N) == TRUE) == FALSE) {
             P <- P[, , 1]
-            ifelse(isTRUE(length(which(P + N > 1)) > 0) == TRUE, 
-                ambiv <- TRUE, ambiv <- FALSE)
+            ifelse(isTRUE(length(which(P + N > 1L)) > 0L) == 
+                TRUE, ambiv <- TRUE, ambiv <- FALSE)
         }
     }
     sn <- array(dim = c(dim(P)[1], dim(N)[2], 2))
@@ -70,23 +70,23 @@ function (P, N = NULL, labels = NULL)
             bnd$mixed[[2]])]), unlist(bnd$full)))
         mat <- matrix("o", ncol = ncol(P), nrow = nrow(P))
         rownames(mat) <- colnames(mat) <- labels
-        if (length(pos) != 0) 
+        if (length(pos) != 0L) 
             for (i in 1:length(pos)) mat[which(strsplit(pos[i], 
                 ", ")[[1]][1] == labels), which(strsplit(pos[i], 
                 ", ")[[1]][2] == labels)] <- "p"
-        if (length(neg) != 0) 
+        if (length(neg) != 0L) 
             for (i in 1:length(neg)) mat[which(strsplit(neg[i], 
                 ", ")[[1]][1] == labels), which(strsplit(neg[i], 
                 ", ")[[1]][2] == labels)] <- "n"
-        if (length(amb) != 0) 
+        if (length(amb) != 0L) 
             for (i in 1:length(amb)) mat[which(strsplit(amb[i], 
                 ", ")[[1]][1] == labels), which(strsplit(amb[i], 
                 ", ")[[1]][2] == labels)] <- "a"
-        mat[which(diag(P) == 1)] <- "p"
-        mat[which(diag(N) == 1)] <- "n"
+        mat[which(diag(P) == 1L)] <- "p"
+        mat[which(diag(N) == 1L)] <- "n"
     }
     else {
-        mat <- matrix(0, ncol = ncol(P), nrow = nrow(P))
+        mat <- matrix(0L, ncol = ncol(P), nrow = nrow(P))
         rownames(mat) <- colnames(mat) <- labels
         if (isTRUE(is.null(N) == TRUE) == TRUE) {
             mat <- P
@@ -97,7 +97,7 @@ function (P, N = NULL, labels = NULL)
         }
     }
     val <- noquote(levels(factor(mat)))
-    val <- levels(reorder(val, length(val):1))
+    val <- levels(stats::reorder(val, length(val):1))
     lst <- list(val = val, s = noquote(mat))
     class(lst) <- "Signed"
     return(lst)

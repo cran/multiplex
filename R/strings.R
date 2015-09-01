@@ -28,19 +28,19 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
     }
     gener <- dimnames(x)[[3]]
     if (is.na(dim(x)[3]) == TRUE) {
-        s0 <- data.frame(matrix(ncol = 1, nrow = 1))
-        if (isTRUE(all.equal(replace(x %*% x, x %*% x >= 1, 1), 
-            x) == TRUE)) 
-            s0[1, 1] <- 1
+        s0 <- data.frame(matrix(ncol = 1L, nrow = 1L))
+        if (isTRUE(all.equal(replace(x %*% x, x %*% x >= 1L, 
+            1L), x) == TRUE)) 
+            s0[1, 1] <- 1L
         Bx <- array(dim = c(dim(x)[1], dim(x)[2], 2))
         Bx[, , 1] <- as.matrix(x)
-        Bx[, , 2] <- replace(x %*% x, x %*% x >= 1, 1)
+        Bx[, , 2] <- replace(x %*% x, x %*% x >= 1L, 1L)
     }
     if (is.na(dim(x)[3]) == FALSE) {
         tmpo <- data.frame(matrix(ncol = (dim(x)[1] * dim(x)[2]), 
-            nrow = 0))
+            nrow = 0L))
         for (i in 1:dim(x)[3]) {
-            ifelse(isTRUE(dim(x)[3] > 1) == TRUE, tmpo[i, ] <- as.vector(x[, 
+            ifelse(isTRUE(dim(x)[3] > 1L) == TRUE, tmpo[i, ] <- as.vector(x[, 
                 , i]), tmpo <- as.vector(x))
         }
         rm(i)
@@ -60,9 +60,9 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         else {
             note <- NULL
         }
-        if (isTRUE(dim(x)[3] < 2) == TRUE) 
+        if (isTRUE(dim(x)[3] < 2L) == TRUE) 
             x <- array(tmpo, c(dim(x)[1], dim(x)[2]))
-        if (isTRUE(dim(x)[3] > 1) == TRUE) {
+        if (isTRUE(dim(x)[3] > 1L) == TRUE) {
             tmp <- array(dim = c(dim(x)[1], dim(x)[2], nrow(tmpu)))
             for (i in 1:nrow(tmpu)) {
                 tmp[, , i][1:(dim(x)[1] * dim(x)[2])] <- as.numeric(tmpu[i, 
@@ -81,7 +81,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         for (q in 1:dim(x)[3]) {
             for (j in 1:dim(x)[3]) {
                 tmp <- x[, , j] %*% x[, , q]
-                tmp <- replace(tmp, tmp >= 1, 1)
+                tmp <- replace(tmp, tmp >= 1L, 1L)
                 for (i in dim(x)[3]:1) {
                   if (isTRUE(all.equal(tmp, x[, , i]) == TRUE)) 
                     s0[j, q] <- i
@@ -91,21 +91,22 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         rm(i, j, q)
         dimnames(s0)[[1]] <- 1:dim(x)[3]
         dimnames(s0)[[2]] <- 1:dim(x)[3]
-        if (sum(as.numeric(is.na(s0))) == 0) 
+        if (sum(as.numeric(is.na(s0))) == 0L) 
             Bx <- x
-        if (sum(as.numeric(is.na(s0))) > 0) {
-            Bx <- array(dim = c(dim(x)[1], dim(x)[2], 0))
+        if (sum(as.numeric(is.na(s0))) > 0L) {
+            Bx <- array(dim = c(dim(x)[1], dim(x)[2], 0L))
             for (i in 1:nrow(s0)) {
                 for (j in 1:length(which(is.na(s0[i, ])))) {
-                  if (length(which(is.na(s0[i, ]))) > 0) 
+                  if (length(which(is.na(s0[i, ]))) > 0L) 
                     Bx <- zbnd(Bx, (replace(x[, , i] %*% x[, 
                       , which(is.na(s0[i, ]))[j]], x[, , i] %*% 
-                      x[, , which(is.na(s0[i, ]))[j]] >= 1, 1)))
+                      x[, , which(is.na(s0[i, ]))[j]] >= 1L, 
+                      1L)))
                 }
             }
             rm(i, j)
             tmp <- data.frame(matrix(ncol = (dim(x)[1] * dim(x)[2]), 
-                nrow = 0))
+                nrow = 0L))
             for (i in 1:dim(Bx)[3]) {
                 tmp[i, ] <- as.vector(Bx[, , i])
             }
@@ -117,25 +118,25 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             }
             rm(i)
             if (is.null(dimnames(xBx)) == FALSE) 
-                dimnames(xBx)[[3]] <- (dim(x)[3] + 1):(dim(xBx)[3] + 
+                dimnames(xBx)[[3]] <- (dim(x)[3] + 1L):(dim(xBx)[3] + 
                   dim(x)[3])
             Bx <- zbnd(x, xBx)
             rm(xBx, tmp)
         }
     }
-    while (sum(as.numeric(is.na(s0))) > 0) {
+    while (sum(as.numeric(is.na(s0))) > 0L) {
         BBx <- Bx
         for (i in 1:nrow(s0)) {
             for (j in 1:length(which(is.na(s0[i, ])))) {
-                if (length(which(is.na(s0[i, ]))) > 0) 
+                if (length(which(is.na(s0[i, ]))) > 0L) 
                   BBx <- zbnd(BBx, (replace(Bx[, , i] %*% Bx[, 
                     , which(is.na(s0[i, ]))[j]], Bx[, , i] %*% 
-                    Bx[, , which(is.na(s0[i, ]))[j]] >= 1, 1)))
+                    Bx[, , which(is.na(s0[i, ]))[j]] >= 1L, 1L)))
             }
         }
         rm(i, j)
         tmp <- data.frame(matrix(ncol = (dim(Bx)[1] * dim(Bx)[2]), 
-            nrow = 0))
+            nrow = 0L))
         for (i in 1:dim(BBx)[3]) {
             tmp[i, ] <- as.vector(BBx[, , i])
         }
@@ -148,10 +149,10 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         rm(i)
         rm(tmp, BBx)
         if (is.na(dim(x)[3]) == TRUE) {
-            s0 <- data.frame(matrix(ncol = 1, nrow = dim(Bx)[3]))
+            s0 <- data.frame(matrix(ncol = 1L, nrow = dim(Bx)[3]))
             for (j in 1:dim(Bx)[3]) {
                 tmp <- Bx[, , j] %*% Bx[, , 1]
-                tmp <- replace(tmp, tmp >= 1, 1)
+                tmp <- replace(tmp, tmp >= 1L, 1L)
                 for (i in dim(Bx)[3]:1) {
                   if (isTRUE(all.equal(tmp, Bx[, , i]) == TRUE)) 
                     s0[j, 1] <- i
@@ -164,7 +165,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             for (q in 1:dim(x)[3]) {
                 for (j in 1:dim(Bx)[3]) {
                   tmp <- Bx[, , j] %*% Bx[, , q]
-                  tmp <- replace(tmp, tmp >= 1, 1)
+                  tmp <- replace(tmp, tmp >= 1L, 1L)
                   for (i in dim(Bx)[3]:1) {
                     if (isTRUE(all.equal(tmp, Bx[, , i]) == TRUE)) 
                       s0[j, q] <- i
@@ -174,10 +175,10 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             rm(i, j, q)
         }
     }
-    ifelse(isTRUE(is.na(dim(x)[3])) == TRUE, dimnames(s0)[[2]] <- 1, 
+    ifelse(isTRUE(is.na(dim(x)[3])) == TRUE, dimnames(s0)[[2]] <- 1L, 
         dimnames(s0)[[2]] <- 1:dim(x)[3])
     tmpO <- data.frame(matrix(ncol = (dim(Bx)[1] * dim(Bx)[2]), 
-        nrow = 0))
+        nrow = 0L))
     for (i in 1:dim(Bx)[3]) {
         tmpO[i, ] <- as.vector(Bx[, , i])
     }
@@ -199,7 +200,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         colnames(W) <- c("", "n", "g")
     }
     if (dim(Bx)[3] > ncol(E)) {
-        tmp <- (ncol(E) + 1):dim(Bx)[3]
+        tmp <- (ncol(E) + 1L):dim(Bx)[3]
         z <- vector()
         for (i in 1:length(tmp)) {
             z[i] <- which(t(E) == tmp[i])[1]
@@ -207,17 +208,17 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         rm(i)
         g <- vector()
         for (i in 1:length(tmp)) {
-            ifelse(z[i]%%ncol(E) == 0, g[i] <- ncol(E), g[i] <- z[i]%%ncol(E))
+            ifelse(z[i]%%ncol(E) == 0L, g[i] <- ncol(E), g[i] <- z[i]%%ncol(E))
         }
         rm(i)
         n <- vector()
         for (i in 1:length(tmp)) {
-            ifelse(z[i]%%ncol(E) == 0, n[i] <- (z[i]%/%ncol(E)), 
-                n[i] <- ((z[i]%/%ncol(E)) + 1))
+            ifelse(z[i]%%ncol(E) == 0L, n[i] <- (z[i]%/%ncol(E)), 
+                n[i] <- ((z[i]%/%ncol(E)) + 1L))
         }
         rm(i)
         W <- rbind(cbind(1:ncol(E), NA, NA), cbind(((ncol(E) + 
-            1):nrow(E)), n, g))
+            1L):nrow(E)), n, g))
         rm(z, n, g)
     }
     rm(tmp)
@@ -234,17 +235,17 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             if (isTRUE(dim(Bx)[3] < dim(x)[3]) == TRUE) 
                 lbl <- rownames(tmpO)
             if (isTRUE(dim(Bx)[3] > dim(x)[3]) == TRUE) 
-                lbl <- c(dimnames(x)[[3]], (dim(x)[3] + 1):dim(Bx)[3])
+                lbl <- c(dimnames(x)[[3]], (dim(x)[3] + 1L):dim(Bx)[3])
         }
         dimnames(Bx)[[3]] <- lbl
-        for (i in which(W[, 2] < (ncol(E) + 1))) {
+        for (i in which(W[, 2] < (ncol(E) + 1L))) {
             lbl[(i)] <- paste(dimnames(Bx)[[3]][W[, 2][i]], dimnames(Bx)[[3]][W[, 
                 3][i]], sep = "")
         }
         rm(i)
         for (i in which(W[, 2] < (which(W[, 2] > ncol(E))[1]))[(length(which(W[, 
-            2] < (ncol(E) + 1))) + 1):length(which(W[, 2] < (which(W[, 
-            2] > ncol(E))[1])))]) {
+            2] < (ncol(E) + 1L))) + 1L):length(which(W[, 2] < 
+            (which(W[, 2] > ncol(E))[1])))]) {
             lbl[(i)] <- paste(dimnames(Bx)[[3]][W[W[, 2][i], 
                 ][2]], dimnames(Bx)[[3]][W[W[, 2][i], ][3]], 
                 dimnames(Bx)[[3]][W[, 3][i]], sep = "")
@@ -252,7 +253,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         rm(i)
         for (i in which(W[, 2] < (which(W[, 2] >= (which(W[, 
             2] > ncol(E)))[1])[1]))[(length(which(W[, 2] < (which(W[, 
-            2] > ncol(E))[1]))) + 1):length(which(W[, 2] < (which(W[, 
+            2] > ncol(E))[1]))) + 1L):length(which(W[, 2] < (which(W[, 
             2] >= (which(W[, 2] > ncol(E)))[1])[1])))]) {
             lbl[(i)] <- paste(dimnames(Bx)[[3]][W[W[W[W[, 2][i], 
                 ], ][1, ][2], ][2]], dimnames(Bx)[[3]][W[W[W[W[, 
@@ -263,7 +264,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         for (i in which(W[, 2] < (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] > ncol(E))[1])))[1])[1]))[(length(which(W[, 
             2] < (which(W[, 2] >= (which(W[, 2] > ncol(E)))[1])[1]))) + 
-            1):length(which(W[, 2] < (which(W[, 2] >= (which(W[, 
+            1L):length(which(W[, 2] < (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] > ncol(E))[1])))[1])[1])))]) {
             lbl[(i)] <- paste(dimnames(Bx)[[3]][W[W[W[W[W[, 2][i], 
                 ], ][1, ][2], ][2], ][2]], dimnames(Bx)[[3]][W[W[W[W[W[, 
@@ -275,7 +276,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         for (i in which(W[, 2] < (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] >= (which(W[, 2] > ncol(E))[1]))[1])))[1])[1]))[(length(which(W[, 
             2] < (which(W[, 2] >= (which(W[, 2] >= (which(W[, 
-            2] > ncol(E))[1])))[1])[1]))) + 1):length(which(W[, 
+            2] > ncol(E))[1])))[1])[1]))) + 1L):length(which(W[, 
             2] < (which(W[, 2] >= (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] > ncol(E))[1]))[1])))[1])[1])))]) {
             lbl[(i)] <- paste(dimnames(Bx)[[3]][W[W[W[W[W[W[, 
@@ -291,7 +292,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             2] > ncol(E))[1]))[1]))[1])))[1])[1]))[(length(which(W[, 
             2] < (which(W[, 2] >= (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] > ncol(E))[1]))[1])))[1])[1]))) + 
-            1):length(which(W[, 2] < (which(W[, 2] >= (which(W[, 
+            1L):length(which(W[, 2] < (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] >= (which(W[, 2] >= (which(W[, 
             2] > ncol(E))[1]))[1]))[1])))[1])[1])))]) {
             lbl[(i)] <- paste(dimnames(Bx)[[3]][W[W[W[W[W[W[W[, 
@@ -310,7 +311,7 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             2] >= (which(W[, 2] > ncol(E))[1]))[1]))[1]))[1])))[1])[1]))[(length(which(W[, 
             2] < (which(W[, 2] >= (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] >= (which(W[, 2] > ncol(E))[1]))[1]))[1])))[1])[1]))) + 
-            1):length(which(W[, 2] < (which(W[, 2] >= (which(W[, 
+            1L):length(which(W[, 2] < (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] >= (which(W[, 2] >= (which(W[, 
             2] >= (which(W[, 2] > ncol(E))[1]))[1]))[1]))[1])))[1])[1])))]) {
             lbl[(i)] <- paste(dimnames(Bx)[[3]][W[W[W[W[W[W[W[W[, 
@@ -394,29 +395,31 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             }
             rm(i)
         }
-        if (k > 1) {
-            if (length(gn) > 1) {
+        if (k > 1L) {
+            if (length(gn) > 1L) {
                 eq2 <- vector()
                 for (i in 1:length(gn)) {
                   eq2 <- append(eq2, paste(gn[i], gn[i], sep = ""))
                 }
                 rm(i)
                 db <- eq2
-                for (i in 1:ncol(combn(gn, 2))) {
-                  if (!(paste(combn(gn, 2)[, i][1], combn(gn, 
+                for (i in 1:ncol(utils::combn(gn, 2))) {
+                  if (!(paste(utils::combn(gn, 2)[, i][1], utils::combn(gn, 
                     2)[, i][2], sep = "") %in% lbl)) 
-                    eq2 <- append(eq2, paste(combn(gn, 2)[, i][1], 
-                      combn(gn, 2)[, i][2], sep = ""))
-                  if (!(paste(combn(gn, 2)[, i][2], combn(gn, 
+                    eq2 <- append(eq2, paste(utils::combn(gn, 
+                      2)[, i][1], utils::combn(gn, 2)[, i][2], 
+                      sep = ""))
+                  if (!(paste(utils::combn(gn, 2)[, i][2], utils::combn(gn, 
                     2)[, i][1], sep = "") %in% lbl)) 
-                    eq2 <- append(eq2, paste(combn(gn, 2)[, i][2], 
-                      combn(gn, 2)[, i][1], sep = ""))
+                    eq2 <- append(eq2, paste(utils::combn(gn, 
+                      2)[, i][2], utils::combn(gn, 2)[, i][1], 
+                      sep = ""))
                 }
                 rm(i)
                 eq2 <- unique(eq2)
-                if (length(eq2) != 0) {
+                if (length(eq2) != 0L) {
                   dbl <- data.frame(matrix(ncol = (dim(w)[1] * 
-                    dim(w)[2]), nrow = 0))
+                    dim(w)[2]), nrow = 0L))
                   for (i in 1:length(eq2)) {
                     dbl[(nrow(dbl) + 1), ] <- as.vector(dichot(x[, 
                       , which(dimnames(x)[[3]] == strsplit(eq2[i], 
@@ -429,15 +432,15 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
                     if (isTRUE(eq2[i] %in% rownames(unq)) == 
                       FALSE) {
                       luq[[which(duplicated(rbind(dbl[i, ], unq))) - 
-                        1]] <- append(luq[[which(duplicated(rbind(dbl[i, 
-                        ], unq))) - 1]], eq2[i])
+                        1L]] <- append(luq[[which(duplicated(rbind(dbl[i, 
+                        ], unq))) - 1L]], eq2[i])
                     }
                   }
                   rm(i)
                 }
             }
         }
-        if (k > 2) {
+        if (k > 2L) {
             eq3 <- vector()
             for (i in 1:length(gn)) {
                 eq3 <- append(eq3, paste(db, gn[i], sep = ""))
@@ -453,52 +456,52 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
             }
             rm(i)
             if (length(gn) > 2) {
-                for (i in 1:ncol(combn(gn, 3))) {
-                  if (!(paste(combn(gn, 3)[, i][1], combn(gn, 
-                    3)[, i][2], combn(gn, 3)[, i][3], sep = "") %in% 
-                    lbl)) 
-                    eq3 <- append(eq3, paste(combn(gn, 3)[, i][1], 
-                      combn(gn, 3)[, i][2], combn(gn, 3)[, i][3], 
-                      sep = ""))
-                  if (!(paste(combn(gn, 3)[, i][1], combn(gn, 
-                    3)[, i][3], combn(gn, 3)[, i][2], sep = "") %in% 
-                    lbl)) 
-                    eq3 <- append(eq3, paste(combn(gn, 3)[, i][1], 
-                      combn(gn, 3)[, i][3], combn(gn, 3)[, i][2], 
-                      sep = ""))
-                  if (!(paste(combn(gn, 3)[, i][2], combn(gn, 
-                    3)[, i][1], combn(gn, 3)[, i][3], sep = "") %in% 
-                    lbl)) 
-                    eq3 <- append(eq3, paste(combn(gn, 3)[, i][2], 
-                      combn(gn, 3)[, i][1], combn(gn, 3)[, i][3], 
-                      sep = ""))
-                  if (!(paste(combn(gn, 3)[, i][2], combn(gn, 
-                    3)[, i][3], combn(gn, 3)[, i][1], sep = "") %in% 
-                    lbl)) 
-                    eq3 <- append(eq3, paste(combn(gn, 3)[, i][2], 
-                      combn(gn, 3)[, i][3], combn(gn, 3)[, i][1], 
-                      sep = ""))
-                  if (!(paste(combn(gn, 3)[, i][3], combn(gn, 
-                    3)[, i][1], combn(gn, 3)[, i][2], sep = "") %in% 
-                    lbl)) 
-                    eq3 <- append(eq3, paste(combn(gn, 3)[, i][3], 
-                      combn(gn, 3)[, i][1], combn(gn, 3)[, i][2], 
-                      sep = ""))
-                  if (!(paste(combn(gn, 3)[, i][3], combn(gn, 
-                    3)[, i][2], combn(gn, 3)[, i][1], sep = "") %in% 
-                    lbl)) 
-                    eq3 <- append(eq3, paste(combn(gn, 3)[, i][3], 
-                      combn(gn, 3)[, i][2], combn(gn, 3)[, i][1], 
-                      sep = ""))
+                for (i in 1:ncol(utils::combn(gn, 3))) {
+                  if (!(paste(utils::combn(gn, 3)[, i][1], utils::combn(gn, 
+                    3)[, i][2], utils::combn(gn, 3)[, i][3], 
+                    sep = "") %in% lbl)) 
+                    eq3 <- append(eq3, paste(utils::combn(gn, 
+                      3)[, i][1], utils::combn(gn, 3)[, i][2], 
+                      utils::combn(gn, 3)[, i][3], sep = ""))
+                  if (!(paste(utils::combn(gn, 3)[, i][1], utils::combn(gn, 
+                    3)[, i][3], utils::combn(gn, 3)[, i][2], 
+                    sep = "") %in% lbl)) 
+                    eq3 <- append(eq3, paste(utils::combn(gn, 
+                      3)[, i][1], utils::combn(gn, 3)[, i][3], 
+                      utils::combn(gn, 3)[, i][2], sep = ""))
+                  if (!(paste(utils::combn(gn, 3)[, i][2], utils::combn(gn, 
+                    3)[, i][1], utils::combn(gn, 3)[, i][3], 
+                    sep = "") %in% lbl)) 
+                    eq3 <- append(eq3, paste(utils::combn(gn, 
+                      3)[, i][2], utils::combn(gn, 3)[, i][1], 
+                      utils::combn(gn, 3)[, i][3], sep = ""))
+                  if (!(paste(utils::combn(gn, 3)[, i][2], utils::combn(gn, 
+                    3)[, i][3], utils::combn(gn, 3)[, i][1], 
+                    sep = "") %in% lbl)) 
+                    eq3 <- append(eq3, paste(utils::combn(gn, 
+                      3)[, i][2], utils::combn(gn, 3)[, i][3], 
+                      utils::combn(gn, 3)[, i][1], sep = ""))
+                  if (!(paste(utils::combn(gn, 3)[, i][3], utils::combn(gn, 
+                    3)[, i][1], utils::combn(gn, 3)[, i][2], 
+                    sep = "") %in% lbl)) 
+                    eq3 <- append(eq3, paste(utils::combn(gn, 
+                      3)[, i][3], utils::combn(gn, 3)[, i][1], 
+                      utils::combn(gn, 3)[, i][2], sep = ""))
+                  if (!(paste(utils::combn(gn, 3)[, i][3], utils::combn(gn, 
+                    3)[, i][2], utils::combn(gn, 3)[, i][1], 
+                    sep = "") %in% lbl)) 
+                    eq3 <- append(eq3, paste(utils::combn(gn, 
+                      3)[, i][3], utils::combn(gn, 3)[, i][2], 
+                      utils::combn(gn, 3)[, i][1], sep = ""))
                 }
                 rm(i)
             }
             eq3 <- unique(eq3)
-            if (length(eq3) != 0) {
+            if (length(eq3) != 0L) {
                 tpl <- data.frame(matrix(ncol = (dim(w)[1] * 
-                  dim(w)[2]), nrow = 0))
+                  dim(w)[2]), nrow = 0L))
                 for (i in 1:length(eq3)) {
-                  tpl[(nrow(tpl) + 1), ] <- as.vector(dichot(x[, 
+                  tpl[(nrow(tpl) + 1L), ] <- as.vector(dichot(x[, 
                     , which(dimnames(x)[[3]] == strsplit(eq3[i], 
                       "")[[1]][1])] %*% x[, , which(dimnames(x)[[3]] == 
                     strsplit(eq3[i], "")[[1]][2])] %*% x[, , 
@@ -510,8 +513,8 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
                 for (i in 1:nrow(tpl)) {
                   if (isTRUE(eq3[i] %in% rownames(unq)) == FALSE) {
                     luq[[which(duplicated(rbind(tpl[i, ], unq))) - 
-                      1]] <- append(luq[[which(duplicated(rbind(tpl[i, 
-                      ], unq))) - 1]], eq3[i])
+                      1L]] <- append(luq[[which(duplicated(rbind(tpl[i, 
+                      ], unq))) - 1L]], eq3[i])
                   }
                 }
                 rm(i)
@@ -528,20 +531,20 @@ function (x, smpl = FALSE, equat = FALSE, k = 2)
         }
         rm(i)
         names(lqu) <- lqlb
-        if (length(lqu) != 0) {
+        if (length(lqu) != 0L) {
             for (i in 1:length(lqu)) {
                 lqu[[i]] <- c(attr(lqu, "names")[i], lqu[[i]])
                 lqu[[i]] <- unique(lqu[[i]])
             }
             rm(i)
         }
-        else if (length(lqu) == 0) {
+        else if (length(lqu) == 0L) {
             lqu <- paste("No equations were produced in words with length", 
                 k, "or less", sep = " ")
         }
     }
     if (equat == TRUE) {
-        ifelse(isTRUE(length(note) > 0) == TRUE, lst <- list(wt = Bx, 
+        ifelse(isTRUE(length(note) > 0L) == TRUE, lst <- list(wt = Bx, 
             ord = dim(Bx)[3], st = lbl, equat = lqu, Note = note), 
             lst <- list(wt = Bx, ord = dim(Bx)[3], st = lbl, 
                 equat = lqu))

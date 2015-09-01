@@ -1,16 +1,23 @@
 dhc <-
-function (x, prsep = ", ") 
+function (xd, prsep = ", ") 
 {
-    if (isTRUE(length(x) != 0) == TRUE && isTRUE(is.na(x)) == 
+    if (isTRUE(length(xd) != 0L) == TRUE && isTRUE(is.na(xd)) == 
         FALSE) {
-        Lt <- FALSE
-        ifelse(isTRUE(is.list(x)) == TRUE, Lt <- TRUE, x <- as.list(x))
-        for (i in 1:length(x)) ifelse(isTRUE(length(x[[i]]) != 
-            0) == TRUE, x[[i]] <- strsplit(x[[i]], prsep)[[1]], 
-            NA)
-        ifelse(isTRUE(Lt) == TRUE, return(x), return(unlist(x)))
+        Ltd <- FALSE
+        ifelse(isTRUE(is.list(xd)) == TRUE, Ltd <- TRUE, xd <- as.list(xd))
+        Xd <- list()
+        length(Xd) <- length(xd)
+        for (i in 1:length(xd)) {
+            if (isTRUE(length(xd[[i]]) != 0L) == TRUE) {
+                tmpd <- as.list(xd[[i]])
+                for (j in 1:length(xd[[i]])) Xd[[i]] <- append(Xd[[i]], 
+                  strsplit(tmpd[[j]], prsep)[[1]])
+            }
+        }
+        attr(Xd, "names") <- attr(xd, "names")
+        ifelse(isTRUE(Ltd) == TRUE, return(Xd), return(unlist(Xd)))
     }
     else {
-        x
+        xd
     }
 }

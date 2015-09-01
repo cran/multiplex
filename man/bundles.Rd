@@ -15,7 +15,7 @@ bundles(m, loops = FALSE, prsep = ", ", smpl = FALSE,
    an array; usually with three dimensions of stacked matrices where the multiple relations are placed.
 }
   \item{loops}{
-   (logical) whether or not the loops should be considered
+   (logical) whether or not the loops should be considered as a particular bundle
 }
   \item{smpl}{
    (logical) simplify the strings of relations? Default no.

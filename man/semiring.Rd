@@ -49,7 +49,7 @@ Antonio Rivero Ostoic
 Disabling transitive closure should be made with good substantial reasons.
 }
 \seealso{
-\code{\link{signed}}
+\code{\link{signed}}, \code{\link{as.signed}}
 }
 \examples{
 ## Create the data: two sets with a pair of binary relations 

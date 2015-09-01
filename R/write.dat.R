@@ -12,7 +12,7 @@ function (x, path)
                 ".dat", sep = ""), i)
             pathname <- file.path(path, filename)
             obj <- x[, , i]
-            write.table(obj, file = pathname, row.names = FALSE, 
+            utils::write.table(obj, file = pathname, row.names = FALSE, 
                 col.names = FALSE)
         }
         rm(i)
@@ -20,6 +20,6 @@ function (x, path)
     else if (is.na(dim(x)[3]) == TRUE) {
         pathname <- file.path(path, paste(deparse(substitute(x)), 
             "dat", sep = "."))
-        write.table(x, file = pathname, row.names = FALSE, col.names = FALSE)
+        utils::write.table(x, file = pathname, row.names = FALSE, col.names = FALSE)
     }
 }

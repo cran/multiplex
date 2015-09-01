@@ -107,7 +107,7 @@ function (x, type = c("balance", "cluster"), symclos = TRUE,
                         x2[i, j] <- "o"
                       } else {
                         ch <- replace(ch, ch == "o", NA)
-                        cch <- na.omit(ch)
+                        cch <- stats::na.omit(ch)
                         if ("a" %in% cch) {
                           x2[i, j] <- "a"
                         } else if (all("p" == cch)) {
@@ -122,7 +122,7 @@ function (x, type = c("balance", "cluster"), symclos = TRUE,
                         x2[i, j] <- "o"
                       } else {
                         ch <- replace(ch, ch == "o", NA)
-                        cch <- na.omit(ch)
+                        cch <- stats::na.omit(ch)
                         if (isTRUE(length(cch) == 0) == TRUE) {
                           x2[i, j] <- "o"
                         } else if (all("p" == cch)) {
@@ -135,7 +135,7 @@ function (x, type = c("balance", "cluster"), symclos = TRUE,
                           x2[i, j] <- "a"
                         } else {
                           cch <- replace(cch, cch == "q", NA)
-                          ccch <- na.omit(cch)
+                          ccch <- stats::na.omit(cch)
                           if ("a" %in% ccch) {
                             x2[i, j] <- "a"
                           } else if (all("p" == ccch)) {

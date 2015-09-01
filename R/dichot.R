@@ -1,7 +1,13 @@
 dichot <-
 function (x, c = 1) 
 {
-    x <- replace(x, x < c, 0)
-    x <- replace(x, x >= c, 1)
-    return(x)
+    if (isTRUE(0 >= c) == TRUE) {
+        x <- replace(x, x >= c, 1L)
+        x <- replace(x, x < c, 0L)
+    }
+    else {
+        x <- replace(x, x < c, 0L)
+        x <- replace(x, x >= c, 1L)
+    }
+    x
 }

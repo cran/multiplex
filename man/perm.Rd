@@ -50,3 +50,4 @@ perm(s, clu = c(1,2,3))
 \keyword{ math }
 \keyword{ array }
 \keyword{cluster}
+\keyword{ manip }

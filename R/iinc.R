@@ -104,7 +104,7 @@ function (inc, PO, prsep = ", ", print.eqs = FALSE)
         rm(i)
     }
     rm(k)
-    n <- as.numeric(attr(na.omit(cl), "na.action"))
+    n <- as.numeric(attr(stats::na.omit(cl), "na.action"))
     for (i in 1:length(n)) {
         cl[n[i]] <- f + i
     }

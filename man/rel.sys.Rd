@@ -7,18 +7,25 @@ Relational System
 Create the Relation System of a multiple network.
 }
 \usage{
-rel.sys(x, bonds = c("entire", "strong", "weak"), prsep = ", ")
+rel.sys(x, bonds = c("entire", "strong", "weak"), prsep = ", ", loops = FALSE, 
+          att = NULL)
 }
 \arguments{
   \item{x}{
    an array; usually with three dimensions of stacked matrices where the multiple relations are placed.
 }
   \item{bonds}{
-   the type of bonds to be used in the creation of the relational system
+   the type of bonds to be used in the creation of the relational system (default the entire network)
 }
   \item{prsep}{
    (optional) the pair separator for the pairwise relations
   }
+  \item{loops}{
+   (logical) whether or not the loops should be considered in the relational system
+}
+  \item{att}{
+   the arrays in \code{x} corresponding to attributes
+}
 }
 \details{
 When the type of bonds chosen is \code{entire} then the nodes with ties are considered in the relational system without isolated nodes. \code{strong} bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those pattern exclusively without mutual character.
@@ -34,7 +41,11 @@ The items are:
    \item{excl}{the nodes excluded the relational system with the chosen bond type}
    \item{bond.type}{the type of bonds used in the relational system creation}
    \item{size}{number of ties in the relational system}
-   \item{ties}{the ties in the relational system}
+   \item{Note}{(optional) note}
+   \item{prsep}{the pairwise separator of the relational system}
+   \item{Ties}{the ties in the relational system}
+   \item{Attrs.ord}{if \code{att} is not \code{NULL}, the number of nodes with the chosen attribute(s) }
+   \item{Attrs}{if \code{att} is not \code{NULL}, the actors with the chosen attribute(s)}
 %% ...
 }
 %\references{
@@ -50,7 +61,7 @@ Antonio Rivero Ostoic
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{expos}}, \code{\link{bundles}}
+\code{\link{expos}}, \code{\link{bundles}}, \code{\link{neighb}}
 }
 \examples{
 ## Create the data: two binary relations among three elements
@@ -58,10 +69,13 @@ arr <- round( replace( array( runif(18), c(3 ,3, 2) ), array( runif(18),
        c(3, 3, 2) ) > .9, 3 ) )
 
 ## Determine the system of strong bonds
-rel.sys(arr, bonds="strong")
+rel.sys(arr, bonds = "strong")
+
+## the first array is for attributes
+rel.sys(arr, att = 1)
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ models }
+\keyword{ attribute }
 
