@@ -11,7 +11,7 @@ expos(rs, classes = FALSE, allClasses = FALSE, allNodes = TRUE)
 }
 \arguments{
   \item{rs}{
-   an object of `\code{Rel.System}', typically with actor attributes.
+   an object of `\code{Rel.System}', typically with node attributes.
 }
   \item{classes}{
    (optional) whether or not should be included in the outputthe categories of adopters 

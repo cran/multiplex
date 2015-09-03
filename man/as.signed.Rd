@@ -5,7 +5,7 @@
 Coerce to a Signed Object
 }
 \description{
-A generic function for coercing an R object to a \code{Signed} class.
+A generic function for coercing an object to a \code{Signed} class.
 }
 \usage{
 as.signed(x)

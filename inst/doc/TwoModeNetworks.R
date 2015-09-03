@@ -35,7 +35,7 @@ galois(frt, labeling = "reduced")
 ## ----strgaloisReduc, size='scriptsize'----------------------------------------------------------------------
 str(gc$full)
 
-## ----partialorder, echo=-2----------------------------------------------------------------------------------
+## ----partialorder, echo=-3----------------------------------------------------------------------------------
 ## Partial ordering of the formal concepts with established labels
 pogcc <- partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
 pogcc

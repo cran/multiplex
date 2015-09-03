@@ -15,7 +15,7 @@ rel.sys(x, bonds = c("entire", "strong", "weak"), prsep = ", ", loops = FALSE,
    an array; usually with three dimensions of stacked matrices where the multiple relations are placed.
 }
   \item{bonds}{
-   the type of bonds to be used in the creation of the relational system (default the entire network)
+   the type of bonds to be used in the creation of the relational system (default the `entire' network)
 }
   \item{prsep}{
    (optional) the pair separator for the pairwise relations

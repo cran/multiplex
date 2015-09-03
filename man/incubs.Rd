@@ -16,6 +16,7 @@ Each data set contains the adjacency matrices of the three social relations, cod
 In addition, there is a blockmodel attached to each data set that is product of Compositional Equivalence (cf. \code{\link{cph}}) with transposes for each type of social tie labelled with the following letter in the Latin alphabet; i.e. \code{D} for collaboration, etc.
 }
 \usage{
+data("incubs")
 data("incubA")
 data("incubB")
 data("incubC")

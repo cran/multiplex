@@ -110,7 +110,7 @@ $$
 
 For this, the function \texttt{partial.order()} now supports the ``\texttt{galois}'' option in the \texttt{type} argument where the hierarchy of the concepts is constructed. In this case, even though the concepts have the ``reduced'' option, it is the ``full'' labeling of the formal concepts that is the base of the ordering among these concepts that can be designated in different ways.
 
-<<partialorder, echo=-2>>=
+<<partialorder, echo=-3>>=
 ## Partial ordering of the formal concepts with established labels
 pogcc <- partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
 pogcc
@@ -198,7 +198,7 @@ To illustrate these concepts, we apply the function \texttt{fltr()} of \textbf{m
 fltr(3, pogcc)
 @
 
-In order to get the labels of the different concepts made of objects and attributes, we apply this function rather to object \texttt{pogc}, which embodies the partial order of the reduced context. Full labeling typically brings misleading results.
+In order to get the labels of the different concepts made of objects and attributes, we apply this function rather to object \texttt{pogc}, which embodies the partial order of the reduced context. 
 
 <<princfltrlbs, echo=TRUE>>= 
 ## Principal filter of third concept with labels
@@ -209,6 +209,7 @@ And in this latter case we get the same result by writing
 <<princfltrlbs2, echo=TRUE, eval=FALSE>>= 
 fltr("red", pogc)
 @
+However, full labeling in the Galois derivation typically brings misleading results with the label option.
 
 \newpage
 

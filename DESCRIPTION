@@ -1,9 +1,9 @@
 Package: multiplex
 Type: Package
 Title: Analysis of Multiple Social Networks with Algebra
-Version: 1.7
+Version: 1.7.1
 Depends: R (>= 3.2.2)
-Date: 2015-09-01
+Date: 2015-09-03
 Author: J. Antonio Rivero Ostoic
 Maintainer: Antonio Rivero Ostoic <multiplex@post.com>
 Description: Algebraic procedures for the analysis of multiple social networks are delivered with 
@@ -19,6 +19,6 @@ VignetteBuilder: knitr
 License: GPL-3
 Encoding: latin1
 NeedsCompilation: no
-Packaged: 2015-09-01 12:30:06 UTC; jari
+Packaged: 2015-09-03 12:01:39 UTC; jari
 Repository: CRAN
-Date/Publication: 2015-09-01 17:32:03
+Date/Publication: 2015-09-03 15:41:36

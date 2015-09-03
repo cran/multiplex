@@ -2,6 +2,11 @@
 'multiplex' PACKAGE
 
 
+version 1.7.1 (3-Sep-2015)
+---------------------------
+Vignette is fixed.
+
+
 version 1.7 (1-Sep-2015)
 ---------------------------
 ADDED FEATURES:
