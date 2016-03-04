@@ -7,11 +7,11 @@ Bundle Class Patterns
 Classify the Bundle class patterns in a system of multiple relations
 }
 \usage{
-bundles(m, loops = FALSE, prsep = ", ", smpl = FALSE, 
+bundles(x, loops = FALSE, prsep = ", ", smpl = FALSE, 
            lb2lb = TRUE, collapse = FALSE)
 }
 \arguments{
-  \item{m}{
+  \item{x}{
    an array; usually with three dimensions of stacked matrices where the multiple relations are placed.
 }
   \item{loops}{

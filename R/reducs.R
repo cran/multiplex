@@ -14,7 +14,9 @@ function (x, clu, labels = NULL)
     lb <- x$st
     ifelse(isTRUE(attr(tmp, "class")[2] == "symbolic") == TRUE, 
         x <- convert(tmp), x <- tmp$S)
-    px <- perm(x, clu)
+    ifelse(isTRUE(is.array(x)) == TRUE, xa <- x, xa <- array(x, 
+        dimnames = lb))
+    px <- perm(xa, clu, rev = FALSE)
     tab <- tabulate(clu)
     bm <- array(dim = c(lngt, lngt))
     y <- h <- j <- 0

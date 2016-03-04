@@ -3,7 +3,7 @@
 %\alias{multiplex}
 \docType{package}
 \title{
-Tools for the Analysis of Multiple Social Networks with Algebra
+Algebraic Tools for the Analysis of Multiple Social Networks
 }
 \description{
 One of the aims of the `\code{multiplex}' package is to meet the necessity to count with an analytic tool specially designed for social networks with relations at different levels. In this sense, `\code{multiplex}' counts with functions that models the local role algebras of the network based on the simple and compound relations existing in the system, and also a procedure for the construction and analysis of signed networks through the semiring structure. The different relational patterns at the dyadic level in the network can be obtained as well, which can serve for a further analysis with different types of structural theories.
@@ -14,8 +14,8 @@ It is also possible to take the attributes of the actors in the analysis of mult
 \tabular{ll}{
 Package: \tab multiplex\cr
 Type: \tab Package\cr
-Version: \tab 1.7.1\cr
-Date: \tab 3 September 2015\cr
+Version: \tab 1.8.1\cr
+Date: \tab 4 March 2016\cr
 License: \tab GPL-3\cr
 LazyLoad: \tab yes\cr
 }

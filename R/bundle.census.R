@@ -1,6 +1,8 @@
 bundle.census <-
 function (m, loops = FALSE) 
 {
+    if (isTRUE(is.array(m)) == FALSE) 
+        stop("'m' sholud be an array.")
     ifelse(isTRUE(is.null(dimnames(m)[1]) == TRUE | is.null(dimnames(m)[1][[1]]) == 
         TRUE) == TRUE, LBS <- 1:nrow(m), LBS <- dimnames(m)[[1]])
     lbs <- seq(LBS)

@@ -2,13 +2,33 @@
 'multiplex' PACKAGE
 
 
+version 1.8 (4-Mar-2016)
+------------------------
+
+ADDED FEATURES:
+	+ 'rel.sys' allows transformations from arrays to pair-lists and vice-versa
+	+ 'perm' and 'reduc' accepts non-sequential integers, character, and NAs in 
+	  clustering. 
+	+ 'perm' has also a new argument to reverse the clustering order
+	+ 'neighb' can use integers to refer the actors
+
+BUGS FIXED:
+	* 'diagram.levels' failed to process single layered partial order structures
+	* 'neighb' does not give an error for systems with k=1 and expand=TRUE
+	* 'signed' has been re-written and now it works properly
+
+OTHER CHANGES:
+	+ output labels in 'bundles' now matches the labels of 'summaryBundles'
+	+ Function 'read.gml' can import the coordenated system (with new internals)
+
+
 version 1.7.1 (3-Sep-2015)
----------------------------
+--------------------------
 Vignette is fixed.
 
 
 version 1.7 (1-Sep-2015)
----------------------------
+------------------------
 ADDED FEATURES:
 	+ NEW FUNCTION 'neighb' for finding the neighbourhood of an actor or a group
 	  of actors with customized distances
@@ -30,10 +50,11 @@ BUG FIXED:
 OTHER CHANGES:
 	+ Namespaces for needed global functions have been added (CRAN request)
 	- Internal function 'slc' is DEPREACTED
+	+ Vignette is expanded
 
 
 version 1.6 (19-May-2015)
-------------------------
+-------------------------
 ADDED FEATURES:
 	+ NEW FUNCTION 'fltr' to find principal filters (or ideals) in partial orders
 	+ Small improvements in internal functions
@@ -44,7 +65,7 @@ BUG FIXED:
 
 
 version 1.5 (30-Apr-2015)
-------------------------
+-------------------------
 ADDED FEATURES:
 	+ NEW FUNCTION 'galois' provides Galois derivations between two subsets
 	+ 'partial.order' has new argument to handle the Galois derivations
@@ -57,6 +78,7 @@ ADDED FEATURES:
 	+ Function 'read.gml' has a new argument for reading as srt or as array, and
 	  now it can read GML files without the "graphics" tag used for multiplex ties
 	+ Some needed internal functions now handle empty vectors or large semigroups
+	+ VIGNETTE is added
 
 BUGS FIXED:
 	* Fixed a small bug in 'cngr' when elements in a numerical semigroup are taken

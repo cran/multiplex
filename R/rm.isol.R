@@ -1,6 +1,7 @@
 rm.isol <-
 function (x, diag.incl = TRUE) 
 {
+    ifelse(isTRUE(all(x == 0)) == TRUE, return(NULL), NA)
     if (isTRUE(dim(x)[3] > 1L) == TRUE) {
         tmp <- x
         ifelse(isTRUE(is.null(dimnames(x)[[1]])) == TRUE & isTRUE(is.null(dimnames(x)[[2]])) == 

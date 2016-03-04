@@ -7,13 +7,16 @@ Relational System
 Create the Relation System of a multiple network.
 }
 \usage{
-rel.sys(x, bonds = c("entire", "strong", "weak"), prsep = ", ", loops = FALSE, 
-          att = NULL)
+rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak"), 
+          prsep = ", ", loops = FALSE, att = NULL)
 }
 \arguments{
   \item{x}{
    an array; usually with three dimensions of stacked matrices where the multiple relations are placed.
 }
+  \item{type}{
+   if the transformation is from (array of) matrices into lists of pairwise relations or vice versa
+ }
   \item{bonds}{
    the type of bonds to be used in the creation of the relational system (default the `entire' network)
 }
@@ -32,7 +35,7 @@ When the type of bonds chosen is \code{entire} then the nodes with ties are cons
 
 }
 \value{
-An object of `\code{Rel.System}' class.
+An object of `\code{Rel.System}' class for the \code{type = "matlist"} (default) option.
 The items are:
    \item{ord}{order of the network relational system}
    \item{nodes}{the nodes in the relational system}
@@ -46,6 +49,8 @@ The items are:
    \item{Ties}{the ties in the relational system}
    \item{Attrs.ord}{if \code{att} is not \code{NULL}, the number of nodes with the chosen attribute(s) }
    \item{Attrs}{if \code{att} is not \code{NULL}, the actors with the chosen attribute(s)}
+
+For \code{type = "listmat"} the output is a dichotomous 2D or 3D array recording the relations among the actors in the network.
 %% ...
 }
 %\references{

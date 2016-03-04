@@ -1,8 +1,9 @@
 ngbs <-
-function (x, rs, type = c("und", "inn", "out")) 
+function (x, rs, type = c("und", "inn", "out"), num = FALSE) 
 {
     if (isTRUE(attr(rs, "class") == "Rel.System") == FALSE) 
         stop("'rs' must be a relational system of a \"Rel.System\" class.")
+    ifelse(isTRUE(is.numeric(x)) == TRUE, x <- rs$nodes[x], NA)
     if (isTRUE(all(x %in% unique(unlist(dhc(as.character(rs$nodes)))))) == 
         TRUE) {
         rst <- as.list(unlist(rs$Ties))
@@ -43,7 +44,12 @@ function (x, rs, type = c("und", "inn", "out"))
         }
         rm(i)
         nb <- levels(factor(nrs))
-        return(nb[which(!(nb %in% x))])
+        if (num) {
+            return(which(rs$nodes %in% nb[which(!(nb %in% x))]))
+        }
+        else {
+            return(nb[which(!(nb %in% x))])
+        }
     }
     else {
         x

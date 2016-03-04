@@ -8,12 +8,15 @@ Coerce to a Signed Object
 A generic function for coercing an object to a \code{Signed} class.
 }
 \usage{
-as.signed(x)
+as.signed(x, labels = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 	a matrix representing the signed network
+}
+  \item{labels}{
+	(optional) labels for the signed matrix
 }
 }
 \details{
