@@ -20,7 +20,8 @@ function (file, header = TRUE, sep = "\t", attr = FALSE, toarray = TRUE,
         if (R == 0L) 
             stop("You must specify at least one relation.")
         if (is.null(labels) == TRUE) {
-            lbs <- levels(factor(as.vector(unlist(x[, 1:2]))))
+            lbs <- unique(c(as.vector(x[, 1]), as.vector(x[, 
+                2])))
             if (isTRUE(lbs == "") == TRUE) {
                 warning("Node labels in the input are empty!")
                 lbs <- 1:nrow(x)

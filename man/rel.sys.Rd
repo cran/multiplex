@@ -8,7 +8,7 @@ Create the Relation System of a multiple network.
 }
 \usage{
 rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak"), 
-          prsep = ", ", loops = FALSE, att = NULL)
+          sel = NULL, prsep = ", ", loops = FALSE, attr = NULL)
 }
 \arguments{
   \item{x}{
@@ -20,25 +20,30 @@ rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak")
   \item{bonds}{
    the type of bonds to be used in the creation of the relational system (default the `entire' network)
 }
+  \item{sel}{
+   (optional) the set of actors to be selected. For \code{"listmat"} \code{1} and \code{0} also supported (see details)
+}
   \item{prsep}{
    (optional) the pair separator for the pairwise relations
   }
   \item{loops}{
    (logical) whether or not the loops should be considered in the relational system
 }
-  \item{att}{
+  \item{attr}{
    the arrays in \code{x} corresponding to attributes
 }
 }
 \details{
 When the type of bonds chosen is \code{entire} then the nodes with ties are considered in the relational system without isolated nodes. \code{strong} bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those pattern exclusively without mutual character.
 
+When selecting from a list with actor attributes, it is also possible to select the network members having or \emph{not} the attribute that is specified in the \code{Attrs} output. Use \code{1} or \code{0} for the two options.
 }
 \value{
 An object of `\code{Rel.System}' class for the \code{type = "matlist"} (default) option.
 The items are:
    \item{ord}{order of the network relational system}
    \item{nodes}{the nodes in the relational system}
+   \item{sel}{the selected set of actors}
    \item{sys.ord}{the order of the relational system with the chosen bond type}
    \item{incl}{the nodes included the relational system with the chosen bond type}
    \item{excl}{the nodes excluded the relational system with the chosen bond type}
@@ -78,6 +83,9 @@ rel.sys(arr, bonds = "strong")
 
 ## the first array is for attributes
 rel.sys(arr, att = 1)
+
+## select the first node
+rel.sys(arr, sel = 1)
 
 }
 

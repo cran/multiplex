@@ -7,23 +7,15 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     ifelse(isTRUE(is.null(dimnames(x)[1]) == TRUE | is.null(dimnames(x)[1][[1]]) == 
         TRUE) == TRUE, LBS <- 1:nrow(x), LBS <- dimnames(x)[[1]])
     lbs <- seq(LBS)
-    TRD <- TRUE
-    if (is.na(dim(x)[3]) == TRUE | isTRUE(dim(x)[3] == 1) == 
-        TRUE) {
-        TRD <- FALSE
-    }
-    else {
+    xd <- dichot(x, c = 1L)
+    ifelse(isTRUE(dim(xd)[3] == 1) == TRUE, xd <- xd[, , 1], 
+        NA)
+    if (is.na(dim(xd)[3]) == FALSE) {
+        TRD <- TRUE
         if (isTRUE(is.null(dimnames(x)[[3]]) == TRUE) | isTRUE(any(duplicated(dimnames(x)[[3]]))) == 
             TRUE) {
             dimnames(x)[[3]] <- 1:dim(x)[3]
         }
-    }
-    xd <- dichot(x, c = 1L)
-    if (isTRUE(TRD == TRUE) == FALSE) {
-        m <- transf(xd, type = "matlist", labels = lbs, prsep = prsep, 
-            lb2lb = lb2lb)
-    }
-    else {
         mlt <- list()
         for (i in 1:dim(x)[3]) {
             mlt[[i]] <- transf(xd[, , i], type = "matlist", labels = lbs, 
@@ -31,6 +23,11 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         }
         rm(i)
         m <- unlist(mlt)
+    }
+    else {
+        TRD <- FALSE
+        m <- transf(xd, type = "matlist", labels = lbs, prsep = prsep, 
+            lb2lb = lb2lb)
     }
     DF <- data.frame(matrix(ncol = 2L, nrow = length(m)))
     DF[, 1] <- dhc(m)[which(1:(length(m) * 2L)%%2L == 1L)]
@@ -291,7 +288,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         rm(j)
     }
     rm(i)
-    if (isTRUE(is.na(dim(x)[3])) == FALSE) {
+    if (isTRUE(TRD == TRUE) == TRUE) {
         AS <- list()
         for (k in 1:length(tt)) {
             tmp <- vector()
@@ -318,7 +315,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         rm(j)
     }
     rm(i)
-    if (isTRUE(is.na(dim(x)[3])) == FALSE) {
+    if (isTRUE(TRD == TRUE) == TRUE) {
         RP <- list()
         for (k in 1:length(tt)) {
             tmp <- vector()
@@ -335,7 +332,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         RP <- as.character(Rp)
     }
     Xc <- vector()
-    if (isTRUE(is.na(dim(x)[3])) == FALSE) {
+    if (isTRUE(TRD == TRUE) == TRUE) {
         for (i in 1:length(xchg)) {
             for (j in 1:length(xchg[[i]])) {
                 if (isTRUE(length(xchg[[i]]) != 0L) == TRUE) {
@@ -377,7 +374,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         XCH <- as.character(Xc)
     }
     Et <- vector()
-    if (isTRUE(is.na(dim(x)[3])) == FALSE) {
+    if (isTRUE(TRD == TRUE) == TRUE) {
         for (i in 1:length(Eout)) {
             for (j in 1:length(Eout[[i]])) {
                 if (isTRUE(length(Eout[[i]]) != 0L) == TRUE) {
@@ -415,7 +412,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         ENT <- as.character(Et)
     }
     Mx <- vector()
-    if (isTRUE(is.na(dim(x)[3])) == FALSE) {
+    if (isTRUE(TRD == TRUE) == TRUE) {
         for (i in 1:length(mixe)) {
             for (j in 1:length(mixe[[i]])) {
                 if (isTRUE(length(mixe[[i]]) != 0L) == TRUE) {
@@ -457,7 +454,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         MIX <- as.character(Mx)
     }
     Fl <- vector()
-    if (isTRUE(is.na(dim(x)[3])) == FALSE) {
+    if (isTRUE(TRD == TRUE) == TRUE) {
         for (i in 1:length(full)) {
             for (j in 1:length(full[[i]])) {
                 if (isTRUE(length(full[[i]]) != 0L) == TRUE) {

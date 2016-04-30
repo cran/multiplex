@@ -4,12 +4,14 @@ function (x, type = c("numerical", "symbolic"), labels = NULL,
 {
     if (is.array(x) == FALSE) 
         stop("Data must be a stacked array of square matrices.")
-    X <- x
     if (is.na(dim(x)[3]) == FALSE) {
-        if (is.null(labels) == FALSE) 
+        if (is.null(labels) == FALSE) {
             dimnames(x)[[3]] <- labels
-        if (is.null(dimnames(x)[[3]]) == TRUE) 
-            dimnames(X)[[3]] <- 1:dim(x)[3]
+        }
+        else {
+            if (is.null(dimnames(x)[[3]]) == TRUE) 
+                dimnames(x)[[3]] <- 1:dim(x)[3]
+        }
     }
     x <- replace(x, x < 1, 0)
     x <- replace(x, x >= 1, 1)
@@ -381,15 +383,8 @@ function (x, type = c("numerical", "symbolic"), labels = NULL,
         rm(i)
         rm(tmp)
     }
-    else if (ncol(S) == ncol(E)) {
-        for (j in 1:ncol(E)) {
-            for (i in 1:nrow(E)) {
-                for (k in 1:dim(Bx)[3]) {
-                  switch(match.arg(type), numerical = NA, symbolic = S[i, 
-                    j] <- lbl[k])
-                }
-            }
-        }
+    else {
+        NA
     }
     switch(match.arg(type), numerical = dimnames(S)[[1]] <- dimnames(S)[[2]] <- 1:dim(Bx)[3], 
         symbolic = dimnames(S)[[1]] <- dimnames(S)[[2]] <- lbl)
@@ -406,11 +401,11 @@ function (x, type = c("numerical", "symbolic"), labels = NULL,
         else {
             ifelse(cmp == TRUE, lst <- list(dim = dim(x)[1], 
                 gens = x, cmps = Bx, ord = nrow(S), Note = paste("Relation ", 
-                  dimnames(X)[[3]][which(duplicated(tmpo) == 
+                  dimnames(x)[[3]][which(duplicated(tmpo) == 
                     TRUE)], " is repeated in the input data and has been equated", 
                   sep = "'"), st = lbl, S = S), lst <- list(dim = dim(x)[1], 
                 gens = x, ord = nrow(S), Note = paste("Relation ", 
-                  dimnames(X)[[3]][which(duplicated(tmpo) == 
+                  dimnames(x)[[3]][which(duplicated(tmpo) == 
                     TRUE)], " is repeated in the input data and has been equated", 
                   sep = "'"), st = lbl, S = S))
         }

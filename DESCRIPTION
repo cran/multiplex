@@ -1,6 +1,6 @@
 Package: multiplex
 Type: Package
-Version: 1.8.2
+Version: 1.9
 Depends: R (>= 3.2.3)
 Title: Algebraic Tools for the Analysis of Multiple Social Networks
 Description: Algebraic procedures for the analysis of multiple social networks are delivered with 
@@ -12,13 +12,13 @@ Description: Algebraic procedures for the analysis of multiple social networks a
 	    through Galois derivations between families of the pair of subsets.
 License: GPL-3
 Imports: methods
-VignetteBuilder: knitr
 Suggests: Rgraphviz, knitr
 Authors@R: person(given = "Antonio", family = "Rivero Ostoic", role = c("aut", "cre"), email = "multiplex@post.com")
 Author: Antonio Rivero Ostoic [aut, cre]
 Maintainer: Antonio Rivero Ostoic <multiplex@post.com>
 Repository: CRAN
 Encoding: latin1
+VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2016-03-08 14:20:32 UTC; jari
-Date/Publication: 2016-03-08 17:02:38
+Packaged: 2016-04-29 13:23:10 UTC; jari
+Date/Publication: 2016-04-30 00:30:21

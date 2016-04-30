@@ -38,15 +38,14 @@ function (P, N = NULL, labels = NULL)
             NA, labels <- 1:dim(sm)[1])
         rownames(sm) <- colnames(sm) <- labels
     }
-    else if (is.null(dimnames(Po)[1]) == FALSE) {
-        rownames(sm) <- colnames(sm) <- dimnames(Po)[[1]]
+    else if (is.null(dimnames(P)[1]) == FALSE) {
+        rownames(sm) <- colnames(sm) <- dimnames(P)[[1]]
     }
     else {
         rownames(sm) <- colnames(sm) <- 1:dim(sm)[1]
     }
     val <- levels(factor(sm))
-    lst <- list(val = noquote(levels(stats::reorder(val, length(val):1))), 
-        s = noquote(sm))
+    lst <- list(val = noquote(val[length(val):1]), s = noquote(sm))
     class(lst) <- "Signed"
     return(lst)
 }

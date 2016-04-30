@@ -8,7 +8,7 @@ Dichotomize data with a cutoff
 Function to dichotomize the input data for the semigroup construction with a cutoff value.
 }
 \usage{
-dichot(x, c = 1)
+dichot(x, c = 1, diag.incl = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -16,7 +16,10 @@ dichot(x, c = 1)
    some data in a numeric form (usually arrays)
 }
   \item{c}{
-   the cutoff value to perform the dichotomization (default 1)
+   the cutoff value to perform the dichotomization (default \code{1})
+}
+  \item{diag.incl}{
+  (logical) whether or not the diagonals should be included (default \code{TRUE})
 }
 }
 \details{

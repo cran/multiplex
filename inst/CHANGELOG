@@ -2,6 +2,24 @@
 'multiplex' PACKAGE
 
 
+version 1.9 (29-Apr-2016)
+--------------------------
+
+ADDED FEATURES:
+	+ NEW FUNCTION 'comps' that returns the distinct components of the multiple
+	  network plus the isolates
+	+ New argument in 'rel.sys' to select just a set of actors from the network
+	+ 'dichot' gives now the option to omit diagonals of the arrays
+
+BUGS FIXED:
+	* The symbolic 'semigroup' works properly for structures with no compounds
+	* Bug fixed in 'signed'
+
+OTHER CHANGES:
+	+ 'read.srt' respects the lexicographic order of the first column for actors
+	+ 'bundles' handles properly two dimensional arrays with the form [n,m,1]
+
+
 version 1.8.2 (8-Mar-2016)
 --------------------------
 
@@ -15,10 +33,10 @@ ADDED FEATURES:
 BUGS FIXED:
 	* 'diagram.levels' failed to process single layered partial order structures
 	* 'neighb' does not give an error for systems with k=1 and expand=TRUE
-	* 'signed' and 'bundles' have been re-written and now they work properly
+	* 'signed' and 'bundles' have been re-written and they should work properly
 
 OTHER CHANGES:
-	+ output labels in 'bundles' now matches the labels of 'summaryBundles'
+	+ Output labels in 'bundles' now matches the labels of 'summaryBundles'
 	+ Function 'read.gml' can import the coordenated system (with new internals)
 
 
@@ -85,7 +103,6 @@ BUGS FIXED:
 	  sometimes(?) as characters
 	* Bug fixed in 'bundle.census' when networks without actor labels have labeled
 	  relations
-	* 'bundles' handles properly two dimensional arrays with the form [n,m,1]
 
 OTHER CHANGES:
 	-+ For consistency reasons 'po.levels' is RENAMED into 'diagram.levels'

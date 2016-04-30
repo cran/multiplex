@@ -1,20 +1,36 @@
 rel.sys <-
 function (x, type = c("matlist", "listmat"), bonds = c("entire", 
-    "strong", "weak"), prsep = ", ", loops = FALSE, att = NULL) 
+    "strong", "weak"), sel = NULL, prsep = ", ", loops = FALSE, 
+    attr = NULL) 
 {
-    if (isTRUE(att == 0L) == TRUE) {
-        att <- NULL
+    if (isTRUE(attr == 0L) == TRUE) {
+        attr <- NULL
     }
     else {
         NA
     }
     if (match.arg(type) == "matlist") {
-        if (is.na(dim(x)[3]) == FALSE) {
-            if (isTRUE(all(seq(dim(x)[3]) %in% att)) == FALSE) {
-                bd <- bundles(x[, , which(!(seq(dim(x)[3]) %in% 
-                  att))], collapse = FALSE, loops = loops, prsep = prsep)
+        if (is.null(attr) == FALSE) {
+            if (is.na(dim(x)[3]) == FALSE) {
+                if (isTRUE(max(attr) > dim(x)[3]) == TRUE) 
+                  stop("Value of 'attr' greater than dim(x)[3]")
             }
-            else if (isTRUE(all(seq(dim(x)[3]) %in% att)) == 
+            else if (is.na(dim(x)[3]) == TRUE) {
+                if (isTRUE(max(attr) > 1L) == TRUE) 
+                  stop("Value of 'attr' greater than dim(x)[3]")
+            }
+            ats <- bundles(x, collapse = FALSE, loops = TRUE, 
+                prsep = prsep)[[7]][attr]
+        }
+        else if (is.null(attr) == TRUE) {
+            ats <- logical(0)
+        }
+        if (is.na(dim(x)[3]) == FALSE) {
+            if (isTRUE(all(seq(dim(x)[3]) %in% attr)) == FALSE) {
+                bd <- bundles(x[, , which(!(seq(dim(x)[3]) %in% 
+                  attr))], collapse = FALSE, loops = loops, prsep = prsep)
+            }
+            else if (isTRUE(all(seq(dim(x)[3]) %in% attr)) == 
                 TRUE) {
                 bd <- NULL
             }
@@ -23,34 +39,19 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
             bd <- bundles(x, collapse = FALSE, loops = loops, 
                 prsep = prsep)
         }
-        if (is.null(att) == FALSE) {
-            if (is.na(dim(x)[3]) == FALSE) {
-                if (isTRUE(max(att) > dim(x)[3]) == TRUE) 
-                  stop("Value of 'att' greater than dim(x)[3]")
-            }
-            else if (is.na(dim(x)[3]) == TRUE) {
-                if (isTRUE(max(att) > 1L) == TRUE) 
-                  stop("Value of 'att' greater than dim(x)[3]")
-            }
-            ats <- bundles(x, collapse = FALSE, loops = TRUE, 
-                prsep = prsep)[[7]][att]
-        }
-        else if (is.null(att) == TRUE) {
-            ats <- logical(0)
-        }
         switch(match.arg(bonds), entire = lbd <- bd, strong = lbd <- list(bd$recp, 
             bd$txch, bd$mixd, bd$full), weak = lbd <- list(bd$asym, 
             bd$tent))
         if (is.null(lbd) == FALSE) {
             if (is.na(dim(x)[3]) == FALSE && isTRUE((dim(x)[3] - 
-                length(att)) == 0L) == FALSE) {
+                length(attr)) == 0L) == FALSE) {
                 stb <- list()
-                for (k in 1:(dim(x)[3] - length(att))) {
+                for (k in 1:(dim(x)[3] - length(attr))) {
                   tmp <- vector()
                   for (i in 1:length(lbd)) {
                     if (isTRUE(length(lbd[[i]]) > 0L) == TRUE) {
                       ifelse(is.na(dim(x[, , which(!(seq(dim(x)[3]) %in% 
-                        att))])[3]) == TRUE, tmp <- append(tmp, 
+                        attr))])[3]) == TRUE, tmp <- append(tmp, 
                         lbd[[i]]), tmp <- append(tmp, lbd[[i]][k]))
                     }
                   }
@@ -70,12 +71,37 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
         else {
             stb <- lbd
         }
+        if (is.null(sel) == FALSE) {
+            ntsel <- list()
+            for (k in 1:length(stb)) {
+                tss <- which(dhc(stb[[k]]) %in% sel)
+                if (isTRUE(length(tss) > 0) == TRUE) {
+                  tmpsel <- vector()
+                  for (i in 1:length(tss)) {
+                    if (isTRUE((tss[i]%%2L) == 1L) == TRUE) {
+                      tmpsel <- append(tmpsel, stb[[k]][ceiling(tss[i]/2L)])
+                    }
+                    else {
+                      tmpsel <- append(tmpsel, stb[[k]][floor(tss[i]/2L)])
+                    }
+                  }
+                  rm(i)
+                  ntsel[[k]] <- as.vector(unlist(tmpsel))
+                }
+            }
+            rm(k)
+            rm(tmpsel, tss)
+            stb <- ntsel
+        }
+        else {
+            NA
+        }
         if (length(stb) > 0L) {
-            tmp <- vector()
+            ties <- vector()
             for (k in 1:length(stb)) {
                 for (i in 1:length(stb[[k]])) {
                   if (isTRUE(length(stb[[k]]) > 0L) == TRUE) {
-                    tmp <- append(tmp, dhc(stb[[k]][i], prsep = prsep))
+                    ties <- append(ties, dhc(stb[[k]][i], prsep = prsep))
                   }
                 }
                 rm(i)
@@ -83,23 +109,23 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
             rm(k)
         }
         else {
-            tmp <- stb <- character(0)
+            ties <- stb <- character(0)
         }
-        if (is.null(att) == TRUE) {
+        if (is.null(attr) == TRUE) {
             if (is.na(dim(x)[3]) == FALSE) {
                 ifelse(is.null(dimnames(x)[[3]]) == TRUE, attr(stb, 
-                  "names") <- 1:(dim(x)[3] - length(att)), attr(stb, 
+                  "names") <- 1:(dim(x)[3] - length(attr)), attr(stb, 
                   "names") <- dimnames(x)[[3]])
             }
         }
         else {
             ifelse(is.null(dimnames(x)[[3]]) == TRUE, attr(stb, 
-                "names") <- which(!(seq(dim(x)[3]) %in% att)), 
+                "names") <- which(!(seq(dim(x)[3]) %in% attr)), 
                 attr(stb, "names") <- dimnames(x)[[3]][which(!(seq(dim(x)[3]) %in% 
-                  att))])
+                  attr))])
         }
         if (is.null(dimnames(x)[[1]]) == TRUE) {
-            note <- "Input labels in x are NULL."
+            note <- "Input labels in 'x' are NULL."
             lbs <- 1:dim(x)[1]
         }
         else {
@@ -108,29 +134,30 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
         }
         if (isTRUE(length(ats) > 0L) == TRUE) {
             ifelse(length(note) > 0L, RS <- (list(ord = dim(x)[1], 
-                nodes = lbs, sys.ord = nlevels(factor(tmp)), 
-                incl = lbs[which(lbs %in% levels(factor(tmp)))], 
-                excl = lbs[which(!(lbs %in% levels(factor(tmp))))], 
+                nodes = lbs, sel = sel, sys.ord = nlevels(factor(ties)), 
+                incl = lbs[which(lbs %in% levels(factor(ties)))], 
+                excl = lbs[which(!(lbs %in% levels(factor(ties))))], 
                 bond.type = bonds, size = length(unlist(stb)), 
                 Note = note, prsep = prsep, Ties = stb, Attrs.ord = length(unlist(ats)), 
                 Attrs = jnt(dhc(ats, prsep = prsep), prsep = prsep))), 
-                RS <- (list(ord = dim(x)[1], nodes = lbs, sys.ord = nlevels(factor(tmp)), 
-                  incl = lbs[which(lbs %in% levels(factor(tmp)))], 
-                  excl = lbs[which(!(lbs %in% levels(factor(tmp))))], 
-                  bond.type = bonds, size = length(unlist(stb)), 
-                  prsep = prsep, Ties = stb, Attrs.ord = length(unlist(ats)), 
+                RS <- (list(ord = dim(x)[1], nodes = lbs, sel = sel, 
+                  sys.ord = nlevels(factor(ties)), incl = lbs[which(lbs %in% 
+                    levels(factor(ties)))], excl = lbs[which(!(lbs %in% 
+                    levels(factor(ties))))], bond.type = bonds, 
+                  size = length(unlist(stb)), prsep = prsep, 
+                  Ties = stb, Attrs.ord = length(unlist(ats)), 
                   Attrs = jnt(dhc(ats, prsep = prsep), prsep = prsep))))
         }
         else {
             ifelse(isTRUE(length(note) > 0L) == TRUE, RS <- (list(ord = dim(x)[1], 
-                nodes = lbs, sys.ord = nlevels(factor(tmp)), 
-                incl = lbs[which(lbs %in% levels(factor(tmp)))], 
-                excl = lbs[which(!(lbs %in% levels(factor(tmp))))], 
+                nodes = lbs, sel = sel, sys.ord = nlevels(factor(ties)), 
+                incl = lbs[which(lbs %in% levels(factor(ties)))], 
+                excl = lbs[which(!(lbs %in% levels(factor(ties))))], 
                 bond.type = bonds, size = length(unlist(stb)), 
                 Note = note, prsep = prsep, Ties = stb)), RS <- (list(ord = dim(x)[1], 
-                nodes = lbs, sys.ord = nlevels(factor(tmp)), 
-                incl = lbs[which(lbs %in% levels(factor(tmp)))], 
-                excl = lbs[which(!(lbs %in% levels(factor(tmp))))], 
+                nodes = lbs, sel = sel, sys.ord = nlevels(factor(ties)), 
+                incl = lbs[which(lbs %in% levels(factor(ties)))], 
+                excl = lbs[which(!(lbs %in% levels(factor(ties))))], 
                 bond.type = bonds, size = length(unlist(stb)), 
                 prsep = prsep, Ties = stb)))
         }
@@ -142,9 +169,53 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
             stop("Relational system must be a \"Rel.System\" class.")
         if (isTRUE(x$sys.ord == 0L) == TRUE) 
             stop("Relational system chosen is empty!")
-        n <- x$sys.ord
-        r <- length(x$Ties)
-        lbs <- x$incl
+        lbst <- attr(x$Ties, "names")
+        if (is.null(sel) == FALSE) {
+            if (isTRUE(sel == 1L) == TRUE) {
+                sel <- x$nodes[which(x$nodes %in% unlist(dhc(x$Attrs)))]
+            }
+            else if (isTRUE(sel == 0L) == TRUE) {
+                sel <- x$nodes[which(!(x$nodes %in% unlist(dhc(x$Attrs))))]
+            }
+            else if (isTRUE(any(sel %in% x$nodes)) == FALSE) {
+                return(sel)
+            }
+            else {
+                NA
+            }
+            ntsel <- list()
+            for (k in 1:length(x$Ties)) {
+                tss <- which(dhc(x$Ties[[k]]) %in% sel)
+                if (isTRUE(length(tss) > 0) == TRUE) {
+                  tmpsel <- vector()
+                  for (i in 1:length(tss)) {
+                    if (isTRUE((tss[i]%%2L) == 1L) == TRUE) {
+                      tmpsel <- append(tmpsel, x$Ties[[k]][ceiling(tss[i]/2L)])
+                    }
+                    else {
+                      tmpsel <- append(tmpsel, x$Ties[[k]][floor(tss[i]/2L)])
+                    }
+                  }
+                  rm(i)
+                  ntsel[[k]] <- as.vector(unlist(tmpsel))
+                }
+                else {
+                  lbst <- lbst[which(!(lbst %in% lbst[k]))]
+                }
+            }
+            rm(k)
+            rm(tmpsel, tss)
+            ntsel <- ntsel[unlist(lapply(ntsel, length) != 0)]
+            x$Ties <- ntsel
+            lbs <- unique(dhc(unlist(ntsel)))
+            n <- length(lbs)
+            r <- length(lbst)
+        }
+        else if (is.null(sel) == TRUE) {
+            n <- x$sys.ord
+            r <- length(x$Ties)
+            lbs <- x$incl
+        }
         arr <- array(0, dim = c(n, n, r))
         for (i in 1:r) {
             if (isTRUE(length(x$Ties[[i]]) > 0) == TRUE) {
@@ -157,7 +228,7 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
         }
         rm(i)
         dimnames(arr)[[1]] <- dimnames(arr)[[2]] <- lbs
-        dimnames(arr)[[3]] <- attr(x$Ties, "names")
+        dimnames(arr)[[3]] <- lbst
         if (is.null(x$Attrs) == FALSE) {
             arra <- array(0, dim = c(n, n, length(x$Attrs)))
             dimnames(arra)[[1]] <- dimnames(arra)[[2]] <- lbs
@@ -169,10 +240,10 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
                 }
             }
             rm(i)
-            atts <- dim(arr)[3]
+            attrs <- dim(arr)[3]
             arr <- zbind(arr, arra)
-            class(arr) <- c("Rel.System", "Attrs.", paste(atts + 
-                1L, dim(arr)[3], sep = ":"))
+            class(arr) <- c("Rel.System", paste("Attrs.", paste(attrs + 
+                1L, dim(arr)[3], sep = "="), sep = ": "))
         }
         return(arr)
     }
