@@ -2,6 +2,26 @@
 'multiplex' PACKAGE
 
 
+version 1.9.2 (16-June-2016)
+--------------------------
+
+ADDED FEATURES:
+	+ NEW FUNCTION 'mnplx' to make multiple networks as monoplex structures
+	+ Bonds argument in 'rel.sys' permits specifying particular bundle types
+	  and the selection option now works with empty matrices
+	+ 'diagram' allows graphical parameters such as background color, and 
+	  restores the original margen parameters after the plotting
+
+BUGS FIXED:
+	* Fix 'galois' for objects or/and attributes with identical profiles
+	* 'comps' accepts networks (levels) with empty ties
+	* 'zbind' retrieves the tie label for arrays like [n,m,1]
+
+OTHER CHANGES:
+	+ 'rbox' handles paths until k = 9
+	+ 'bundles' ensures working with binary matrices to speed up computations
+
+
 version 1.9 (29-Apr-2016)
 --------------------------
 
@@ -9,7 +29,7 @@ ADDED FEATURES:
 	+ NEW FUNCTION 'comps' that returns the distinct components of the multiple
 	  network plus the isolates
 	+ New argument in 'rel.sys' to select just a set of actors from the network
-	+ 'dichot' gives now the option to omit diagonals of the arrays
+	+ 'dichot' has the option to omit the array diagonals in the transformation
 
 BUGS FIXED:
 	* The symbolic 'semigroup' works properly for structures with no compounds

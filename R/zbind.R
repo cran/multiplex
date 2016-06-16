@@ -45,7 +45,14 @@ function (...)
                 lbs <- append(lbs, (length(lbs) + 1:dim(argl[[i]])[3])))
         }
         else if (isTRUE(dim(argl[[i]])[3] > 1) == FALSE) {
-            lbs <- append(lbs, (length(lbs) + 1))
+            if (isTRUE(is.na(dim(argl[[i]])[3])) == FALSE) {
+                ifelse(is.null(attr(argl[[i]], "dimnames")[[3]]) == 
+                  FALSE, lbs <- append(lbs, attr(argl[[i]], "dimnames")[[3]]), 
+                  lbs <- append(lbs, (length(lbs) + 1)))
+            }
+            else {
+                lbs <- append(lbs, (length(lbs) + 1))
+            }
         }
     }
     rm(i)

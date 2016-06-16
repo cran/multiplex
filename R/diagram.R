@@ -1,13 +1,16 @@
 diagram <-
-function (x, unord = TRUE, attrs = NULL, main = NULL, cex.main = graphics::par()$cex.main) 
+function (x, unord = TRUE, attrs = NULL, main = NULL, cex.main = graphics::par()$cex.main, 
+    bg = graphics::par()$bg, ...) 
 {
     if (requireNamespace("Rgraphviz", quietly = TRUE)) {
         if (is.null(dimnames(x)[[1]]) == TRUE) 
             rownames(x) <- colnames(x) <- as.character(utils::as.roman(c(1:dim(x)[1])))
+        obg <- graphics::par()$bg
+        graphics::par(bg = bg)
         if (is.null(attrs) == TRUE) 
             attrs = list(graph = list(rankdir = "BT"), edge = list(arrowsize = "0", 
                 minlen = "1"), node = list(shape = "rectangle", 
-                color = "white", fixedsize = FALSE))
+                color = "transparent", fixedsize = FALSE))
         po <- x & (1L - t(x))
         diag(po) <- 0L
         if (isTRUE(ncol(x) == nrow(x)) == TRUE) {
@@ -55,8 +58,11 @@ function (x, unord = TRUE, attrs = NULL, main = NULL, cex.main = graphics::par()
             po <- as.matrix(stats::na.exclude(npx))
             dimnames(po)[[1]] <- dimnames(po)[[2]] <- as.vector(stats::na.exclude(lb))
         }
+        opm <- graphics::par()$mar
         Rgraphviz::plot(methods::as(po, "graphNEL"), attrs = attrs, 
-            main = main, cex.main = cex.main)
+            main = main, cex.main = cex.main, ...)
+        graphics::par(mar = opm)
+        graphics::par(bg = obg)
     }
     else stop("Package 'Rgraphviz' needs to be properly installed")
 }

@@ -30,7 +30,7 @@ Antonio Rivero Ostoic
 Data frames should be transformed into square arrays
 }
 \seealso{
-\code{\link{strings}}
+\code{\link{mnplx}}, \code{\link{dichot}}, \code{\link{strings}}
 }
 \examples{
 ## Create the data: two sets with a pair of binary relations 

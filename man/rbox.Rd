@@ -51,10 +51,9 @@ Winship, C. and M.J. Mandel `Roles and positions: A critique and extension of th
 Antonio Rivero Ostoic
 }
 \note{
-With many types of relations, and when the order of the multiple network is high, turning \code{k} to more than three may take a long time of computation.
+Values of \code{k} until 9 is supported. With many types of relations, and when the order of the multiple network is high, turning \code{k} to more than three may take a long time of computation.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+%\Warning{}
 
 \seealso{
  \code{\link{cph}}, \code{\link{semigroup}}, \code{\link{hierar}}

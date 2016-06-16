@@ -7,7 +7,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     ifelse(isTRUE(is.null(dimnames(x)[1]) == TRUE | is.null(dimnames(x)[1][[1]]) == 
         TRUE) == TRUE, LBS <- 1:nrow(x), LBS <- dimnames(x)[[1]])
     lbs <- seq(LBS)
-    xd <- dichot(x, c = 1L)
+    xd <- dichot(x, c = 1L, diag.incl = TRUE)
     ifelse(isTRUE(dim(xd)[3] == 1) == TRUE, xd <- xd[, , 1], 
         NA)
     if (is.na(dim(xd)[3]) == FALSE) {
@@ -292,7 +292,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         AS <- list()
         for (k in 1:length(tt)) {
             tmp <- vector()
-            for (i in which(As %in% transf(x[, , k], labels = lbs, 
+            for (i in which(As %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmp <- append(tmp, As[i])
             }
@@ -319,7 +319,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         RP <- list()
         for (k in 1:length(tt)) {
             tmp <- vector()
-            for (i in which(Rp %in% transf(x[, , k], labels = lbs, 
+            for (i in which(Rp %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmp <- append(tmp, Rp[i])
             }
@@ -349,12 +349,12 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         for (k in 1:length(tt)) {
             tmp <- vector()
             tmpt <- vector()
-            for (i in which(Xc %in% transf(x[, , k], labels = lbs, 
+            for (i in which(Xc %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmp <- append(tmp, Xc[i])
             }
             rm(i)
-            for (i in which(Xc %in% transf(t(x[, , k]), labels = lbs, 
+            for (i in which(Xc %in% transf(t(xd[, , k]), labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmpt <- append(tmpt, paste(strsplit(Xc[i], prsep)[[1]][2], 
                   strsplit(Xc[i], prsep)[[1]][1], sep = prsep))
@@ -399,7 +399,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         ENT <- list()
         for (k in 1:length(tt)) {
             tmp <- vector()
-            for (i in which(Et %in% transf(x[, , k], labels = lbs, 
+            for (i in which(Et %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmp <- append(tmp, Et[i])
             }
@@ -429,12 +429,12 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         for (k in 1:length(tt)) {
             tmp <- vector()
             tmpt <- vector()
-            for (i in which(Mx %in% transf(x[, , k], labels = lbs, 
+            for (i in which(Mx %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmp <- append(tmp, Mx[i])
             }
             rm(i)
-            for (i in which(Mx %in% transf(t(x[, , k]), labels = lbs, 
+            for (i in which(Mx %in% transf(t(xd[, , k]), labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmpt <- append(tmpt, paste(strsplit(Mx[i], prsep)[[1]][2], 
                   strsplit(Mx[i], prsep)[[1]][1], sep = prsep))
@@ -471,12 +471,12 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         for (k in 1:length(tt)) {
             tmp <- vector()
             tmpt <- vector()
-            for (i in which(Fl %in% transf(x[, , k], labels = lbs, 
+            for (i in which(Fl %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmp <- append(tmp, Fl[i])
             }
             rm(i)
-            for (i in which(Fl %in% transf(t(x[, , k]), labels = lbs, 
+            for (i in which(Fl %in% transf(t(xd[, , k]), labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
                 tmpt <- append(tmpt, paste(strsplit(Fl[i], prsep)[[1]][2], 
                   strsplit(Fl[i], prsep)[[1]][1], sep = prsep))
@@ -584,7 +584,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
             LOP <- list()
             length(LOP) <- dim(x)[3]
             for (i in 1:dim(x)[3]) {
-                lp <- which(diag(x[, , i]) != 0L)
+                lp <- which(diag(xd[, , i]) != 0L)
                 if (isTRUE(length(lp) > 0L) == TRUE) {
                   for (j in 1:length(lp)) {
                     if (lb2lb) {
@@ -615,7 +615,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         }
         else {
             LOP <- vector()
-            lp <- which(diag(x) != 0L)
+            lp <- which(diag(xd) != 0L)
             for (j in 1:length(lp)) {
                 LOP <- append(LOP, paste(LBS[lp][j], LBS[lp][j], 
                   sep = prsep))

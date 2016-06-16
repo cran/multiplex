@@ -1,6 +1,6 @@
 Package: multiplex
 Type: Package
-Version: 1.9
+Version: 1.9.3
 Depends: R (>= 3.2.3)
 Title: Algebraic Tools for the Analysis of Multiple Social Networks
 Description: Algebraic procedures for the analysis of multiple social networks are delivered with 
@@ -20,5 +20,5 @@ Repository: CRAN
 Encoding: latin1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2016-04-29 13:23:10 UTC; jari
-Date/Publication: 2016-04-30 00:30:21
+Packaged: 2016-06-16 09:40:57 UTC; JARO
+Date/Publication: 2016-06-16 12:32:00

@@ -7,8 +7,9 @@ Relational System
 Create the Relation System of a multiple network.
 }
 \usage{
-rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak"), 
-          sel = NULL, prsep = ", ", loops = FALSE, attr = NULL)
+rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak", 
+        "asym", "recp", "txch", "tent", "mixd", "full"), sel = NULL, 
+	prsep = ", ", loops = FALSE, att = NULL)
 }
 \arguments{
   \item{x}{
@@ -29,7 +30,7 @@ rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak")
   \item{loops}{
    (logical) whether or not the loops should be considered in the relational system
 }
-  \item{attr}{
+  \item{att}{
    the arrays in \code{x} corresponding to attributes
 }
 }

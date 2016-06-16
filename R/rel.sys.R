@@ -1,36 +1,38 @@
 rel.sys <-
 function (x, type = c("matlist", "listmat"), bonds = c("entire", 
-    "strong", "weak"), sel = NULL, prsep = ", ", loops = FALSE, 
-    attr = NULL) 
+    "strong", "weak", "asym", "recp", "txch", "tent", "mixd", 
+    "full"), sel = NULL, prsep = ", ", loops = FALSE, att = NULL) 
 {
-    if (isTRUE(attr == 0L) == TRUE) {
-        attr <- NULL
+    if (isTRUE(att == 0L) == TRUE) {
+        att <- NULL
     }
     else {
         NA
     }
     if (match.arg(type) == "matlist") {
-        if (is.null(attr) == FALSE) {
+        if (!inherits(x, "array")) 
+            stop("\"x\" should be an array.")
+        if (is.null(att) == FALSE) {
             if (is.na(dim(x)[3]) == FALSE) {
-                if (isTRUE(max(attr) > dim(x)[3]) == TRUE) 
+                if (isTRUE(max(att) > dim(x)[3]) == TRUE) 
                   stop("Value of 'attr' greater than dim(x)[3]")
             }
             else if (is.na(dim(x)[3]) == TRUE) {
-                if (isTRUE(max(attr) > 1L) == TRUE) 
+                if (isTRUE(max(att) > 1L) == TRUE) 
                   stop("Value of 'attr' greater than dim(x)[3]")
             }
             ats <- bundles(x, collapse = FALSE, loops = TRUE, 
-                prsep = prsep)[[7]][attr]
+                prsep = prsep)[[7]][att]
         }
-        else if (is.null(attr) == TRUE) {
+        else if (is.null(att) == TRUE) {
             ats <- logical(0)
         }
         if (is.na(dim(x)[3]) == FALSE) {
-            if (isTRUE(all(seq(dim(x)[3]) %in% attr)) == FALSE) {
+            if (isTRUE(all(seq(dim(x)[3]) %in% att)) == FALSE) {
                 bd <- bundles(x[, , which(!(seq(dim(x)[3]) %in% 
-                  attr))], collapse = FALSE, loops = loops, prsep = prsep)
+                  att))], collapse = FALSE, loops = loops, prsep = prsep)
             }
-            else if (isTRUE(all(seq(dim(x)[3]) %in% attr)) == 
+            else if (isTRUE(all(seq(dim(x)[3]) %in% att)) == 
                 TRUE) {
                 bd <- NULL
             }
@@ -41,17 +43,19 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
         }
         switch(match.arg(bonds), entire = lbd <- bd, strong = lbd <- list(bd$recp, 
             bd$txch, bd$mixd, bd$full), weak = lbd <- list(bd$asym, 
-            bd$tent))
+            bd$tent), asym = lbd <- list(bd$asym), recp = lbd <- list(bd$recp), 
+            txch = lbd <- list(bd$txch), tent = lbd <- list(bd$tent), 
+            mixd = lbd <- list(bd$mixd), full = lbd <- list(bd$full))
         if (is.null(lbd) == FALSE) {
             if (is.na(dim(x)[3]) == FALSE && isTRUE((dim(x)[3] - 
-                length(attr)) == 0L) == FALSE) {
+                length(att)) == 0L) == FALSE) {
                 stb <- list()
-                for (k in 1:(dim(x)[3] - length(attr))) {
+                for (k in 1:(dim(x)[3] - length(att))) {
                   tmp <- vector()
                   for (i in 1:length(lbd)) {
                     if (isTRUE(length(lbd[[i]]) > 0L) == TRUE) {
                       ifelse(is.na(dim(x[, , which(!(seq(dim(x)[3]) %in% 
-                        attr))])[3]) == TRUE, tmp <- append(tmp, 
+                        att))])[3]) == TRUE, tmp <- append(tmp, 
                         lbd[[i]]), tmp <- append(tmp, lbd[[i]][k]))
                     }
                   }
@@ -72,7 +76,13 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
             stb <- lbd
         }
         if (is.null(sel) == FALSE) {
+            if (is.array(sel) == TRUE) {
+                ifelse(is.na(dim(sel)[3]) == TRUE | isTRUE(dim(sel)[3] == 
+                  1L) == TRUE, sel <- diag(sel), sel <- diag(mnplx(sel)))
+                sel <- as.vector(attr(which(!(sel == 0)), "names"))
+            }
             ntsel <- list()
+            length(ntsel) <- length(stb)
             for (k in 1:length(stb)) {
                 tss <- which(dhc(stb[[k]]) %in% sel)
                 if (isTRUE(length(tss) > 0) == TRUE) {
@@ -81,12 +91,12 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
                     if (isTRUE((tss[i]%%2L) == 1L) == TRUE) {
                       tmpsel <- append(tmpsel, stb[[k]][ceiling(tss[i]/2L)])
                     }
-                    else {
+                    else if (isTRUE((tss[i]%%2L) == 1L) == FALSE) {
                       tmpsel <- append(tmpsel, stb[[k]][floor(tss[i]/2L)])
                     }
                   }
                   rm(i)
-                  ntsel[[k]] <- as.vector(unlist(tmpsel))
+                  ntsel[[k]] <- unique(as.vector(unlist(tmpsel)))
                 }
             }
             rm(k)
@@ -111,18 +121,18 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
         else {
             ties <- stb <- character(0)
         }
-        if (is.null(attr) == TRUE) {
+        if (is.null(att) == TRUE) {
             if (is.na(dim(x)[3]) == FALSE) {
                 ifelse(is.null(dimnames(x)[[3]]) == TRUE, attr(stb, 
-                  "names") <- 1:(dim(x)[3] - length(attr)), attr(stb, 
+                  "names") <- 1:(dim(x)[3] - length(att)), attr(stb, 
                   "names") <- dimnames(x)[[3]])
             }
         }
         else {
             ifelse(is.null(dimnames(x)[[3]]) == TRUE, attr(stb, 
-                "names") <- which(!(seq(dim(x)[3]) %in% attr)), 
+                "names") <- which(!(seq(dim(x)[3]) %in% att)), 
                 attr(stb, "names") <- dimnames(x)[[3]][which(!(seq(dim(x)[3]) %in% 
-                  attr))])
+                  att))])
         }
         if (is.null(dimnames(x)[[1]]) == TRUE) {
             note <- "Input labels in 'x' are NULL."
@@ -169,6 +179,8 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
             stop("Relational system must be a \"Rel.System\" class.")
         if (isTRUE(x$sys.ord == 0L) == TRUE) 
             stop("Relational system chosen is empty!")
+        if (isTRUE(bonds != "entire") == TRUE) 
+            warning("'bonds' is only for the \"matlist\" option.")
         lbst <- attr(x$Ties, "names")
         if (is.null(sel) == FALSE) {
             if (isTRUE(sel == 1L) == TRUE) {
@@ -204,7 +216,7 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
                 }
             }
             rm(k)
-            rm(tmpsel, tss)
+            rm(tss)
             ntsel <- ntsel[unlist(lapply(ntsel, length) != 0)]
             x$Ties <- ntsel
             lbs <- unique(dhc(unlist(ntsel)))
@@ -218,7 +230,8 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
         }
         arr <- array(0, dim = c(n, n, r))
         for (i in 1:r) {
-            if (isTRUE(length(x$Ties[[i]]) > 0) == TRUE) {
+            if (isTRUE(length(x$Ties[[i]]) > 0) == TRUE && isTRUE(n > 
+                0) == TRUE) {
                 arr[, , i] <- transf(x$Ties[[i]], type = "listmat", 
                   ord = n, labels = lbs)
             }
@@ -228,11 +241,13 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
         }
         rm(i)
         dimnames(arr)[[1]] <- dimnames(arr)[[2]] <- lbs
-        dimnames(arr)[[3]] <- lbst
+        if (isTRUE(n > 0) == TRUE) 
+            dimnames(arr)[[3]] <- lbst
         if (is.null(x$Attrs) == FALSE) {
             arra <- array(0, dim = c(n, n, length(x$Attrs)))
             dimnames(arra)[[1]] <- dimnames(arra)[[2]] <- lbs
-            dimnames(arra)[[3]] <- attr(x$Attrs, "names")
+            if (isTRUE(n > 0) == TRUE) 
+                dimnames(arra)[[3]] <- attr(x$Attrs, "names")
             for (i in 1:length(x$Attrs)) {
                 act <- dhc(x$Attrs[[i]], prsep = prsep)
                 if (isTRUE(length(act) > 0) == TRUE) {
@@ -242,8 +257,14 @@ function (x, type = c("matlist", "listmat"), bonds = c("entire",
             rm(i)
             attrs <- dim(arr)[3]
             arr <- zbind(arr, arra)
-            class(arr) <- c("Rel.System", paste("Attrs.", paste(attrs + 
-                1L, dim(arr)[3], sep = "="), sep = ": "))
+            if (isTRUE(dim(arra)[3] > 1) == TRUE) {
+                class(arr) <- c("array", paste("Attrs.", paste(attrs + 
+                  1L, dim(arr)[3], sep = ","), sep = " : "))
+            }
+            else {
+                class(arr) <- c("array", paste("Attrs.", dim(arr)[3], 
+                  sep = " : "))
+            }
         }
         return(arr)
     }
