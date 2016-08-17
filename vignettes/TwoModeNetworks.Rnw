@@ -1,5 +1,5 @@
 %\VignetteIndexEntry{Working with Two-Mode Networks in multiplex}
-%\VignetteDepends{multiplex, Rgraphviz}
+%\VignetteDepends{multiplex, Rgraphviz, multigraph}
 %\VignetteEngine{knitr::knitr}
 
 \documentclass{article}
@@ -167,7 +167,7 @@ Hence concepts $7$ and $12$ make a class of their own, whereas the rest of the c
 
 By setting \texttt{perm} to \texttt{TRUE}, we obtain the different classes in the lattice structure in a convenient way, and also a permuted partial order table according to the clustering.
 
-<<diaglevelsperm, echo=TRUE>>= 
+<<diaglevelsperm, echo=TRUE, message=FALSE, warning=FALSE>>= 
 ## Diagram levels with permutation
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram.levels(pogcc, perm = TRUE) }
@@ -224,57 +224,19 @@ fltr(3, pogc, ideal = TRUE)
 
 \section{Bipartite graphs}
 
-Two-mode network are depicted through bipartite graphs, where the entities can be related only to the elements placed in the other set. One way to produce bipartite graphs with \textbf{multiplex} is by plotting an isomorphic lattice diagram to the bipartite graph. For this we need to construct a square matrix with both the domain and codomain where the binary ties among these are taken as inclusion relations.
+Two-mode network are depicted through \emph{bipartite graphs}, where the entities in one set only can relate to the elements placed in the other set. \textbf{multiplex} has a reverse dependence on \textbf{multigraph} for the visualization of multiple networks, and also for bipartite graphs. Hence, we use the function \texttt{bmgraph()} to plot the graph of the \texttt{frt} data set with the default layout option.
 
-
-For the creation of such matrix we can use the \texttt{transf()} function that starting with version $1.5$ supports rectangular arrays. Hence with the option ``\texttt{matlist}'' of this function we transform the data frame of the formal context into a ``list of pairs'' with the relations between objects and their attributes. It is convenient to preserve the labels in the transformation, and when assigning the output into an object we make sure that the option \texttt{lb2lb} is set to \texttt{TRUE}.
-
-<<lstfrt, echo=-2>>= 
-lstfrt <- transf(frt, type = "matlist", lb2lb = TRUE)
-lstfrt
+<<bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph'>>=
+library("multigraph")
+bmgraph(frt, vcol = 1)
 @
 
-Now if we transform again the list of pairs into a ``matrix'' then we obtain the square array that can be used to produce a lattice diagram isomorphic to the bipartite graph of the network. Since \scalebox{1.2}[1.0]{R} is case sensitive, the output of this transformation differentiates ``orange'' from ``Orange''; otherwise there is a mix of the color with the fruit that will not produce a diagram isomorphic to the bipartite graph. 
+Another possibility is to apply a force-directed layout to the binomial projection of this two-mode data set, below with some arguments for the vertices.
 
-<<matlstfrt, echo=TRUE>>=
-mlstfrt <- transf(lstfrt, type = "listmat", lb2lb = TRUE)
+<<binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with stress majorization', echo=TRUE>>=
+bmgraph(frt, layout = "stress", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16:15)
 @
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-<<setup2, include=FALSE>>=
-# smaller font size for chunks
-options(width=130)
-@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%\vspace{-20pt}
-<<matlstfrtecho, echo=FALSE, size='scriptsize'>>=
-mlstfrt
-@
-
-\newpage
-
-Notice that this array is a matrix that is asymmetric, and this condition is essential if we want to obtain a partial ordering that leads to the lattice diagram isomorphic to the bipartite graph of the network. Symmetric data structures only consider mutual inclusions without any level differentiation, and hence there will be no lines in the lattice diagram.
-
-
-If we plot the diagram corresponding to this table, we obtain the lattice diagram that is isomorphic to the bipartite graph of the network.
-
-<<bipgraph, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph of the fruit characteristics ', small.mar=TRUE>>=
-if( require("Rgraphviz", quietly = TRUE)) {
-diagram(mlstfrt)
-}
-@
-
-\bigbreak
-Obviously, by transposing the matrix we produce inclusions from the attributes into the objects of the context.
-
-<<bipgraphB, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Transpose depiction of the Bipartite graph', small.mar=TRUE>>=
-if( require("Rgraphviz", quietly = TRUE)) {
-diagram(t(mlstfrt)) 
-}
-@
 
 
 \bigbreak
@@ -286,7 +248,8 @@ diagram(t(mlstfrt))
 %
 \bibitem{Gant-Will96} Ganter, B. and R. Wille~\emph{ Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
 \bibitem{rgpahviz} Gentry, J, L. Long, R. Gentleman, S. Falcon, F. Hahne, D. Sarkar, and K.D. Hansen  ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package version 2.12.0
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Analysis of Multiple Social Networks with Algebra}. R package version 1.7
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Algebraic Tools for the Analysis of Multiple Social Networks}. R package v 2.0
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multigraph}: \emph{Plot and manipulate multigraphs}. R package v 0.30
 %
 \end{thebibliography}
 

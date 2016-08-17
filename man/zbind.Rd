@@ -15,7 +15,7 @@ zbind(...)
 }
 }
 \details{
-This function represents an extension to both the \code{\link[base:cbind]{cbind}} and the \code{\link[base:rbind]{rbind}} functions, and it is especially useful in constructing a single object to represent a multivariate system structure. 
+This function represents an extension to both the \code{\link[base:cbind]{cbind}} and the \code{\link[base:rbind]{rbind}} functions, and it is especially useful in constructing a single object to represent a multivariate system structure. Both square and rectangular arrays are supported provided that the dimensions in the input are equal.
 }
 \value{
 Usually a three dimensional array
@@ -27,7 +27,7 @@ Usually a three dimensional array
 Antonio Rivero Ostoic
 }
 \note{
-Data frames should be transformed into square arrays
+Data frames should be transformed into arrays
 }
 \seealso{
 \code{\link{mnplx}}, \code{\link{dichot}}, \code{\link{strings}}

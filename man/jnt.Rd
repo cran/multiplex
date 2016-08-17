@@ -7,7 +7,7 @@ internal function
 internal function
 }
 %\usage{
-%jnt(PR, prsep = ", ")
+%jnt(xj, prsep)
 %}
 %
 \keyword{internal}

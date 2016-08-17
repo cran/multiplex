@@ -36,7 +36,7 @@ Antonio Rivero Ostoic
 %
 %}
 \seealso{
-\code{\link{write.gml}}, \code{\link{write.srt}}, \code{\link{write.dat}}
+\code{\link{read.dl}}, \code{\link{write.gml}}, \code{\link{write.srt}}, \code{\link{write.dat}}
 }
 %\examples{
 %

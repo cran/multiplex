@@ -1,39 +1,39 @@
 \name{transf}
 \alias{transf}
 \title{
-Transform Data from/to Matrix/List Formats
+Transform Data from/to Array to Pairwise List Formats
 }
 \description{
-Function to transform data from/to matrix/list formats representing a network.
+Function to transform data from/to array to pairwise list formats to represent the network.
 }
 \usage{
-transf(x, type = c("matlist", "listmat"), lb2lb = FALSE, 
-       labels = NULL, prsep = ", ", ord = NULL)
+transf(x, type = c("tolist", "toarray"), lb2lb = FALSE, 
+       labels = NULL, ord, prsep)
 }
 \arguments{
   \item{x}{
    a matrix or a list of pair relations
   }
   \item{type}{
-   whether the transformation is from a matrix to a list of pair relations, or from a list of pair relations to a matrix form
+   whether the transformation is from a matrix to a list of pair relations, or from a list of pair relations to an array format
   }
   \item{lb2lb}{
    (logical) whether the transformation is label-to-label
   }
   \item{labels}{
-   the labels in the transformation
+   (optional) the labels in the transformation
+  }
+  \item{ord}{
+   (optional) the order of the resulted structure (`\code{toarray}' option, otherwise ignored)
   }
   \item{prsep}{
    (optional) the pair separator for the pairwise relations
   }
-  \item{ord}{
-   the order of the resulted structure (`\code{listmat}' option, otherwise ignored)
-  }
 }
 \details{
-`\code{matlist}' is the option to transform a matrix to a list of pair elements. In case that the \code{lb2lb} is enabled in this type of transformation, then \code{labels} must be provided, whereas the pair separator is optional. On the other hand `\code{listmat}' will produce a matrix from a list of pair elements, and in this case is advisable to specify the order of the structure.
+This is a function to transform the data representing the network from an array, matrix, or data frame into a `pairwise list' of relations and vice versa. Use argument `\code{tolist}' to transform a matrix to a list of pair elements, and `\code{toarray}' for the converse. In the former option there is the possibility to enable \code{lb2lb} to preserve the label names of the network members; otherwise their placement in the array will be given. For the latter option it is advisable to specify the order of the structure in case there are isolated actors.
 
-For high dimensional arrays use the \code{\link{rel.sys}} function in order to get the list of pair relations of the entire structure.
+Note that this function is designed for simple networks, and in order to perform a transformation of a multiple network that are represented by high dimensional arrays we use instead for the \code{\link{rel.sys}} function, which allows many more options.
 }
 \value{
 Depending on the input data, the result is either a list of pair relations or a matrix of relations.
@@ -45,7 +45,7 @@ Depending on the input data, the result is either a list of pair relations or a 
 Antonio Rivero Ostoic
 }
 \note{
-Data frames are also accepted for the `\code{matlist}' option, but in case that this information is given as a list of pair relations the output will be a square matrix.
+Data frames are also accepted for the `\code{tolist}' option, but in case that this information is given as a list of pair relations the output will be a square matrix.
 }
 \seealso{
 \code{\link{read.srt}}, \code{\link{bundles}}, \code{\link{reduc}}, \code{\link{rel.sys}}

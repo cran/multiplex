@@ -1,7 +1,8 @@
 pacnet <-
-function (file, prsep = ", ", toarray = FALSE, uniq = FALSE, 
-    transp = FALSE) 
+function (file, toarray = FALSE, uniq = FALSE, transp = FALSE, 
+    prsep) 
 {
+    ifelse(missing(prsep) == TRUE, prsep <- ", ", NA)
     arx <- scan(file, what = "character", nlines = -1, quiet = TRUE)
     if (isTRUE(length(grep("ALPHA", arx, fixed = TRUE)) == 0L) == 
         TRUE) {
@@ -151,9 +152,9 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
             1:n, 1:length(ii)))
         for (i in 1:length(ii)) {
             ifelse(isTRUE(transp == TRUE) == TRUE, iiarrs[, , 
-                i] <- transf(t(ii[[i]]), type = "listmat", ord = n, 
+                i] <- transf(t(ii[[i]]), type = "toarray", ord = n, 
                 prsep = prsep), iiarrs[, , i] <- transf(ii[[i]], 
-                type = "listmat", ord = n, prsep = prsep))
+                type = "toarray", ord = n, prsep = prsep))
         }
         rm(i)
         tmp <- data.frame(matrix(ncol = dim(iiarrs)[1] * dim(iiarrs)[2], 
@@ -174,9 +175,9 @@ function (file, prsep = ", ", toarray = FALSE, uniq = FALSE,
             1:n, 1:length(at)))
         for (i in 1:length(at)) {
             ifelse(isTRUE(transp == TRUE) == TRUE, atarrs[, , 
-                i] <- transf(t(at[[i]]), type = "listmat", ord = n, 
+                i] <- transf(t(at[[i]]), type = "toarray", ord = n, 
                 prsep = prsep), atarrs[, , i] <- transf(at[[i]], 
-                type = "listmat", ord = n, prsep = prsep))
+                type = "toarray", ord = n, prsep = prsep))
         }
         rm(i)
         tmp <- data.frame(matrix(ncol = dim(atarrs)[1] * dim(atarrs)[2], 

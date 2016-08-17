@@ -7,19 +7,19 @@ Read Output from Pacnet
 A function to read output files from the Pacnet program with the full factorization option.
 }
 \usage{
-pacnet(file, prsep = ", ", toarray = FALSE, uniq = FALSE, 
-            transp = FALSE)
+pacnet(file, toarray = FALSE, uniq = FALSE, 
+            transp = FALSE, prsep)
 }
 \arguments{
   \item{file}{  character vector containing a file name or path
-}
-  \item{prsep}{  pair separator
 }
   \item{toarray}{  (logical) should the induced inclusions be transformed into arrays?
 }
   \item{uniq}{  (logical) should only be considered the induced inclusions that are unique?
 }
   \item{transp}{  (logical) should the partially ordered structures be transposed?
+}
+  \item{prsep}{  (optional) pair separator
 }
 }
 \details{

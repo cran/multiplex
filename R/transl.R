@@ -1,6 +1,7 @@
 transl <-
-function (lt, prsep = ", ") 
+function (lt, prsep) 
 {
+    ifelse(missing(prsep) == TRUE, prsep <- ", ", NA)
     llt <- levels(factor(lt))
     if (isTRUE(length(llt) == 1) == TRUE) {
         ifelse(isTRUE(length(jnt(llt)) == 1) == TRUE, return(jnt(llt)), 
@@ -8,7 +9,7 @@ function (lt, prsep = ", ")
     }
     else {
         Ls <- as.list(llt)
-        j <- 1
+        j <- 1L
         tmp0 <- strsplit(Ls[[1]], prsep)[[1]]
         attr(Ls[[1]], "names") <- j
         for (i in 2:length(Ls)) {
@@ -42,7 +43,7 @@ function (lt, prsep = ", ")
         }
         while (length(which(attr(unlist(Ls), "names") == "")) != 
             0) {
-            j <- (j + 1)
+            j <- (j + 1L)
             attr(Ls[[which(attr(unlist(Ls), "names") == "")[1]]], 
                 "names") <- j
             if (length(which(attr(unlist(Ls), "names") == "")) != 

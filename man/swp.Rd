@@ -7,7 +7,7 @@ internal function
 internal function
 }
 %\usage{
-%swp(y)
+%swp(y, prsep)
 %}
 %
 \keyword{internal}

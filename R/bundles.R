@@ -1,9 +1,12 @@
 bundles <-
-function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE, 
-    collapse = FALSE) 
+function (x, loops = FALSE, smpl = FALSE, lb2lb = TRUE, collapse = FALSE, 
+    prsep) 
 {
     if (is.array(x) == FALSE) 
         stop("'x' must be an array.")
+    if (isTRUE(dim(x)[1] == dim(x)[2]) == FALSE) 
+        stop("'x' must be a square array.")
+    ifelse(missing(prsep) == TRUE, prsep <- ", ", NA)
     ifelse(isTRUE(is.null(dimnames(x)[1]) == TRUE | is.null(dimnames(x)[1][[1]]) == 
         TRUE) == TRUE, LBS <- 1:nrow(x), LBS <- dimnames(x)[[1]])
     lbs <- seq(LBS)
@@ -12,13 +15,14 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         NA)
     if (is.na(dim(xd)[3]) == FALSE) {
         TRD <- TRUE
+        r <- dim(x)[3]
         if (isTRUE(is.null(dimnames(x)[[3]]) == TRUE) | isTRUE(any(duplicated(dimnames(x)[[3]]))) == 
             TRUE) {
             dimnames(x)[[3]] <- 1:dim(x)[3]
         }
         mlt <- list()
         for (i in 1:dim(x)[3]) {
-            mlt[[i]] <- transf(xd[, , i], type = "matlist", labels = lbs, 
+            mlt[[i]] <- transf(xd[, , i], type = "tolist", labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb)
         }
         rm(i)
@@ -26,12 +30,15 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     }
     else {
         TRD <- FALSE
-        m <- transf(xd, type = "matlist", labels = lbs, prsep = prsep, 
+        r <- 1
+        m <- transf(xd, type = "tolist", labels = lbs, prsep = prsep, 
             lb2lb = lb2lb)
     }
     DF <- data.frame(matrix(ncol = 2L, nrow = length(m)))
-    DF[, 1] <- dhc(m)[which(1:(length(m) * 2L)%%2L == 1L)]
-    DF[, 2] <- dhc(m)[which(1:(length(m) * 2L)%%2L == 0L)]
+    DF[, 1] <- dhc(m, prsep = prsep)[which(1:(length(m) * 2L)%%2L == 
+        1L)]
+    DF[, 2] <- dhc(m, prsep = prsep)[which(1:(length(m) * 2L)%%2L == 
+        0L)]
     DF <- DF[which(DF[, 1] != DF[, 2]), ]
     out <- list()
     inn <- list()
@@ -60,6 +67,15 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     asym <- list()
     for (i in seq(lbs)) {
         asym[[i]] <- which(tabulate(All[[i]]) == 1L)
+    }
+    rm(i)
+    sout <- list()
+    sinn <- list()
+    for (i in seq(lbs)) {
+        sout[[i]] <- which(tabulate(out[[i]]) == 1L)[which(!(which(tabulate(out[[i]]) == 
+            1L) %in% asym[[i]]))]
+        sinn[[i]] <- which(tabulate(inn[[i]]) == 1L)[which(!(which(tabulate(inn[[i]]) == 
+            1L) %in% asym[[i]]))]
     }
     rm(i)
     dobl <- list()
@@ -98,15 +114,6 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     else {
         TEnt <- Eout <- Einn <- character(0)
     }
-    sout <- list()
-    sinn <- list()
-    for (i in seq(lbs)) {
-        sout[[i]] <- which(tabulate(out[[i]]) == 1L)[which(!(which(tabulate(out[[i]]) == 
-            1L) %in% asym[[i]]))]
-        sinn[[i]] <- which(tabulate(inn[[i]]) == 1L)[which(!(which(tabulate(inn[[i]]) == 
-            1L) %in% asym[[i]]))]
-    }
-    rm(i)
     trip <- list()
     trin <- list()
     trou <- list()
@@ -134,18 +141,18 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     for (i in seq(lbs)) {
         tmprcp <- vector()
         for (j in 1:length(sngl[[i]])) {
-            chk <- paste(sngl[[i]][j], i, sep = ", ")
+            chk <- paste(sngl[[i]][j], i, sep = prsep)
             if (isTRUE(TRD == TRUE) == TRUE) {
                 for (k in 1:dim(x)[3]) {
-                  ifelse(isTRUE(all(c(chk, swp(chk)) %in% mlt[[k]])) == 
-                    TRUE, tmprcp <- append(tmprcp, sngl[[i]][j]), 
-                    NA)
+                  ifelse(isTRUE(all(c(chk, swp(chk, prsep = prsep)) %in% 
+                    mlt[[k]])) == TRUE, tmprcp <- append(tmprcp, 
+                    sngl[[i]][j]), NA)
                 }
                 rm(k)
             }
             else {
-                ifelse(isTRUE(all(c(chk, swp(chk)) %in% m)) == 
-                  TRUE, tmprcp <- append(tmprcp, sngl[[i]][j]), 
+                ifelse(isTRUE(all(c(chk, swp(chk, prsep = prsep)) %in% 
+                  m)) == TRUE, tmprcp <- append(tmprcp, sngl[[i]][j]), 
                   NA)
             }
         }
@@ -193,12 +200,14 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
             tmpinn <- vector()
             tmpout <- vector()
             for (j in 1:length(TEnt3p[[i]])) {
-                if (isTRUE(!(Einn3p[[i]][j] %in% out[[i]])) == 
-                  TRUE) 
-                  tmpinn <- append(tmpinn, Einn3p[[i]][j])
-                if (isTRUE(!(Eout3p[[i]][j] %in% inn[[i]])) == 
-                  TRUE) 
-                  tmpout <- append(tmpout, Eout3p[[i]][j])
+                if (isTRUE(length(Eout3p[[i]]) > 0) == TRUE) {
+                  if (isTRUE(!(Einn3p[[i]][j] %in% out[[i]])) == 
+                    TRUE) 
+                    tmpinn <- append(tmpinn, Einn3p[[i]][j])
+                  if (isTRUE(!(Eout3p[[i]][j] %in% inn[[i]])) == 
+                    TRUE) 
+                    tmpout <- append(tmpout, Eout3p[[i]][j])
+                }
             }
             rm(j)
             TEinn[[i]] <- tmpinn
@@ -212,6 +221,14 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                 c(TEinn[[i]], TEout[[i]])))]
         }
         rm(i)
+        Eoutnp <- list()
+        for (i in seq(lbs)) {
+            Eoutnp[[i]] <- unique(c(Eout[[i]], Eout3p[[i]]))
+            Eout[[i]] <- Eoutnp[[i]][which(!(Eoutnp[[i]] %in% 
+                mixe[[i]]))]
+        }
+        rm(i)
+        rm(Eoutnp)
     }
     else {
         mixe <- TEinn <- TEout <- character(0)
@@ -231,11 +248,11 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
                 for (i in 1:dim(x)[3]) tt[i] <- tmp[i] <- i
                 rm(i)
             }
-            for (k in 1:length(tt)) {
+            for (k in 1:r) {
                 allr <- paste("all", tt[k], sep = "_")
-                assign(allr, transf(xd[, , k], type = "matlist", 
+                assign(allr, transf(xd[, , k], type = "tolist", 
                   labels = lbs, prsep = prsep, lb2lb = lb2lb))
-                tmp <- transf(xd[, , k], type = "matlist", labels = lbs, 
+                tmp <- transf(xd[, , k], type = "tolist", labels = lbs, 
                   prsep = prsep, lb2lb = lb2lb)
                 tDF <- data.frame(matrix(ncol = 2L, nrow = 0L))
                 for (i in 1:length(tmp)) {
@@ -290,7 +307,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     rm(i)
     if (isTRUE(TRD == TRUE) == TRUE) {
         AS <- list()
-        for (k in 1:length(tt)) {
+        for (k in 1:r) {
             tmp <- vector()
             for (i in which(As %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
@@ -317,7 +334,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
     rm(i)
     if (isTRUE(TRD == TRUE) == TRUE) {
         RP <- list()
-        for (k in 1:length(tt)) {
+        for (k in 1:r) {
             tmp <- vector()
             for (i in which(Rp %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
@@ -346,7 +363,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         rm(i)
         XC <- list()
         XCt <- list()
-        for (k in 1:length(tt)) {
+        for (k in 1:r) {
             tmp <- vector()
             tmpt <- vector()
             for (i in which(Xc %in% transf(xd[, , k], labels = lbs, 
@@ -385,19 +402,8 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
             rm(j)
         }
         rm(i)
-        for (i in 1:length(TEout)) {
-            for (j in 1:length(TEout[[i]])) {
-                if (isTRUE(is.na(stats::na.omit(TEout[[i]])) == 
-                  FALSE) == TRUE) {
-                  Et <- append(Et, paste(lbs[i], TEout[[i]][j], 
-                    sep = prsep))
-                }
-            }
-            rm(j)
-        }
-        rm(i)
         ENT <- list()
-        for (k in 1:length(tt)) {
+        for (k in 1:r) {
             tmp <- vector()
             for (i in which(Et %in% transf(xd[, , k], labels = lbs, 
                 prsep = prsep, lb2lb = lb2lb))) {
@@ -426,7 +432,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         rm(i)
         MX <- list()
         MXt <- list()
-        for (k in 1:length(tt)) {
+        for (k in 1:r) {
             tmp <- vector()
             tmpt <- vector()
             for (i in which(Mx %in% transf(xd[, , k], labels = lbs, 
@@ -468,7 +474,7 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
         rm(i)
         FL <- list()
         FLt <- list()
-        for (k in 1:length(tt)) {
+        for (k in 1:r) {
             tmp <- vector()
             tmpt <- vector()
             for (i in which(Fl %in% transf(xd[, , k], labels = lbs, 
@@ -654,6 +660,6 @@ function (x, loops = FALSE, prsep = ", ", smpl = FALSE, lb2lb = TRUE,
             lst <- list(asym = AS, recp = RP, tent = ENT, txch = XCH, 
                 mixd = MIX, full = FUL, loop = LOP))
     }
-    class(lst) <- "Rel.Bundles"
+    class(lst) <- c("Rel.Bundles", paste0("prsep: ", prsep))
     return(lst)
 }

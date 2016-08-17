@@ -2,8 +2,25 @@
 'multiplex' PACKAGE
 
 
-version 1.9.2 (16-June-2016)
---------------------------
+version 2.0 (16-August-2016)
+----------------------------
+
+ADDED FEATURES:
+	+ NEW FUNCTION 'read.dl' to read Ucinet DL files
+	+ It is possible to specify combinations of bundle types in 'rel.sys'
+	+ Function 'zbind' can bind rectangular arrays as well
+
+BUGS FIXED:
+	* 'bundles' failed to recognize n-tuple tie entrainments when n>=3
+	* 'bundle.census' works well now with all corrections made for 'bundles'
+
+OTHER CHANGES:
+	+ Bipartite graphs section in the vignette has been updated.
+	+ Minor changes in functions with customized pair separators
+
+
+version 1.9.3 (16-June-2016)
+----------------------------
 
 ADDED FEATURES:
 	+ NEW FUNCTION 'mnplx' to make multiple networks as monoplex structures
@@ -23,7 +40,7 @@ OTHER CHANGES:
 
 
 version 1.9 (29-Apr-2016)
---------------------------
+-------------------------
 
 ADDED FEATURES:
 	+ NEW FUNCTION 'comps' that returns the distinct components of the multiple

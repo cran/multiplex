@@ -1,8 +1,11 @@
 summaryBundles <-
-function (x, file = NULL, latex = FALSE, prsep = ", ", byties = FALSE) 
+function (x, file = NULL, latex = FALSE, byties) 
 {
-    if (isTRUE(attr(x, "class") == "Rel.Bundles") == FALSE) 
+    if (isTRUE(attr(x, "class")[1] == "Rel.Bundles") == FALSE) 
         stop("Data must be a \"Rel.Bundles\" class.")
+    prsep <- dhc(attr(x, "class")[2], ": ")[2]
+    ifelse(missing(byties) == FALSE && isTRUE(byties == TRUE) == 
+        TRUE, byties <- TRUE, byties <- FALSE)
     if (latex) {
         if (isTRUE(is.null(file)) == TRUE) 
             stop("No connection provided.")
@@ -68,12 +71,12 @@ function (x, file = NULL, latex = FALSE, prsep = ", ", byties = FALSE)
         if (isTRUE(is.list(x[[k]])) == TRUE) {
             for (i in 1:length(x[[k]])) {
                 if (isTRUE(length(x[[k]][[i]]) != 0) == TRUE) {
-                  tmp <- transf(x[[k]][[i]], "listmat", lb2lb = TRUE, 
-                    labels = lb)
+                  tmp <- transf(x[[k]][[i]], type = "toarray", 
+                    lb2lb = TRUE, labels = lb, ord = length(lb))
                   tmp[lower.tri(tmp)] <- NA
                   tmp[is.na(tmp)] <- 0
                   if (isTRUE(sum(tmp) == 0) == FALSE) {
-                    tmp <- transf(tmp, "matlist", lb2lb = TRUE, 
+                    tmp <- transf(tmp, type = "tolist", lb2lb = TRUE, 
                       labels = lb)
                     for (j in 1:length(tmp)) {
                       if (latex) {
@@ -370,6 +373,10 @@ function (x, file = NULL, latex = FALSE, prsep = ", ", byties = FALSE)
         Tent = tent, Txch = txch, Mixd = mixd, Full = full))
     Bundles <- unlist(bndl)
     if (latex) {
+        cat(paste("%% Produced by \"multiplex\"", paste("\"", 
+            utils::packageDescription("multiplex")["Version"]$Version, 
+            "\"", sep = ""), collapse = "  \\\\\n"), file = file, 
+            sep = "\n", append = TRUE)
         cat(paste("\\documentclass{article}", collapse = "\n"), 
             file = file, sep = "\n", append = TRUE)
         cat(paste("\\usepackage[landscape,a4paper]{geometry}", 

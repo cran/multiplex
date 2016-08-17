@@ -76,27 +76,9 @@ fltr(3, pogc)
 ## Principal ideal of the third concept
 fltr(3, pogc, ideal = TRUE)
 
-## ----lstfrt, echo=-2----------------------------------------------------------------------------------------
-lstfrt <- transf(frt, type = "matlist", lb2lb = TRUE)
-lstfrt
+## ----bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph'----
+library("multigraph")
+bmgraph(frt, vcol = 1)
 
-## ----matlstfrt, echo=TRUE-----------------------------------------------------------------------------------
-mlstfrt <- transf(lstfrt, type = "listmat", lb2lb = TRUE)
-
-## ----setup2, include=FALSE------------------------------------------------------------------------------------------------------
-# smaller font size for chunks
-options(width=130)
-
-## ----matlstfrtecho, echo=FALSE, size='scriptsize'-------------------------------------------------------------------------------
-mlstfrt
-
-## ----bipgraph, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph of the fruit characteristics ', small.mar=TRUE----
-if( require("Rgraphviz", quietly = TRUE)) {
-diagram(mlstfrt)
-}
-
-## ----bipgraphB, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Transpose depiction of the Bipartite graph', small.mar=TRUE----
-if( require("Rgraphviz", quietly = TRUE)) {
-diagram(t(mlstfrt)) 
-}
-
+## ----binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with stress majorization', echo=TRUE----
+bmgraph(frt, layout = "stress", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16:15)

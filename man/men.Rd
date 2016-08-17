@@ -7,7 +7,7 @@ internal function
 internal function
 }
 %\usage{
-%men(y)
+%men(y, prsep)
 %}
 %
 \keyword{internal}

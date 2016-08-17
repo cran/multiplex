@@ -7,15 +7,13 @@ function (...)
     tmp <- data.frame(matrix(ncol = (dim(pvt)[1] * dim(pvt)[2]), 
         nrow = 0))
     for (i in 1:length(argl)) {
-        if (isTRUE(is.array(argl[[i]]) == TRUE) == FALSE) 
-            stop("(part of) 'x' is not an array or matrix")
         if (isTRUE(dim(argl[[i]])[3] > 1) == TRUE) {
             for (j in 1:dim(argl[[i]])[3]) {
                 if (isTRUE(dim(argl[[i]][, , j])[1] != dim(pvt)[1]) == 
                   TRUE) 
                   stop("Dimensions 'x', 'y' must be equal")
-                tmp[(nrow(tmp) + 1), ] <- as.vector(argl[[i]][, 
-                  , j])
+                tmp[(nrow(tmp) + 1), ] <- as.vector(as.matrix(argl[[i]][, 
+                  , j]))
             }
             rm(j)
         }
@@ -23,7 +21,7 @@ function (...)
             TRUE | isTRUE(dim(argl[[i]])[3] == 1) == TRUE) {
             if (isTRUE(dim(argl[[i]])[1] != dim(pvt)[1]) == TRUE) 
                 stop("Dimensions 'x', 'y' must be equal")
-            tmp[(nrow(tmp) + 1), ] <- as.vector(argl[[i]])
+            tmp[(nrow(tmp) + 1), ] <- as.vector(as.matrix(argl[[i]]))
         }
     }
     rm(i)
@@ -34,8 +32,11 @@ function (...)
     }
     rm(i)
     if (isTRUE(is.null(dimnames(arr)) == TRUE) == TRUE) {
-        if (isTRUE(is.null(dimnames(pvt)) == TRUE) == FALSE) 
-            dimnames(arr)[[1]] <- dimnames(arr)[[2]] <- dimnames(pvt)[[1]]
+        dimnames(arr)[[1]] <- dimnames(pvt)[[1]]
+        dimnames(arr)[[2]] <- dimnames(pvt)[[2]]
+    }
+    else {
+        NA
     }
     lbs <- vector()
     for (i in 1:length(argl)) {

@@ -16,7 +16,8 @@ function (S, PO = NULL, unique = FALSE)
             mat[which(s$S == i)[1]] <- i
         }
         rm(i)
-        inc <- levels(factor(transf(dichot(mat), "matlist", prsep = ", ")))
+        inc <- levels(factor(transf(dichot(mat, c = 1), type = "tolist", 
+            prsep = ", ")))
         clus <- data.frame(matrix(ncol = s$ord, nrow = 0))
         for (i in 1:length(inc)) {
             clus[i, ] <- as.vector(sprt(s$S, as.numeric(strsplit(inc[i], 
@@ -24,15 +25,15 @@ function (S, PO = NULL, unique = FALSE)
         }
         rm(i)
         if (isTRUE(unique == TRUE) == TRUE) {
-            x <- unique(clus)
+            cls <- unique(clus)
         }
         else {
-            x <- clus
+            cls <- clus
         }
-        colnames(x) <- rownames(x) <- NULL
-        x <- data.matrix(x)
+        colnames(cls) <- rownames(cls) <- NULL
+        cls <- data.matrix(cls)
         cg <- list()
-        for (i in 1:nrow(x)) cg[[i]] <- as.vector(x[i, ])
+        for (i in 1:nrow(cls)) cg[[i]] <- as.vector(cls[i, ])
     }
     else {
         cg <- rep(1, s$dim)

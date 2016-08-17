@@ -11,7 +11,41 @@ function (x, type = c("balance", "cluster"), symclos = TRUE,
     if (isTRUE(all(levels(factor(as.matrix(q))) %in% c("a", "n", 
         "o", "p", "q")) == TRUE) == TRUE) {
         if (isTRUE(symclos == TRUE) == TRUE) {
-            q <- suppressWarnings(symclos(q))
+            for (i in 1:nrow(q)) {
+                for (j in 1:ncol(q)) {
+                  if (isTRUE(q[i, j] != q[j, i]) == TRUE) {
+                    if (isTRUE(q[i, j] == "o") == TRUE) {
+                      q[i, j] <- q[j, i]
+                    }
+                    else if (isTRUE(q[j, i] == "o") == TRUE) {
+                      q[j, i] <- q[i, j]
+                    }
+                  }
+                }
+                rm(j)
+            }
+            rm(i)
+            for (i in 1:nrow(q)) {
+                for (j in 1:ncol(q)) {
+                  if (isTRUE(q[i, j] != q[j, i]) == TRUE) {
+                    if (isTRUE(q[i, j] == "p") == TRUE) {
+                      q[j, i] <- q[i, j]
+                    }
+                    else if (isTRUE(q[j, i] == "p") == TRUE) {
+                      q[i, j] <- q[j, i]
+                    }
+                    else if (isTRUE(q[i, j] == "q") == TRUE || 
+                      isTRUE(q[j, i] == "q") == TRUE) {
+                      q[i, j] <- q[j, i] <- "p"
+                    }
+                    else {
+                      q[i, j] <- "a"
+                    }
+                  }
+                }
+                rm(j)
+            }
+            rm(i)
         }
         ifelse(isTRUE(attr(q, "class") != "data.frame") == TRUE, 
             Q <- as.data.frame(unclass(q)), Q <- as.data.frame(q))
@@ -156,9 +190,37 @@ function (x, type = c("balance", "cluster"), symclos = TRUE,
                 }
                 rm(i)
                 switch(match.arg(type), balance = {
-                  ifelse(isTRUE(transclos == TRUE) == TRUE, Q <- tclos(x2), 
-                    Q <- x2)
-                  rm(x2)
+                  if (isTRUE(transclos == TRUE) == TRUE) {
+                    y2 <- as.matrix(x2)
+                    y2 <- replace(y2, y2 == "p", 1L)
+                    y2 <- replace(y2, y2 != 1L, 0)
+                    for (i in seq_len(ncol(y2))) {
+                      y2 <- pmax(y2, outer(y2[, i], y2[i, ], 
+                        pmin.int))
+                    }
+                    rm(i)
+                    y2 <- replace(y2, y2 == 1L, "p")
+                    y2 <- replace(y2, y2 != "p", "o")
+                    nn <- which(x2 == "n", arr.ind = TRUE)
+                    for (i in 1:nrow(nn)) y2[nn[, 1][i], nn[, 
+                      2][i]] <- "n"
+                    rm(i, nn)
+                    aa <- which(x2 == "a", arr.ind = TRUE)
+                    for (i in 1:nrow(aa)) y2[aa[, 1][i], aa[, 
+                      2][i]] <- "a"
+                    rm(i, aa)
+                    qq <- which(x2 == "q", arr.ind = TRUE)
+                    for (i in 1:nrow(qq)) y2[qq[, 1][i], qq[, 
+                      2][i]] <- "q"
+                    rm(i, qq)
+                    x2 <- data.frame(matrix(nrow = nrow(x2), 
+                      ncol = ncol(x2)))
+                    for (i in 1:nrow(y2)) x2[i, ] <- y2[i, ]
+                    rm(i)
+                  } else {
+                    NA
+                  }
+                  Q <- x2
                 }, cluster = {
                   chmx <- list()
                   for (h in 1:nrow(Q)) {
@@ -176,8 +238,37 @@ function (x, type = c("balance", "cluster"), symclos = TRUE,
                   }
                   rm(h)
                   rm(tmp, tmp2)
-                  ifelse(isTRUE(transclos == TRUE) == TRUE, x3 <- x2 <- tclos(x2), 
-                    x3 <- x2)
+                  if (isTRUE(transclos == TRUE) == TRUE) {
+                    y2 <- as.matrix(x2)
+                    y2 <- replace(y2, y2 == "p", 1L)
+                    y2 <- replace(y2, y2 != 1L, 0)
+                    for (i in seq_len(ncol(y2))) {
+                      y2 <- pmax(y2, outer(y2[, i], y2[i, ], 
+                        pmin.int))
+                    }
+                    rm(i)
+                    y2 <- replace(y2, y2 == 1L, "p")
+                    y2 <- replace(y2, y2 != "p", "o")
+                    nn <- which(x2 == "n", arr.ind = TRUE)
+                    for (i in 1:nrow(nn)) y2[nn[, 1][i], nn[, 
+                      2][i]] <- "n"
+                    rm(i, nn)
+                    aa <- which(x2 == "a", arr.ind = TRUE)
+                    for (i in 1:nrow(aa)) y2[aa[, 1][i], aa[, 
+                      2][i]] <- "a"
+                    rm(i, aa)
+                    qq <- which(x2 == "q", arr.ind = TRUE)
+                    for (i in 1:nrow(qq)) y2[qq[, 1][i], qq[, 
+                      2][i]] <- "q"
+                    rm(i, qq)
+                    x2 <- data.frame(matrix(nrow = nrow(x2), 
+                      ncol = ncol(x2)))
+                    for (i in 1:nrow(y2)) x2[i, ] <- y2[i, ]
+                    rm(i)
+                  } else {
+                    NA
+                  }
+                  x3 <- x2
                   for (o in seq_along(which(x2 == "o"))) {
                     if (isTRUE(sum(as.numeric(chmx[[which(x2 == 
                       "o", arr.ind = TRUE)[, 2][1]]][[which(x2 == 
@@ -188,9 +279,8 @@ function (x, type = c("balance", "cluster"), symclos = TRUE,
                     }
                   }
                   rm(o)
-                  rm(chmx)
                   Q <- x3
-                  rm(x2, x3)
+                  rm(chmx, x2, x3)
                 })
             }
             rm(z)

@@ -1,6 +1,7 @@
 dhc <-
-function (xd, prsep = ", ") 
+function (xd, prsep) 
 {
+    ifelse(missing(prsep) == TRUE, prsep <- ", ", NA)
     if (isTRUE(length(xd) != 0L) == TRUE && isTRUE(is.na(xd)) == 
         FALSE) {
         Ltd <- FALSE

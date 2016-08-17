@@ -1,49 +1,49 @@
 bundle.census <-
-function (m, loops = FALSE) 
+function (x, loops = FALSE) 
 {
-    if (isTRUE(is.array(m)) == FALSE) 
-        stop("'m' sholud be an array.")
-    ifelse(isTRUE(is.null(dimnames(m)[1]) == TRUE | is.null(dimnames(m)[1][[1]]) == 
-        TRUE) == TRUE, LBS <- 1:nrow(m), LBS <- dimnames(m)[[1]])
+    if (isTRUE(is.array(x)) == FALSE) 
+        stop("'x' sholud be an array.")
+    if (isTRUE(dim(x)[1] == dim(x)[2]) == FALSE) 
+        stop("'x' must be a square array.")
+    prsep <- ", "
+    lb2lb <- TRUE
+    ifelse(isTRUE(is.null(dimnames(x)[1]) == TRUE | is.null(dimnames(x)[1][[1]]) == 
+        TRUE) == TRUE, LBS <- 1:nrow(x), LBS <- dimnames(x)[[1]])
     lbs <- seq(LBS)
-    if (isTRUE(is.na(dim(m)[3])) == FALSE) {
-        if (isTRUE(is.null(dimnames(m)[[3]]) == TRUE) | isTRUE(any(duplicated(dimnames(m)[[3]]))) == 
-            TRUE) 
-            dimnames(m)[[3]] <- 1:dim(m)[3]
-    }
-    if (is.na(dim(m)[3]) == FALSE) {
-        x <- transf(dichot(m)[, , 1], "matlist", labels = lbs, 
-            prsep = ", ", lb2lb = TRUE)
-        if (isTRUE(dim(m)[3] > 1L) == TRUE) {
-            for (k in 2:dim(m)[3]) x <- append(x, transf(dichot(m)[, 
-                , k], "matlist", labels = lbs, prsep = ", ", 
-                lb2lb = TRUE))
-            rm(k)
+    xd <- dichot(x, c = 1L, diag.incl = TRUE)
+    ifelse(isTRUE(dim(xd)[3] == 1) == TRUE, xd <- xd[, , 1], 
+        NA)
+    if (is.na(dim(xd)[3]) == FALSE) {
+        TRD <- TRUE
+        r <- dim(x)[3]
+        if (isTRUE(is.null(dimnames(x)[[3]]) == TRUE) | isTRUE(any(duplicated(dimnames(x)[[3]]))) == 
+            TRUE) {
+            dimnames(x)[[3]] <- 1:dim(x)[3]
         }
+        mlt <- list()
+        for (i in 1:dim(x)[3]) {
+            mlt[[i]] <- transf(xd[, , i], type = "tolist", labels = lbs, 
+                prsep = prsep, lb2lb = lb2lb)
+        }
+        rm(i)
+        m <- unlist(mlt)
     }
     else {
-        x <- transf(dichot(m), "matlist", labels = lbs, prsep = ", ", 
-            lb2lb = TRUE)
+        TRD <- FALSE
+        r <- 1
+        m <- transf(xd, type = "tolist", labels = lbs, prsep = prsep, 
+            lb2lb = lb2lb)
     }
-    dfl <- data.frame(matrix(ncol = 2L, nrow = 0L))
-    for (i in 1:length(x)) {
-        dfl[i, 1] <- strsplit(x[i], ", ")[[1]][1]
-        dfl[i, 2] <- strsplit(x[i], ", ")[[1]][2]
-    }
-    rm(i)
-    DF <- data.frame(matrix(ncol = 2L, nrow = 0L))
-    k <- 1
-    for (i in 1:nrow(dfl)) {
-        if (isTRUE(dfl[i, 1] != dfl[i, 2]) == TRUE) 
-            DF[k, ] <- dfl[i, ]
-        k <- k + 1L
-    }
-    rm(i)
-    rm(k)
+    DF <- data.frame(matrix(ncol = 2L, nrow = length(m)))
+    DF[, 1] <- dhc(m, prsep = prsep)[which(1:(length(m) * 2L)%%2L == 
+        1L)]
+    DF[, 2] <- dhc(m, prsep = prsep)[which(1:(length(m) * 2L)%%2L == 
+        0L)]
+    DF <- DF[which(DF[, 1] != DF[, 2]), ]
     out <- list()
     inn <- list()
     All <- list()
-    for (i in 1:length(lbs)) {
+    for (i in seq(lbs)) {
         out[[i]] <- as.numeric(DF[which(DF[, 1] == as.numeric(lbs[i])), 
             2])
         inn[[i]] <- as.numeric(DF[which(DF[, 2] == as.numeric(lbs[i])), 
@@ -51,12 +51,11 @@ function (m, loops = FALSE)
         All[[i]] <- c(out[[i]], inn[[i]])
     }
     rm(i)
-    rm(DF)
     finn <- list()
     fout <- list()
     for (i in seq(lbs)) {
-        finn[[i]] <- which(tabulate(inn[[i]]) == dim(m)[3])
-        fout[[i]] <- which(tabulate(out[[i]]) == dim(m)[3])
+        finn[[i]] <- which(tabulate(inn[[i]]) == dim(x)[3])
+        fout[[i]] <- which(tabulate(out[[i]]) == dim(x)[3])
     }
     rm(i)
     full <- list()
@@ -70,185 +69,145 @@ function (m, loops = FALSE)
         asym[[i]] <- which(tabulate(All[[i]]) == 1L)
     }
     rm(i)
+    sout <- list()
+    sinn <- list()
+    for (i in seq(lbs)) {
+        sout[[i]] <- which(tabulate(out[[i]]) == 1L)[which(!(which(tabulate(out[[i]]) == 
+            1L) %in% asym[[i]]))]
+        sinn[[i]] <- which(tabulate(inn[[i]]) == 1L)[which(!(which(tabulate(inn[[i]]) == 
+            1L) %in% asym[[i]]))]
+    }
+    rm(i)
     dobl <- list()
     dout <- list()
+    dinn <- list()
     for (i in seq(lbs)) {
         dobl[[i]] <- which(tabulate(All[[i]]) == 2L)
         dout[[i]] <- which(tabulate(out[[i]]) == 2L)
+        dinn[[i]] <- which(tabulate(inn[[i]]) == 2L)
     }
     rm(i)
-    rete <- list()
-    for (i in 1:length(dobl)) {
-        tmprte <- vector()
-        for (j in 1:length(dobl[[i]])) {
-            if (isTRUE(dobl[[i]][j] %in% which(tabulate(inn[[i]]) == 
-                1L)) == TRUE && isTRUE(dobl[[i]][j] %in% which(tabulate(out[[i]]) == 
-                1L)) == TRUE) 
-                tmprte[length(tmprte) + 1L] <- dobl[[i]][j]
-        }
-        rm(j)
-        rete[[i]] <- tmprte
-    }
-    rm(i)
-    rm(tmprte)
-    if (isTRUE(is.na(dim(m)[3])) == FALSE) {
-        tmp <- list()
-        tt <- vector()
-        if (isTRUE(is.null(dimnames(m)[[3]])) == FALSE) {
-            for (i in 1:length(dimnames(m)[[3]])) tmp[i] <- dimnames(m)[[3]][i]
-            rm(i)
-            for (i in 1:length(tmp)) tt[i] <- (strsplit(tmp[[i]], 
-                "")[[1]][1])
-            rm(i)
-        }
-        else {
-            for (i in 1:dim(m)[3]) tt[i] <- tmp[i] <- i
-            rm(i)
-        }
-        for (k in 1:length(tt)) {
-            allr <- paste("all", tt[k], sep = "_")
-            assign(allr, transf(m[, , k], "matlist", labels = lbs, 
-                prsep = ", ", lb2lb = TRUE))
-            tmp <- transf(m[, , k], "matlist", labels = lbs, 
-                prsep = ", ", lb2lb = TRUE)
-            tDF <- data.frame(matrix(ncol = 2L, nrow = 0L))
-            for (i in 1:length(tmp)) {
-                tDF[i, 1] <- strsplit(tmp[i], ", ")[[1]][1]
-                tDF[i, 2] <- strsplit(tmp[i], ", ")[[1]][2]
-            }
-            rm(i)
-            rm(tmp)
-            oud <- list()
-            ind <- list()
-            ald <- list()
-            for (i in 1:length(lbs)) {
-                oud[[i]] <- as.numeric(tDF[which(tDF[, 1] == 
-                  as.numeric(lbs[i])), 2])
-                ind[[i]] <- as.numeric(tDF[which(tDF[, 2] == 
-                  as.numeric(lbs[i])), 1])
-                ald[[i]] <- c(oud[[i]], ind[[i]])
-            }
-            rm(i)
-            assign(allr, ald)
-            rm(oud, ind, ald, allr)
-            rm(tDF)
-        }
-        rm(k)
-    }
-    else {
-        tt <- "R"
-        tmp <- x
-    }
-    if (isTRUE(is.na(dim(m)[3])) == FALSE) {
-        for (k in 1:length(tt)) {
-            tmpxchg <- list()
-            xchr <- paste("xch", tt[k], sep = "_")
-            for (i in 1:length(rete)) {
-                allr <- paste("all", tt[k], sep = "_")
-                tmpxchr <- vector()
-                for (j in 1:length(rete[[i]])) {
-                  if (isTRUE(rete[[i]][j] %in% which(tabulate(eval(as.name(allr))[[i]]) == 
-                    1L)) == TRUE) 
-                    tmpxchr[length(tmpxchr) + 1L] <- rete[[i]][j]
-                }
-                rm(j)
-                tmpxchg[[i]] <- tmpxchr
-            }
-            rm(i)
-            assign(xchr, tmpxchg)
-        }
-        rm(k)
-        rm(tmpxchr)
-        rm(tmpxchg)
-        xchg <- list()
-        length(xchg) <- length(lbs)
-        for (k in 1:length(tt)) {
-            xchr <- paste("xch", tt[k], sep = "_")
-            for (i in 1:length(rete)) {
-                vecr <- paste("vec", i, sep = "")
-                tmpxch <- vector()
-                tmpxch <- eval(as.name(xchr))[[i]]
-                if (sum(tmpxch) > 0L) {
-                  assign(vecr, tmpxch)
-                  xchg[[i]] <- eval(as.name(vecr))
-                  rm(vecr)
-                }
-                else {
-                  rm(vecr)
-                }
-            }
-            rm(i)
-        }
-        rm(k)
-        rm(tmpxch)
-        rm(xchr)
-    }
-    else {
-        xchg <- logical(0)
-    }
-    recp <- list()
-    if (isTRUE(is.na(dim(m)[3])) == FALSE) {
-        for (i in 1:length(rete)) {
-            recp[[i]] <- rete[[i]][which(!(rete[[i]] %in% xchg[[i]]))]
-        }
-        rm(i)
-        attr(recp, "names") <- lbs
-    }
-    else {
-        recp <- rete
-    }
-    if (isTRUE(is.na(dim(m)[3])) == FALSE) {
+    if ((is.na(dim(x)[3]) == FALSE | isTRUE(dim(x)[3] == 1) == 
+        TRUE)) {
         Eout <- list()
         length(Eout) <- length(lbs)
+        Einn <- list()
+        length(Einn) <- length(lbs)
+        TEnt <- list()
+        length(TEnt) <- length(lbs)
         for (i in 1:length(dobl)) {
             tmpout <- vector()
+            tmpinn <- vector()
             for (j in 1:length(dobl[[i]])) {
                 if (isTRUE(dobl[[i]][j] %in% dout[[i]]) == TRUE) 
                   tmpout[length(tmpout) + 1L] <- dobl[[i]][j]
+                if (isTRUE(dobl[[i]][j] %in% dinn[[i]]) == TRUE) 
+                  tmpinn[length(tmpinn) + 1L] <- dobl[[i]][j]
             }
             rm(j)
             Eout[[i]] <- tmpout
+            Einn[[i]] <- tmpinn
+            TEnt[[i]] <- c(tmpout, tmpinn)
         }
-        rm(tmpout)
-        trpr <- list()
-        tinn <- list()
-        tout <- list()
+        rm(tmpout, tmpinn)
+    }
+    else {
+        TEnt <- Eout <- Einn <- character(0)
+    }
+    trip <- list()
+    trin <- list()
+    trou <- list()
+    for (i in seq(lbs)) {
+        trip[[i]] <- which(tabulate(All[[i]]) > 2L)
+        trin[[i]] <- which(tabulate(inn[[i]]) > 2L)
+        trou[[i]] <- which(tabulate(out[[i]]) > 2L)
+    }
+    rm(i)
+    tripfl <- list()
+    trinfl <- list()
+    troufl <- list()
+    for (i in seq(lbs)) {
+        tripfl[[i]] <- trip[[i]][which(!(trip[[i]] %in% full[[i]]))]
+        trinfl[[i]] <- trin[[i]][which(!(trin[[i]] %in% full[[i]]))]
+        troufl[[i]] <- trou[[i]][which(!(trou[[i]] %in% full[[i]]))]
+    }
+    rm(i)
+    sngl <- list()
+    for (i in seq(lbs)) {
+        sngl[[i]] <- sout[[i]][which(!(sout[[i]] %in% tripfl[[i]]))]
+    }
+    rm(i)
+    recp <- list()
+    for (i in seq(lbs)) {
+        tmprcp <- vector()
+        for (j in 1:length(sngl[[i]])) {
+            chk <- paste(sngl[[i]][j], i, sep = prsep)
+            if (isTRUE(TRD == TRUE) == TRUE) {
+                for (k in 1:dim(x)[3]) {
+                  ifelse(isTRUE(all(c(chk, swp(chk, prsep = prsep)) %in% 
+                    mlt[[k]])) == TRUE, tmprcp <- append(tmprcp, 
+                    sngl[[i]][j]), NA)
+                }
+                rm(k)
+            }
+            else {
+                ifelse(isTRUE(all(c(chk, swp(chk, prsep = prsep)) %in% 
+                  m)) == TRUE, tmprcp <- append(tmprcp, sngl[[i]][j]), 
+                  NA)
+            }
+        }
+        rm(j)
+        recp[[i]] <- tmprcp
+    }
+    rm(i)
+    rm(tmprcp)
+    if (isTRUE(TRD == TRUE) == TRUE) {
+        xchg <- list()
         for (i in seq(lbs)) {
-            trpr[[i]] <- which(tabulate(All[[i]]) > 2L)
-            tinn[[i]] <- which(tabulate(inn[[i]]) > 2L)
-            tout[[i]] <- which(tabulate(out[[i]]) > 2L)
+            xchg[[i]] <- sngl[[i]][which(!(sngl[[i]] %in% recp[[i]]))]
         }
         rm(i)
-        teinn <- list()
-        teout <- list()
-        length(teinn) <- length(lbs)
-        length(teout) <- length(lbs)
-        for (i in 1:length(trpr)) {
-            tmpinn <- vector()
+    }
+    else {
+        xchg <- character(0)
+    }
+    if (isTRUE(TRD == TRUE) == TRUE) {
+        Eout3p <- list()
+        length(Eout3p) <- length(lbs)
+        Einn3p <- list()
+        length(Einn3p) <- length(lbs)
+        TEnt3p <- list()
+        length(TEnt3p) <- length(lbs)
+        for (i in 1:length(tripfl)) {
             tmpout <- vector()
-            for (j in 1:length(trpr[[i]])) {
-                if (isTRUE(trpr[[i]][j] %in% tinn[[i]]) == TRUE) 
-                  tmpinn[length(tmpinn) + 1L] <- trpr[[i]][j]
-                if (isTRUE(trpr[[i]][j] %in% tout[[i]]) == TRUE) 
-                  tmpout[length(tmpout) + 1L] <- trpr[[i]][j]
+            tmpinn <- vector()
+            for (j in 1:length(tripfl[[i]])) {
+                if (isTRUE(tripfl[[i]][j] %in% trou[[i]]) == 
+                  TRUE) 
+                  tmpout[length(tmpout) + 1L] <- tripfl[[i]][j]
+                if (isTRUE(tripfl[[i]][j] %in% trin[[i]]) == 
+                  TRUE) 
+                  tmpinn[length(tmpinn) + 1L] <- tripfl[[i]][j]
             }
             rm(j)
-            teinn[[i]] <- tmpinn
-            teout[[i]] <- tmpout
+            Eout3p[[i]] <- tmpout
+            Einn3p[[i]] <- tmpinn
+            TEnt3p[[i]] <- c(tmpout, tmpinn)
         }
-        rm(tmpinn, tmpout)
         TEinn <- list()
         TEout <- list()
-        for (i in 1:length(trpr)) {
+        for (i in 1:length(TEnt3p)) {
             tmpinn <- vector()
             tmpout <- vector()
-            for (j in 1:length(trpr[[i]])) {
-                if (isTRUE(!(teinn[[i]][j] %in% out[[i]])) == 
-                  TRUE) 
-                  tmpinn[length(tmpinn) + 1L] <- teinn[[i]][j]
-                if (isTRUE(!(teout[[i]][j] %in% inn[[i]])) == 
-                  TRUE) 
-                  tmpout[length(tmpout) + 1L] <- teout[[i]][j]
+            for (j in 1:length(TEnt3p[[i]])) {
+                if (isTRUE(length(Eout3p[[i]]) > 0) == TRUE) {
+                  if (isTRUE(!(Einn3p[[i]][j] %in% out[[i]])) == 
+                    TRUE) 
+                    tmpinn <- append(tmpinn, Einn3p[[i]][j])
+                  if (isTRUE(!(Eout3p[[i]][j] %in% inn[[i]])) == 
+                    TRUE) 
+                    tmpout <- append(tmpout, Eout3p[[i]][j])
+                }
             }
             rm(j)
             TEinn[[i]] <- tmpinn
@@ -256,69 +215,82 @@ function (m, loops = FALSE)
         }
         rm(i)
         rm(tmpinn, tmpout)
-    }
-    else {
-        TEinn <- TEout <- Eout <- logical(0)
-    }
-    mix <- list()
-    if (isTRUE(is.na(dim(m)[3])) == FALSE) {
-        for (i in 1:length(trpr)) {
-            mix[[i]] <- trpr[[i]][which(!(trpr[[i]] %in% TEinn[[i]] | 
-                trpr[[i]] %in% TEout[[i]]))]
-        }
-        rm(i)
         mixe <- list()
-        for (i in 1:length(mix)) {
-            mixe[[i]] <- mix[[i]][which(!(mix[[i]] %in% full[[i]]))]
+        for (i in seq(lbs)) {
+            mixe[[i]] <- tripfl[[i]][which(!(tripfl[[i]] %in% 
+                c(TEinn[[i]], TEout[[i]])))]
+        }
+        rm(i)
+        Eoutnp <- list()
+        for (i in seq(lbs)) {
+            Eoutnp[[i]] <- unique(c(Eout[[i]], Eout3p[[i]]))
+            Eout[[i]] <- Eoutnp[[i]][which(!(Eoutnp[[i]] %in% 
+                mixe[[i]]))]
         }
         rm(i)
     }
     else {
-        mixe <- logical(0)
+        mixe <- TEinn <- TEout <- character(0)
+    }
+    Et <- vector()
+    if (isTRUE(TRD == TRUE) == TRUE) {
+        for (i in 1:length(Eout)) {
+            for (j in 1:length(Eout[[i]])) {
+                if (isTRUE(length(Eout[[i]]) != 0L) == TRUE) {
+                  Et <- append(Et, paste(lbs[i], Eout[[i]][j], 
+                    sep = prsep))
+                }
+            }
+            rm(j)
+        }
+        rm(i)
+        ENT <- list()
+        for (k in 1:r) {
+            tmp <- vector()
+            for (i in which(Et %in% transf(xd[, , k], labels = lbs, 
+                prsep = prsep, lb2lb = lb2lb))) {
+                tmp <- append(tmp, Et[i])
+            }
+            rm(i)
+            ENT[[k]] <- as.character(tmp)
+        }
+        rm(k)
+    }
+    else {
+        ENT <- as.character(Et)
     }
     if (loops) {
-        if (isTRUE(is.na(dim(m)[3])) == FALSE) {
+        if (isTRUE(is.na(dim(xd)[3])) == FALSE) {
             vec <- vector()
-            for (i in 1:dim(m)[3]) {
-                vec <- append(vec, sum(dichot(diag(m[, , i]), 
-                  c = 1L)))
+            for (i in 1:dim(xd)[3]) {
+                vec <- append(vec, sum(diag(xd[, , i])))
             }
             rm(i)
             lop <- sum(vec)
         }
         else {
-            lop <- sum(dichot(diag(m), c = 1L))
+            lop <- sum(diag(xd))
         }
     }
+    tbnd <- (length(unlist(full))/2L + length(unlist(asym))/2L + 
+        length(unlist(recp))/2L + length(unlist(xchg))/2L + length(unlist(Eout))/1L + 
+        (length(unlist(tripfl))/2L) - (length(which(table(unlist(ENT)) > 
+        2L))))
     ifelse(isTRUE(loops == FALSE) == TRUE, {
-        bc <- cbind(abs(choose(nrow(m), 2) - (choose(nrow(m), 
-            2)) - (length(unlist(full))/2L + length(unlist(asym))/2L + 
-            length(unlist(recp))/2L + length(unlist(xchg))/2L + 
-            (length(unlist(Eout)) + length(stats::na.exclude(unlist(TEout)))) + 
-            length(unlist(mixe))/2L)), (choose(nrow(m), 2)) - 
-            (length(unlist(asym))/2L + length(unlist(recp))/2L + 
-                length(unlist(xchg))/2L + (length(unlist(Eout)) + 
-                length(stats::na.exclude(unlist(TEout)))) + length(unlist(mixe))/2L + 
-                length(unlist(full))/2L), length(unlist(asym))/2L, 
-            length(unlist(recp))/2L, (length(unlist(Eout)) + 
-                length(stats::na.exclude(unlist(TEout)))), length(unlist(xchg))/2L, 
-            length(unlist(mixe))/2L, length(unlist(full))/2L)
+        bc <- cbind(abs(choose(nrow(xd), 2) - (choose(nrow(xd), 
+            2)) - tbnd), (choose(nrow(xd), 2)) - tbnd, length(unlist(asym))/2L, 
+            length(unlist(recp))/2L, length(unlist(Eout))/1L, 
+            length(unlist(xchg))/2L, (length(unlist(tripfl))/2L) - 
+                (length(which(table(unlist(ENT)) > 2L))), length(unlist(full))/2L)
         colnames(bc) <- c("BUNDLES", "NULL", "ASYMM", "RECIP", 
             "T.ENTR", "T.EXCH", "MIXED", "FULL")
         rownames(bc) <- "TOTAL"
     }, {
-        bc <- cbind(abs(choose(nrow(m), 2) - (choose(nrow(m), 
-            2)) - (length(unlist(full))/2L + length(unlist(asym))/2L + 
-            length(unlist(recp))/2L + length(unlist(xchg))/2L + 
-            (length(unlist(Eout)) + length(stats::na.exclude(unlist(TEout)))) + 
-            length(unlist(mixe))/2L)), (choose(nrow(m), 2)) - 
-            (length(unlist(asym))/2L + length(unlist(recp))/2L + 
-                length(unlist(xchg))/2L + (length(unlist(Eout)) + 
-                length(stats::na.exclude(unlist(TEout)))) + length(unlist(mixe))/2L + 
-                length(unlist(full))/2L), length(unlist(asym))/2L, 
-            length(unlist(recp))/2L, (length(unlist(Eout)) + 
-                length(stats::na.exclude(unlist(TEout)))), length(unlist(xchg))/2L, 
-            length(unlist(mixe))/2L, length(unlist(full))/2L, 
+        bc <- cbind(abs(choose(nrow(xd), 2) - (choose(nrow(xd), 
+            2)) - tbnd), (choose(nrow(xd), 2)) - tbnd, length(unlist(asym))/2L, 
+            length(unlist(recp))/2L, length(unlist(Eout))/1L, 
+            length(unlist(xchg))/2L, (length(unlist(tripfl))/2L) - 
+                (length(which(table(unlist(ENT)) > 2L))), length(unlist(full))/2L, 
             lop)
         colnames(bc) <- c("BUNDLES", "NULL", "ASYMM", "RECIP", 
             "T.ENTR", "T.EXCH", "MIXED", "FULL", "LOOP")

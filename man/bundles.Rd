@@ -7,8 +7,8 @@ Bundle Class Patterns
 Classify the Bundle class patterns in a system of multiple relations
 }
 \usage{
-bundles(x, loops = FALSE, prsep = ", ", smpl = FALSE, 
-           lb2lb = TRUE, collapse = FALSE)
+bundles(x, loops = FALSE, smpl = FALSE, lb2lb = TRUE, 
+           collapse = FALSE, prsep)
 }
 \arguments{
   \item{x}{

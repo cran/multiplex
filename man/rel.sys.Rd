@@ -7,9 +7,9 @@ Relational System
 Create the Relation System of a multiple network.
 }
 \usage{
-rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak", 
+rel.sys(x, type = c("tolist", "toarray"), bonds = c("entire", "strong", "weak", 
         "asym", "recp", "txch", "tent", "mixd", "full"), sel = NULL, 
-	prsep = ", ", loops = FALSE, att = NULL)
+        loops = FALSE, att = NULL, prsep)
 }
 \arguments{
   \item{x}{
@@ -22,25 +22,25 @@ rel.sys(x, type = c("matlist", "listmat"), bonds = c("entire", "strong", "weak",
    the type of bonds to be used in the creation of the relational system (default the `entire' network)
 }
   \item{sel}{
-   (optional) the set of actors to be selected. For \code{"listmat"} \code{1} and \code{0} also supported (see details)
+   (optional) the set of actors to be selected. For \code{"toarray"} \code{att} and \code{noatt} also supported (see details)
 }
-  \item{prsep}{
-   (optional) the pair separator for the pairwise relations
-  }
   \item{loops}{
    (logical) whether or not the loops should be considered in the relational system
 }
   \item{att}{
    the arrays in \code{x} corresponding to attributes
 }
+  \item{prsep}{
+   (optional) the pair separator for the pairwise relations
+  }
 }
 \details{
-When the type of bonds chosen is \code{entire} then the nodes with ties are considered in the relational system without isolated nodes. \code{strong} bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those pattern exclusively without mutual character.
+This function serves to establish a particular \emph{system} in the network typically by the `\code{bonds}' argument, but also through `\code{sel}'. In case that ``\code{entire}'' is chosen with the former option, then all nodes with ties are considered in the relational system without isolated nodes. ``\code{strong}'' bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those pattern exclusively without mutual character. A single bundle pattern or combination of these is also possible.
 
-When selecting from a list with actor attributes, it is also possible to select the network members having or \emph{not} the attribute that is specified in the \code{Attrs} output. Use \code{1} or \code{0} for the two options.
+The latter argument allows selecting network members as well, and this can be done with a scalar or a vector given the location of the actor(s) in the input data or else by their label names. Moreover, it is possible to select the actors having or \emph{not} a particular attribute, which can be specified by an array as well; use ``\code{att}'' or ``\code{noatt}'' for the two possibilities in the `\code{sel}' argument, and this is specified in \code{Attrs} of the output.
 }
 \value{
-An object of `\code{Rel.System}' class for the \code{type = "matlist"} (default) option.
+An object of `\code{Rel.System}' class for the \code{type = "tolist"} (default option).
 The items are:
    \item{ord}{order of the network relational system}
    \item{nodes}{the nodes in the relational system}
@@ -56,7 +56,7 @@ The items are:
    \item{Attrs.ord}{if \code{att} is not \code{NULL}, the number of nodes with the chosen attribute(s) }
    \item{Attrs}{if \code{att} is not \code{NULL}, the actors with the chosen attribute(s)}
 
-For \code{type = "listmat"} the output is a dichotomous 2D or 3D array recording the relations among the actors in the network.
+For \code{type = "toarray"} the output is a dichotomous 2D or 3D array recording the relations among the actors in the network.
 %% ...
 }
 %\references{

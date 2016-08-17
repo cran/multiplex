@@ -1,13 +1,14 @@
 iinc <-
-function (inc, PO, prsep = ", ", print.eqs = FALSE) 
+function (inc, PO, print.eqs = FALSE, prsep) 
 {
-    pi <- (transf(inc, "listmat", ord = dim(PO)[1], prsep = prsep) + 
+    ifelse(missing(prsep) == TRUE, prsep <- ", ", NA)
+    Pi <- (transf(inc, type = "toarray", ord = dim(PO)[1], prsep = prsep) + 
         PO)
     ls <- list()
     k <- 1
-    for (i in 1:(nrow(pi) - 1)) {
-        for (j in (i + 1):nrow(pi)) {
-            if (isTRUE(all.equal(pi[i, ], pi[j, ])) == TRUE) {
+    for (i in 1:(nrow(Pi) - 1)) {
+        for (j in (i + 1):nrow(Pi)) {
+            if (isTRUE(all.equal(Pi[i, ], Pi[j, ])) == TRUE) {
                 if (i != j) {
                   ls[[k]] <- c(i, j)
                   k <- k + 1
@@ -21,8 +22,8 @@ function (inc, PO, prsep = ", ", print.eqs = FALSE)
     rm(i)
     if (length(ls) == 0) 
         return(1:dim(PO)[1])
-    if (sum(transf(inc, "listmat", ord = dim(PO)[1]), PO) == 
-        dim(PO)[1] * dim(PO)[2]) 
+    if (sum(transf(inc, type = "toarray", ord = dim(PO)[1]), 
+        PO) == dim(PO)[1] * dim(PO)[2]) 
         return(rep(1, each = dim(PO)[1]))
     j <- 1
     attr(ls[[1]], "names")[1] <- attr(ls[[1]], "names")[2] <- j

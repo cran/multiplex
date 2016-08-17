@@ -7,10 +7,10 @@ Bundle Census
 A function to perform the Bundle Census in a given multiple network.
 }
 \usage{
-bundle.census(m, loops = FALSE)
+bundle.census(x, loops = FALSE)
 }
 \arguments{
-  \item{m}{
+  \item{x}{
    an array; usually with three dimensions of stacked matrices where the multiple relations are placed.
 }
   \item{loops}{

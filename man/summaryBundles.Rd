@@ -7,8 +7,7 @@ Summary of Bundle Classes
 Pretty printing of the bundle class patterns results.
 }
 \usage{
-summaryBundles(x, file = NULL, latex = FALSE, prsep = ", ", byties = FALSE)
-
+summaryBundles(x, file = NULL, latex = FALSE, byties)
 }
 \arguments{
   \item{x}{
@@ -20,12 +19,12 @@ summaryBundles(x, file = NULL, latex = FALSE, prsep = ", ", byties = FALSE)
   \item{latex}{
    (logical) whether the output sholud be in latex format or not
 }
-  \item{prsep}{
-   (optional) the pair separator for the pairwise relations
-}
   \item{byties}{
    (logical) expand tie patterns and collapse tie labels?
 }
+%  \item{prsep}{
+%   (optional) the pair separator for the pairwise relations
+%}
 %  \item{...}{
 %   additional arguments
 %}

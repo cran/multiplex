@@ -5,8 +5,8 @@ function (w, transp = FALSE, smpl = FALSE, tlabels = NULL, k = 3)
         stop("Data must be a stacked array of square matrices.")
     if (is.na(dim(w)[3]) == TRUE) 
         stop("Data must have at least 2 dimensions.")
-    if (k > 7L) 
-        stop("Only polynomial until length 7 is supported.")
+    if (k > 9L) 
+        stop("Only polynomial until length 9 is supported.")
     x <- w
     ifelse(is.null(dimnames(w)[[3]]) == FALSE, lbs <- dimnames(w)[[3]], 
         lbs <- 1:dim(w)[3])
@@ -24,7 +24,6 @@ function (w, transp = FALSE, smpl = FALSE, tlabels = NULL, k = 3)
     if (transp == TRUE) {
         if (isTRUE(is.null(tlabels)) == TRUE) {
             LBS <- chartr("a-zA-Z", "A-Za-z", lbs)
-#           thanks to Eik Vettorazzi for making me aware of this function
         }
         else {
             if (isTRUE(length(tlabels) == dim(w)[3]) == TRUE) {
@@ -230,6 +229,113 @@ function (w, transp = FALSE, smpl = FALSE, tlabels = NULL, k = 3)
                         w7[, , i][1:(dim(w)[1] * dim(w)[2])] <- as.numeric(tmp7[i, 
                           ])
                       }
+                      if (isTRUE(k > 7L) == TRUE) {
+                        tmp8 <- data.frame(matrix(ncol = (dim(w)[1] * 
+                          dim(w)[2]), nrow = (dim(w)[3]^8)))
+                        lb8 <- vector()
+                        h <- 1L
+                        for (i in 1:dim(w)[3]) {
+                          for (j in 1:dim(w)[3]) {
+                            for (l in 1:dim(w)[3]) {
+                              for (m in 1:dim(w)[3]) {
+                                for (n in 1:dim(w)[3]) {
+                                  for (o in 1:dim(w)[3]) {
+                                    for (q in 1:dim(w)[3]) {
+                                      for (r in 1:dim(w)[3]) {
+                                        tmp8[h, ] <- replace(as.numeric(as.vector(w[, 
+                                          , i] %*% w[, , j] %*% 
+                                          w[, , l] %*% w[, , 
+                                          m] %*% w[, , n] %*% 
+                                          w[, , o] %*% w[, , 
+                                          q] %*% w[, , r])), 
+                                          as.numeric(as.vector(w[, 
+                                            , i] %*% w[, , j] %*% 
+                                            w[, , l] %*% w[, 
+                                            , m] %*% w[, , n] %*% 
+                                            w[, , o] %*% w[, 
+                                            , q] %*% w[, , r])) >= 
+                                            1L, 1L)
+                                        lb8[h] <- paste(dimnames(w)[[3]][i], 
+                                          dimnames(w)[[3]][j], 
+                                          dimnames(w)[[3]][l], 
+                                          dimnames(w)[[3]][m], 
+                                          dimnames(w)[[3]][n], 
+                                          dimnames(w)[[3]][o], 
+                                          dimnames(w)[[3]][q], 
+                                          dimnames(w)[[3]][r], 
+                                          sep = "")
+                                        h <- h + 1L
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        w8 <- array(dim = c(dim(w)[1], dim(w)[2], 
+                          nrow(tmp8)))
+                        for (i in 1:nrow(tmp8)) {
+                          w8[, , i][1:(dim(w)[1] * dim(w)[2])] <- as.numeric(tmp8[i, 
+                            ])
+                        }
+                        if (isTRUE(k > 8L) == TRUE) {
+                          tmp9 <- data.frame(matrix(ncol = (dim(w)[1] * 
+                            dim(w)[2]), nrow = (dim(w)[3]^9)))
+                          lb9 <- vector()
+                          h <- 1L
+                          for (i in 1:dim(w)[3]) {
+                            for (j in 1:dim(w)[3]) {
+                              for (l in 1:dim(w)[3]) {
+                                for (m in 1:dim(w)[3]) {
+                                  for (n in 1:dim(w)[3]) {
+                                    for (o in 1:dim(w)[3]) {
+                                      for (q in 1:dim(w)[3]) {
+                                        for (r in 1:dim(w)[3]) {
+                                          for (s in 1:dim(w)[3]) {
+                                            tmp9[h, ] <- replace(as.numeric(as.vector(w[, 
+                                              , i] %*% w[, , 
+                                              j] %*% w[, , l] %*% 
+                                              w[, , m] %*% w[, 
+                                              , n] %*% w[, , 
+                                              o] %*% w[, , q] %*% 
+                                              w[, , r] %*% w[, 
+                                              , s])), as.numeric(as.vector(w[, 
+                                              , i] %*% w[, , 
+                                              j] %*% w[, , l] %*% 
+                                              w[, , m] %*% w[, 
+                                              , n] %*% w[, , 
+                                              o] %*% w[, , q] %*% 
+                                              w[, , r] %*% w[, 
+                                              , s])) >= 1L, 1L)
+                                            lb9[h] <- paste(dimnames(w)[[3]][i], 
+                                              dimnames(w)[[3]][j], 
+                                              dimnames(w)[[3]][l], 
+                                              dimnames(w)[[3]][m], 
+                                              dimnames(w)[[3]][n], 
+                                              dimnames(w)[[3]][o], 
+                                              dimnames(w)[[3]][q], 
+                                              dimnames(w)[[3]][r], 
+                                              dimnames(w)[[3]][s], 
+                                              sep = "")
+                                            h <- h + 1L
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          w9 <- array(dim = c(dim(w)[1], dim(w)[2], 
+                            nrow(tmp9)))
+                          for (i in 1:nrow(tmp9)) {
+                            w9[, , i][1:(dim(w)[1] * dim(w)[2])] <- as.numeric(tmp9[i, 
+                              ])
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -237,7 +343,21 @@ function (w, transp = FALSE, smpl = FALSE, tlabels = NULL, k = 3)
         }
     }
     {
-        if (k == 7L) {
+        if (k == 9L) {
+            W <- zbnd(w1, zbnd(w2, zbnd(w3, zbnd(w4, zbnd(w5, 
+                zbnd(w6, zbnd(w7, zbnd(w8, w9))))))))
+            if (is.null(dimnames(w)[[3]]) == FALSE) 
+                dimnames(W)[[3]] <- c(lbs, lb2, lb3, lb4, lb5, 
+                  lb6, lb7, lb8, lb9)
+        }
+        else if (k == 8L) {
+            W <- zbnd(w1, zbnd(w2, zbnd(w3, zbnd(w4, zbnd(w5, 
+                zbnd(w6, zbnd(w7, w8)))))))
+            if (is.null(dimnames(w)[[3]]) == FALSE) 
+                dimnames(W)[[3]] <- c(lbs, lb2, lb3, lb4, lb5, 
+                  lb6, lb7, lb8)
+        }
+        else if (k == 7L) {
             W <- zbnd(w1, zbnd(w2, zbnd(w3, zbnd(w4, zbnd(w5, 
                 zbnd(w6, w7))))))
             if (is.null(dimnames(w)[[3]]) == FALSE) 
@@ -282,31 +402,22 @@ function (w, transp = FALSE, smpl = FALSE, tlabels = NULL, k = 3)
             lst <- list(W = W, lbs = dimnames(x)[[1]], Note = c("Relation labels have been simplified and the transpose relations are included."), 
                 Orels = olbs, Srels = nlbs, Trels = Lbs, k = k, 
                 z = dim(W)[3])
-            class(lst) <- "Rel.Box"
-            return(lst)
         }
         else {
             lst <- list(W = W, lbs = dimnames(x)[[1]], Note = c("Transpose relations are included"), 
                 Trels = Lbs, k = k, z = dim(W)[3])
-            class(lst) <- "Rel.Box"
-            return(lst)
         }
     }
-    else {
+    else if (transp == FALSE) {
         if (smpl == TRUE) {
             lst <- list(W = W, lbs = dimnames(x)[[1]], Note = c("Relation labels have been simplified"), 
                 Orels = olbs, Srels = nlbs, k = k, z = dim(W)[3])
-            class(lst) <- "Rel.Box"
-            return(lst)
         }
         else if (smpl == FALSE) {
             lst <- list(W = W, lbs = dimnames(x)[[1]], k = k, 
                 z = dim(W)[3])
-            class(lst) <- "Rel.Box"
-            return(lst)
         }
     }
-    lst <- list(W = W, lbs = dimnames(x)[[1]], k = k, z = dim(W)[3])
     class(lst) <- "Rel.Box"
     return(lst)
 }

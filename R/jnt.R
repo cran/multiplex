@@ -1,6 +1,7 @@
 jnt <-
-function (xj, prsep = ", ") 
+function (xj, prsep) 
 {
+    ifelse(missing(prsep) == TRUE, prsep <- ", ", NA)
     if (isTRUE(length(xj) != 0) == TRUE) {
         Ltj <- FALSE
         ifelse(isTRUE(is.list(xj)) == TRUE, Ltj <- TRUE, NA)

@@ -7,16 +7,16 @@ Induced Inclusions
 Function to establish class membership of induced inclusions given a partial order structure
 }
 \usage{
-iinc(inc, PO, prsep = ", ", print.eqs = FALSE)
+iinc(inc, PO, print.eqs = FALSE, prsep)
 }
 \arguments{
   \item{inc}{  an induced inclusion ('list' format)
 }
   \item{PO}{  a partial order structure
 }
-  \item{prsep}{  the pair separator
-}
   \item{print.eqs}{  (logical) should the equations be printed in the outcome?
+}
+  \item{prsep}{  the pair separator
 }
 }
 \details{
@@ -43,7 +43,6 @@ data("incubA")
 po <- partial.order(strings(incubA$IM))
 
 ## Get a cluster vector given induced inclusion on the PO
-iinc("0,0", po, prsep=",")
 iinc(transf(1-po), po)
 }
 \keyword{ algebra }

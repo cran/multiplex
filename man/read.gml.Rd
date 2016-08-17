@@ -41,7 +41,7 @@ Antonio Rivero Ostoic
 If the coordenates are chosen, node attributes can also be retrieved.
 }
 \seealso{
-\code{\link{write.gml}}, \code{\link{read.srt}}
+\code{\link{write.gml}}, \code{\link{read.srt}}, \code{\link{read.dl}}
 }
 %\examples{
 %
