@@ -101,5 +101,6 @@ function (x, type = c("strings", "galois"), labels = NULL)
     }
     if (is.null(labels) == FALSE) 
         dimnames(po)[[2]] <- dimnames(po)[[1]] <- labels
+    class(po) <- c("Partial.Order", match.arg(type))
     po
 }

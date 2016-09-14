@@ -35,12 +35,12 @@ rel.sys(x, type = c("tolist", "toarray"), bonds = c("entire", "strong", "weak",
   }
 }
 \details{
-This function serves to establish a particular \emph{system} in the network typically by the `\code{bonds}' argument, but also through `\code{sel}'. In case that ``\code{entire}'' is chosen with the former option, then all nodes with ties are considered in the relational system without isolated nodes. ``\code{strong}'' bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those pattern exclusively without mutual character. A single bundle pattern or combination of these is also possible.
+When the type of bonds chosen is \code{entire} then the nodes with ties are considered in the relational system without isolated nodes. \code{strong} bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those pattern exclusively without mutual character.
 
-The latter argument allows selecting network members as well, and this can be done with a scalar or a vector given the location of the actor(s) in the input data or else by their label names. Moreover, it is possible to select the actors having or \emph{not} a particular attribute, which can be specified by an array as well; use ``\code{att}'' or ``\code{noatt}'' for the two possibilities in the `\code{sel}' argument, and this is specified in \code{Attrs} of the output.
+When selecting from a list with actor attributes, it is also possible to select the network members having or \emph{not} the attribute that is specified in the \code{Attrs} output. Use \code{att} or \code{noatt} for the two options.
 }
 \value{
-An object of `\code{Rel.System}' class for the \code{type = "tolist"} (default option).
+An object of `\code{Rel.System}' class for the \code{type = "tolist"} (default) option.
 The items are:
    \item{ord}{order of the network relational system}
    \item{nodes}{the nodes in the relational system}

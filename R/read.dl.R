@@ -9,12 +9,31 @@ function (file)
         if (any(tip == "NM") == TRUE) {
             arr <- array(NA, dim = c(as.numeric(rep(tip[2], 2)), 
                 as.numeric(tip[4])))
-            dimnames(arr)[[1]] <- arx[(which(arx == "LABELS:")[1] + 
-                1L):(which(arx == "LABELS:")[1] + dim(arr)[1])]
-            dimnames(arr)[[2]] <- arx[(which(arx == "LABELS:")[2] + 
-                1L):(which(arx == "LABELS:")[2] + dim(arr)[2])]
-            dimnames(arr)[[3]] <- arx[(which(arx == "LABELS:")[3] + 
-                1L):(which(arx == "LABELS:")[3] + dim(arr)[3])]
+            if (isTRUE(length(which(arx == "ROW")) > 0) == TRUE) {
+                dimnames(arr)[[1]] <- arx[(which(arx == "ROW")[1] + 
+                  2L):(which(arx == "ROW")[1] + 1L + dim(arr)[1])]
+            }
+            else {
+                NA
+            }
+            if (isTRUE(length(which(arx == "COLUMN")) > 0) == 
+                TRUE) {
+                dimnames(arr)[[2]] <- arx[(which(arx == "COLUMN")[1] + 
+                  2L):(which(arx == "COLUMN")[1] + 1L + dim(arr)[2])]
+            }
+            else {
+                NA
+            }
+            if (isTRUE(length(which(arx == "ROW")) > 0) == TRUE && 
+                isTRUE(length(which(arx == "COLUMN")) > 0) == 
+                  TRUE) {
+                dimnames(arr)[[3]] <- arx[(which(arx == "LABELS:")[3] + 
+                  1L):(which(arx == "LABELS:")[3] + dim(arr)[3])]
+            }
+            else {
+                dimnames(arr)[[3]] <- arx[(which(arx == "LABELS:")[1] + 
+                  1L):(which(arx == "LABELS:")[1] + dim(arr)[3])]
+            }
             lnch <- which(arx == "DATA:")
             lgtv <- dim(arr)[1]^2L
             arrt <- arr
@@ -27,28 +46,44 @@ function (file)
             rm(k, arrt, lnch, lgtv)
         }
         else if (any(tip == "NM") == FALSE) {
-            arrt <- array(as.numeric(arx[(which(arx == "DATA:") + 
-                1L):length(arx)]), dim = c(as.numeric(rep(tip[2], 
-                2))))
-            arr <- t(arrt)
-            dimnames(arr)[[1]] <- dimnames(arr)[[2]] <- arx[(which(arx == 
-                "LABELS:")[1] + 1L):(which(arx == "LABELS:")[1] + 
-                as.numeric(tip[2]))]
+            if (any(tip == "EDGELIST1") == TRUE) {
+                stop("\"EDGELIST\" option in DL is not yet supported for reading.")
+            }
+            else {
+                arrt <- array(as.numeric(arx[(which(arx == "DATA:") + 
+                  1L):length(arx)]), dim = c(as.numeric(rep(tip[2], 
+                  2))))
+                arr <- t(arrt)
+                dimnames(arr)[[1]] <- dimnames(arr)[[2]] <- arx[(which(arx == 
+                  "LABELS:")[1] + 1L):(which(arx == "LABELS:")[1] + 
+                  as.numeric(tip[2]))]
+            }
         }
         else {
             NA
         }
     }
     else if (isTRUE(tip[1] == "NR") == TRUE) {
+        tip <- dhc(tip, ",")
         arrt <- data.frame(matrix(as.numeric(arx[(which(arx == 
             "DATA:") + 1L):length(arx)]), ncol = as.numeric(tip[which(tip == 
             "NR") + 1]), nrow = as.numeric(tip[which(tip == "NC") + 
             1])))
         arr <- t(arrt)
-        colnames(arr) <- arx[(which(arx == "COLUMN") + 2L):((which(arx == 
-            "COLUMN") + 1L + ncol(arr)))]
-        rownames(arr) <- arx[(which(arx == "ROW") + 2L):((which(arx == 
-            "ROW") + 1L + nrow(arr)))]
+        if (isTRUE(length(which(arx == "COLUMN")) > 0) == TRUE) {
+            colnames(arr) <- arx[(which(arx == "COLUMN") + 2L):((which(arx == 
+                "COLUMN") + 1L + ncol(arr)))]
+        }
+        else {
+            NA
+        }
+        if (isTRUE(length(which(arx == "ROW")) > 0) == TRUE) {
+            rownames(arr) <- arx[(which(arx == "ROW") + 2L):((which(arx == 
+                "ROW") + 1L + nrow(arr)))]
+        }
+        else {
+            NA
+        }
     }
     else {
         stop("Format not supported.")

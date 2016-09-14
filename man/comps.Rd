@@ -20,12 +20,12 @@ comps(x, bonds = c("entire", "strong", "weak"))
 }
 }
 \details{
-The network's different components are obtained by means of transitive closure of the bundle ties. By default the ``\code{entire}'' network is chosen, but the option `\code{bonds}' allows to discriminate different types of relational bundles.
+The network's different components are obtained by means of transitive closure of the bundle ties. By default the `entire' network is chosen, but the option \code{bonds} allows to discriminate different types of relational bundles.
 }
 \value{
 A list with two possible ``components''
-\item{com}{for the components}
-\item{isol}{for the isolates}
+\item{com}{a component}
+\item{isol}{the isolates}
 %% ...
 }
 %\references{

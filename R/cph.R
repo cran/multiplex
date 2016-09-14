@@ -42,13 +42,14 @@ function (W, labels = NULL)
         tmp <- outer(phu[, i], phu[i, ], pmin.int)
         phu <- pmax(phu, tmp)
     }
-    if (isTRUE(is.null(labels)) == FALSE) {
+    if (is.null(labels) == FALSE) {
         ifelse(isTRUE(length(labels) == dim(phu)[1]) == TRUE, 
             dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- labels, 
             NA)
     }
-    else if (isTRUE(is.null(labels)) == TRUE) {
+    else if (is.null(labels) == TRUE) {
         dimnames(phu)[[1]] <- dimnames(phu)[[2]] <- W$lbs
     }
-    return(phu)
+    class(phu) <- c("Partial.Order", "CPH")
+    phu
 }

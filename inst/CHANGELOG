@@ -1,22 +1,44 @@
 
 'multiplex' PACKAGE
 
+ 
+version 2.1 (14-September-2016)
+-------------------------------
 
-version 2.0 (16-August-2016)
-----------------------------
+ADDED FEATURES:
+	+ 'fltr' is not restricted only to `principal` filters or ideals
+	+ 'read.dl' can read unlabeled networks as well
+
+BUGS FIXED:
+	* Fixed bug in 'bundles' for networks with n-tuple entrainments (n>2), 
+	  and wihtout mixed patterns (from a notification made by Alex Smith)
+	* 'read.gml', 'pi.rels', and 'is.mc' now update to the new argmunents  
+	  from 'transf'
+	* 'transf' failed to process list whose length was different to the 
+	  value of argument "ord" with the "toarray" option
+
+OTHER CHANGES:
+	+ Internal function 'bnd' ADDED for 'bundles' and 'bundle.census'
+	+ 'partial.order' and 'cph' reports "Partial.Order" class objects
+
+
+version 2.0 (8-July-2016)
+-------------------------
 
 ADDED FEATURES:
 	+ NEW FUNCTION 'read.dl' to read Ucinet DL files
-	+ It is possible to specify combinations of bundle types in 'rel.sys'
-	+ Function 'zbind' can bind rectangular arrays as well
+	+ Combinations of bundle types is possible to specify in 'rel.sys'
+	+ Function 'zbind' now also works with rectangular arrays
 
 BUGS FIXED:
 	* 'bundles' failed to recognize n-tuple tie entrainments when n>=3
-	* 'bundle.census' works well now with all corrections made for 'bundles'
+	* 'bundle.census' incorporates all corrections made for 'bundles'
 
 OTHER CHANGES:
-	+ Bipartite graphs section in the vignette has been updated.
+	+ 'transf' and 'rel.sys' replace arguments that are more convenient 
+	   "matlist" -> "tolist"; "listmat" -> "toarray"
 	+ Minor changes in functions with customized pair separators
+	+ Section "3 Bipartite graphs" in the Vignette has been updated 
 
 
 version 1.9.3 (16-June-2016)
@@ -97,13 +119,13 @@ ADDED FEATURES:
 	+ 'dichot' supports non-positive cut-off real values
 	+ 'summaryBundles' has new argument for expanding tie patterns and collapsing
 	  tie labels
-	+ Small improvements in internal functions; 'flt' is added
 
 BUG FIXED:
 	* 'write.srt' failed to process networks without isolated actors
 
 OTHER CHANGES:
 	+ Namespaces for needed global functions have been added (CRAN request)
+	+ Small improvements in internal functions; 'flt' is ADDED
 	- Internal function 'slc' is DEPREACTED
 	+ Vignette is expanded
 

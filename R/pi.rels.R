@@ -9,13 +9,13 @@ function (x, po, po.incl = FALSE)
     }
     pii <- array(dim = c(nrow(po), ncol(po), length(x$ii)))
     for (i in 1:length(x$ii)) {
-        pii[, , i] <- transf(x$ii[[i]], "listmat", ord = nrow(po), 
+        pii[, , i] <- transf(x$ii[[i]], "toarray", ord = nrow(po), 
             labels = 1:nrow(po)) + Po
     }
     rm(i)
     pat <- array(dim = c(nrow(po), ncol(po), length(x$at)))
     for (i in 1:length(x$at)) {
-        pat[, , i] <- transf(x$at[[i]], "listmat", ord = nrow(po), 
+        pat[, , i] <- transf(x$at[[i]], "toarray", ord = nrow(po), 
             labels = 1:nrow(po)) + Po
     }
     rm(i)

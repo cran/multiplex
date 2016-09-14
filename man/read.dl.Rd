@@ -17,7 +17,7 @@ read.dl(file)
 }
 }
 \details{
-\code{dl} files serve to represent multiple networks, and it is one of the formats used in Netdraw, which is part of the Ucinet program.
+\code{dl} files serve to represent multiple networks, and it is one of the formats used in Netdraw, which is a component of the Ucinet program.
 }
 \value{
 a data frame or an array representing the multiple network.

@@ -11,46 +11,52 @@ function (x, PO, rclos = TRUE, ideal = FALSE)
         tmp <- sub("}", "", dhc(tmp, prsep = ", "), fixed = TRUE)
         if (isTRUE(length(tmp) != length(unique(tmp))) == TRUE) 
             stop("'PO' must be in a reduced form.")
-        flg <- FALSE
-        for (i in 1:length(lbs)) {
-            tmp <- jnt(unlist(strsplit(lbs[i], "} {", fixed = TRUE)), 
-                prsep = ", ")
-            tmp <- sub("{", "", dhc(tmp, prsep = ", "), fixed = TRUE)
-            tmp <- sub("}", "", dhc(tmp, prsep = ", "), fixed = TRUE)
-            if (isTRUE(x %in% tmp) == TRUE) {
-                X <- i
-                flg <- TRUE
-                break
+        ifelse(all(x %in% tmp) == FALSE, x <- x[which(x %in% 
+            tmp)], NA)
+        X <- vector()
+        for (k in 1:length(x)) {
+            for (i in 1:length(lbs)) {
+                tmplb <- jnt(unlist(strsplit(lbs[i], "} {", fixed = TRUE)), 
+                  prsep = ", ")
+                tmplb <- sub("{", "", dhc(tmplb, prsep = ", "), 
+                  fixed = TRUE)
+                tmplb <- sub("}", "", dhc(tmplb, prsep = ", "), 
+                  fixed = TRUE)
+                if (isTRUE(x[k] %in% tmplb) == TRUE) {
+                  X <- append(X, i)
+                  break
+                }
+                else {
+                  NA
+                }
             }
-            else {
-                NA
-            }
+            rm(i)
         }
-        rm(i)
-        if (isTRUE(flg == FALSE) == TRUE) 
+        rm(k)
+        if (isTRUE(length(X) == 0) == TRUE) 
             stop("'x' is not part of the given partial order.")
     }
     else {
-        if (isTRUE(x > nrow(PO) | x <= 0L) == TRUE) 
-            stop("'x' is either non-positive or greater than the size of the given partial order.")
+        if (isTRUE(max(x) > nrow(PO) | min(x) <= 0L) == TRUE) 
+            stop("Element in 'x' is either non-positive or a number greater than the size of the partial order.")
         X <- as.integer(x)
     }
     ifelse(isTRUE(ideal == TRUE) == TRUE, po <- t(PO), po <- PO)
     pfl <- vector()
     for (i in 1:nrow(po)) {
-        if (isTRUE(po[X, i] == 1L) == TRUE && isTRUE(po[i, X] == 
-            0L) == TRUE) {
-            pfl <- append(pfl, i)
+        for (k in 1:length(X)) {
+            ifelse(isTRUE(po[X[k], i] == 1L) == TRUE && isTRUE(po[i, 
+                X[k]] == 0L) == TRUE, pfl <- append(pfl, i), 
+                NA)
         }
-        else {
-            NA
-        }
+        rm(k)
     }
     rm(i)
     if (rclos) {
         pfl <- append(X, pfl)
     }
     if (isTRUE(length(pfl) > 0L) == TRUE) {
+        pfl <- unique(pfl)
         pfll <- as.list(dimnames(PO)[[1]][pfl])
         attr(pfll, "names") <- pfl
     }

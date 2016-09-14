@@ -44,7 +44,7 @@ The network exposure measure is calculated according to the immediate neighbours
 \references{
 Ostoic, J.A.R. Algebraic Methods for the Analysis of Multiple Social Networks and Actors Attributes. PhD thesis. University of Southern Denmark. 2013.
 
-Valente, T. W. \emph{Social Networks and Health}. Oxford University Press. 2010.
+Valente, T. W. \emph{Social networks and health}. Oxford University Press. 2010.
 
 Rogers, E. \emph{The Diffusion of Innovations}. 5th ed. (1st ed. 1964) The Free Press. 2003.
 }

@@ -158,8 +158,8 @@ function (file, as = c("srt", "array"), directed = TRUE, coords = FALSE)
                     }
                   }
                   rm(i)
-                  mat[, , k] <- transf(pr, "listmat", ord = n, 
-                    labels = c(1:n))
+                  mat[, , k] <- transf(pr, type = "toarray", 
+                    ord = n, labels = c(1:n))
                 }
                 rm(k)
             }
@@ -167,8 +167,8 @@ function (file, as = c("srt", "array"), directed = TRUE, coords = FALSE)
         if (isTRUE(ncol(ndf) == 2) == TRUE | isTRUE(nlst == 1) == 
             TRUE) {
             mat <- array(0, dim = c(n, n, 1))
-            mat[, , 1] <- dichot(transf(pr, "listmat", ord = n, 
-                labels = c(1:n)))
+            mat[, , 1] <- dichot(transf(pr, type = "toarray", 
+                ord = n, labels = c(1:n)))
         }
         if (isTRUE(directed == FALSE) == TRUE) {
             for (i in 1:z) {

@@ -1,27 +1,27 @@
 \name{galois}
 \alias{galois}
 \title{
-Galois Derivations between Subsets
+Galois derivations between subsets
 }
 \description{
-Function to perform Galois derivations between partially ordered subsets of objects and attributes
+Function to perform Galois derivations between partially ordered subsets
 }
 \usage{
 galois(x, labeling = c("full", "reduced"))
 }
 \arguments{
   \item{x}{
-	a data frame (or array) with objects and attributes
+	a data frame with objects and attributes
 }
   \item{labeling}{
-	whether the derivations should be with a full or a reduced labeling
+	whether the derivations should be with full or reduced labeling
 }
 }
 \details{
-Galois derivations (or connections) are mappings between families of partially ordered subsets of elements. Such derivations are useful to analyse the structure of both subsets, whichin a social network are typically the actors and their corresponding affiliations or events, i.e. two-mode networks, or else a group of objects with a list of different attributes used in formal concept analysis. The \code{full} labeling implies that first objects are given and then attributes, whereas the \code{reduced} option is given the other way around.
+Galois derivations (or connections) are mappings between families of partially ordered subsets of elements. Such derivations are useful to analyse the structure of both subsets, whichin a social network are typically the actors and their corresponding affiliations or events, i.e. two-mode networks, or else a group of objects with a list of different attributes used in formal concept analysis.
 }
 \value{
-A labelled list with Galois derivations of objects and attributes in a ``Galois'' class object.
+A labelled list with Galois derivations of objects and attributes
 }
 \references{
 Ganter, B. and R. Wille  \emph{Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
@@ -30,7 +30,7 @@ Ganter, B. and R. Wille  \emph{Formal Concept Analysis -- Mathematical Foundatio
 Antonio Rivero Ostoic
 }
 \note{
-Vectors are not allowed for input data.
+Full labeling implies first objects and then attributes, whereas the reduced option is given the other way around.
 }
 
 \seealso{
