@@ -13,12 +13,6 @@ frt <- data.frame(yellow = c(0,1,0,0,1,0,0,0), green = c(0,0,1,0,0,0,0,1), red =
 rownames(frt) <- c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime")
 frt
 
-## ----readtable, eval=FALSE----------------------------------------------------------------------------------
-#  read.table(file, header = TRUE,
-#    row.names=c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime"))
-
-## ----readsrt, eval=FALSE------------------------------------------------------------------------------------
-#  read.srt(file, header = TRUE, attr = TRUE, toarray = FALSE)
 
 ## ----loadmultiplex------------------------------------------------------------------------------------------
 ## Load first the package
@@ -62,23 +56,36 @@ if( require("Rgraphviz", quietly = TRUE)) {
 diagram.levels(pogcc, perm = TRUE) }
 
 ## ----princfltr, echo=TRUE-----------------------------------------------------------------------------------
-## Principal filter of third concept
-fltr(3, pogcc)
-
-## ----princfltrlbs, echo=TRUE--------------------------------------------------------------------------------
-## Principal filter of third concept with labels
+## Principal filter of the third concept 
 fltr(3, pogc)
 
-## ----princfltrlbs2, echo=TRUE, eval=FALSE-------------------------------------------------------------------
-#  fltr("red", pogc)
 
-## ----princideal, echo=TRUE----------------------------------------------------------------------------------
-## Principal ideal of the third concept
-fltr(3, pogc, ideal = TRUE)
+## ----princfltrlbs, eval=FALSE------------------------------------------------------------------------------
+#  fltr("PinkLady", pogc)
+#  fltr(c("red", "RedDelicious"), pogc)
+
+
+## ----filter, echo=TRUE-------------------------------------------------------------------------------------
+## Filter of two concepts
+fltr(c("Lemon", "Lime"), pogc)
+
+
+## ----ideal, echo=TRUE--------------------------------------------------------------------------------------
+## Ideal of two concepts
+fltr(c(9, 11), pogc, ideal = TRUE)
+
 
 ## ----bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph'----
+## Load the "multigraph" package
 library("multigraph")
-bmgraph(frt, vcol = 1)
+## Plot bipartite graph
+bmgraph(frt, pch = 16:15, tcex = .8)
 
-## ----binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with stress majorization', echo=TRUE----
+
+## ----binp2, eval=FALSE-------------------------------------------------------------------------------------
+## Plot proyection of bipartite network
+#  bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
+
+
+## ----binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE----
 bmgraph(frt, layout = "stress", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16:15)

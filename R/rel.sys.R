@@ -11,6 +11,9 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
     else {
         NA
     }
+    if (isTRUE(any(c("entire", "strong", "weak", "asym", "recp", 
+        "txch", "tent", "mixd", "full") %in% bonds)) == FALSE) 
+        stop("Invalid \"bonds\" type.")
     if (all(c("strong", "weak") %in% bonds) == TRUE | isTRUE("entire" %in% 
         bonds) == TRUE) {
         bnds <- "entire"
@@ -56,6 +59,8 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
             bd <- bundles(x, collapse = FALSE, loops = loops, 
                 prsep = prsep)
         }
+        if (isTRUE(length(unlist(bd)) == 0) == TRUE) 
+            stop("Relational system chosen is empty!")
         if ((bnds) == "entire") {
             lbd <- bd
         }
@@ -65,15 +70,17 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
         else if ((bnds) == "weak") {
             lbd <- list(bd$asym, bd$tent)
         }
-        else if ((bnds) == "Mixed") {
-            ifelse(isTRUE("weak" %in% bonds) == TRUE, bonds <- unique(c(bonds, 
-                c("asym", "tent"))), NA)
-            ifelse(isTRUE("strong" %in% bonds) == TRUE, bonds <- unique(c(bonds, 
-                c("txch", "mixd", "full"))), NA)
-            lbd <- bd[which(attr(bd, "names") %in% bonds)]
-        }
         else {
-            NA
+            if ((bnds) == "Mixed") {
+                ifelse(isTRUE("weak" %in% bonds) == TRUE, bonds <- unique(c(bonds, 
+                  c("asym", "tent"))), NA)
+                ifelse(isTRUE("strong" %in% bonds) == TRUE, bonds <- unique(c(bonds, 
+                  c("txch", "mixd", "full"))), NA)
+            }
+            else {
+                NA
+            }
+            lbd <- bd[which(attr(bd, "names") %in% bonds)]
         }
         if (is.null(lbd) == FALSE) {
             if (is.na(dim(x)[3]) == FALSE && isTRUE((dim(x)[3] - 
@@ -157,6 +164,8 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
         else {
             ties <- stb <- character(0)
         }
+        ifelse(is.na(dim(x)[3]) == TRUE, stb <- unlist(stb), 
+            NA)
         if (is.null(att) == TRUE) {
             if (is.na(dim(x)[3]) == FALSE) {
                 ifelse(is.null(dimnames(x)[[3]]) == TRUE, attr(stb, 
@@ -212,6 +221,7 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
     }
     else if (match.arg(type) == "toarray") {
         if (isTRUE(attr(x, "class") == "Rel.System") == FALSE) {
+            X <- x
             if (is.null(sel) == TRUE) {
                 x <- rel.sys(x, type = "tolist", bonds = bonds, 
                   loops = loops, att = att)
@@ -233,13 +243,15 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
                   type = "tolist", bonds = bonds, sel = Sel, 
                   loops = loops, att = att))
             }
+            ifelse(is.na(dim(X)[3]) == TRUE, x$Ties <- unlist(x$Ties), 
+                NA)
         }
         else {
             NA
         }
         if (isTRUE(x$sys.ord == 0L) == TRUE) 
             stop("Relational system chosen is empty!")
-        if (is.null(sel) == FALSE) {
+        if (is.null(sel) == FALSE && is.na(dim(X)[3]) == FALSE) {
             if (isTRUE(sel == "att") == TRUE) {
                 Sel <- x$nodes[which(x$nodes %in% unlist(dhc(x$Attrs)))]
             }
@@ -288,6 +300,12 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
             r <- length(x$Ties)
             lbs <- x$incl
             lbst <- attr(x$Ties, "names")
+        }
+        else {
+            n <- length(x$sel)
+            r <- 1
+            lbs <- x$sel
+            lbst <- NULL
         }
         arr <- array(0, dim = c(n, n, r))
         dimnames(arr)[[1]] <- dimnames(arr)[[2]] <- lbs

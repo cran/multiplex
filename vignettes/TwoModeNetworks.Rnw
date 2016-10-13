@@ -50,18 +50,6 @@ frt
 @
 
 \newpage
-Certainly another way to obtain such data table of objects and attributes can be with the command \texttt{read.table()} and specifying the names of the rows. Alternatively the function \texttt{read.srt()} will accomplish almost the same by setting the \texttt{attr} argument to \texttt{TRUE} and the \texttt{toarray} argument to \texttt{FALSE}.
-
-<<readtable, eval=FALSE>>=
-read.table(file, header = TRUE, 
-  row.names=c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime"))
-@
-\vspace{-10pt}
-<<readsrt, eval=FALSE>>=
-read.srt(file, header = TRUE, attr = TRUE, toarray = FALSE)
-@
-The advantage of the \texttt{read.srt()} function is that the first column does not appear as a ``Factor'' but it is automatically taken as the names of the rows in the data table.
-
 
 \subsection*{Galois derivations}
 The formal concept of a formal context is a pair of sets of objects $A$ and attributes $B$ that is maximally contained on each other. A \emph{Galois derivation} between $G$ and $M$ is defined for any subsets $A \subseteq G$ and $B \subseteq M$ by
@@ -191,33 +179,33 @@ For a particular element $x \in P$, the upset $\uparrow\! x$ formed for all the 
 
 \bigbreak
 
-To illustrate these concepts, we apply the function \texttt{fltr()} of \textbf{multiplex} $v.1.7$ to the third element of the partial order represented by \texttt{pogcc} that results in a proper principal filter for this element.
+To illustrate these concepts, we apply the function \texttt{fltr()} of \textbf{multiplex} to the third element of the partial order represented by \texttt{pogc} that results in a proper principal filter for this formal concept with labels.
+
 
 <<princfltr, echo=TRUE>>= 
-## Principal filter of third concept
-fltr(3, pogcc)
-@
-
-In order to get the labels of the different concepts made of objects and attributes, we apply this function rather to object \texttt{pogc}, which embodies the partial order of the reduced context. 
-
-<<princfltrlbs, echo=TRUE>>= 
-## Principal filter of third concept with labels
+## Principal filter of the third concept 
 fltr(3, pogc)
 @
 
-And in this latter case we get the same result by writing  
-<<princfltrlbs2, echo=TRUE, eval=FALSE>>= 
-fltr("red", pogc)
+We get the same result when introducing the one or more of the names of this concept.
+<<princfltrlbs, echo=TRUE, eval=FALSE>>= 
+## Principal filter of the concept with these labels
+fltr("PinkLady", pogc)
+fltr(c("red", "RedDelicious"), pogc)
 @
-However, full labeling in the Galois derivation typically brings misleading results with the label option.
 
-\newpage
+Or alternatively we can combine elements from different concepts to obtain other types of filters in the concept lattice of the context.
+<<filter, echo=TRUE>>= 
+## Filter of two concepts
+fltr(c("Lemon", "Lime"), pogc)
+@
 
-Principal ideals are obtained with the same function provided that the argument \texttt{ideal} is set to \texttt{TRUE} in this function.
 
-<<princideal, echo=TRUE>>= 
-## Principal ideal of the third concept
-fltr(3, pogc, ideal = TRUE)
+Ideals and principal ideals are obtained in a similar way with this function provided that the argument \texttt{ideal} is set to \texttt{TRUE}.
+
+<<ideal, echo=TRUE>>= 
+## Ideal of two concepts
+fltr(c(9, 11), pogc, ideal = TRUE)
 @
 
 
@@ -227,20 +215,26 @@ fltr(3, pogc, ideal = TRUE)
 Two-mode network are depicted through \emph{bipartite graphs}, where the entities in one set only can relate to the elements placed in the other set. \textbf{multiplex} has a reverse dependence on \textbf{multigraph} for the visualization of multiple networks, and also for bipartite graphs. Hence, we use the function \texttt{bmgraph()} to plot the graph of the \texttt{frt} data set with the default layout option.
 
 <<bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph'>>=
+## Load the "multigraph" package
 library("multigraph")
-bmgraph(frt, vcol = 1)
+
+## Plot bipartite graph
+bmgraph(frt, pch = 16:15, tcex = .8)
 @
 
 Another possibility is to apply a force-directed layout to the binomial projection of this two-mode data set, below with some arguments for the vertices.
 
-<<binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with stress majorization', echo=TRUE>>=
-bmgraph(frt, layout = "stress", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16:15)
+<<binp2, echo=TRUE, eval=FALSE>>= 
+## Plot proyection of bipartite network
+bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
+@
+<<binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE>>=
+bmgraph(frt, layout = "stress", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
 @
 
 
-
 \bigbreak
-\bigbreak
+\medbreak
 
 \renewcommand{\baselinestretch}{1.0}
 
@@ -248,8 +242,8 @@ bmgraph(frt, layout = "stress", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16
 %
 \bibitem{Gant-Will96} Ganter, B. and R. Wille~\emph{ Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
 \bibitem{rgpahviz} Gentry, J, L. Long, R. Gentleman, S. Falcon, F. Hahne, D. Sarkar, and K.D. Hansen  ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package version 2.12.0
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Algebraic Tools for the Analysis of Multiple Social Networks}. R package v 2.0
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multigraph}: \emph{Plot and manipulate multigraphs}. R package v 0.30
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Algebraic Tools for the Analysis of Multiple Social Networks}. R package v 2.2
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multigraph}: \emph{Plot and manipulate multigraphs}. R package v 0.40
 %
 \end{thebibliography}
 
