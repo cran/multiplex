@@ -88,4 +88,4 @@ bmgraph(frt, pch = 16:15, tcex = .8)
 
 
 ## ----binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE----
-bmgraph(frt, layout = "stress", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16:15)
+bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16:15)

@@ -2,8 +2,8 @@
 'multiplex' PACKAGE
 
 
-version 2.2 (12-October-2016)
------------------------------
+versions 2.2.1 (17-October-2016)
+--------------------------------
 
 ADDED FEATURES:
 	+ Function 'read.srt' supports valued networks
@@ -12,6 +12,7 @@ BUGS FIXED:
 	* n-tuple entrainments (n>2) where counted twice by 'bnd'
 
 OTHER CHANGES:
+	+ Vigentte has been updated
 	+ Minor improvements in 'zbibnd', 'rel.sys', and 'jnt'
 
 

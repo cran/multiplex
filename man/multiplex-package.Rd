@@ -12,12 +12,12 @@ It is also possible to take the attributes of the actors in the analysis of mult
 }
 \details{
 \tabular{ll}{
-Package: \tab multiplex\cr
-Type: \tab Package\cr
-Version: \tab 2.2\cr
-Date: \tab 12 October 2016\cr
-License: \tab GPL-3\cr
-LazyLoad: \tab yes\cr
+Package: \tab multiplex \cr
+Type: \tab Package \cr
+Version: \tab 2.3 \cr
+Date: \tab 17 October 2016 \cr
+License: \tab GPL-3 \cr
+LazyLoad: \tab yes \cr
 }
 To work with this package we typically start with a specific algebraic structure. A semigroup is a closed system made of a set of elements and an associative operation on it. This algebraic structure is constructed by the \code{semigroup} function, and it takes an array of (usually but not necessarily) multiple binary relations, which are the generator relations. The Word Table and the Edge Table serve to describe completely the semigroup, and they are constructed with the functions \code{wordT} and \code{edgeT} respectively. Unique relations of the complete semigroup are given by the \code{strings} function. The \code{partial.order} function specifies the ordering of the string elements in the semigroup. The function \code{diagram} produces the lattice of inclusions of a structure having ordered relations.
 
@@ -49,9 +49,9 @@ Boyd, John P. \emph{Social Semigroups. A unified theory of scaling and blockmode
 Pattison, Philippa E. \emph{Algebraic Models for Social Networks}. Cambridge University Press. 1993.
 }
 
-%\seealso{
-%
-%}
+\seealso{
+\code{\link[multigraph:multigraph]{multigraph}}, \code{\link[multigraph:bmgraph]{bmgraph}}
+}
 
 \examples{
 ## Create the data: two binary relations among three elements

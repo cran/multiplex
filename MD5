@@ -1,9 +1,9 @@
-5bf901eb8da2890aa5e5649dea4af5ad *DESCRIPTION
+a32125994cf83e12ff77887d0137d16d *DESCRIPTION
 73c70605379f0577d2d253ca8e274ec7 *NAMESPACE
 9c60577b60f2067055614f0ef5a50bf3 *R/as.semigroup.R
 db28ce2e9ffeb516904129e48acfaace *R/as.signed.R
 21a86d96425c5209e504be2e42941489 *R/as.strings.R
-98fd565184c729c789732a934c99f294 *R/bnd.R
+7de3127a50cef7be7d029339aee5989e *R/bnd.R
 1b38a53ca715ced42a11dd4cb0f41fa5 *R/bundle.census.R
 b24ac34c9ca6a04acdb6073cf87cd1ca *R/bundles.R
 512a7b27a6b6e287e0468ede06a90def *R/cngr.R
@@ -45,7 +45,7 @@ b55b4a0977010b353128055e95ac4aa9 *R/read.dl.R
 dc628dc24624c29bfcb2a4fa96513840 *R/redl.R
 456fbf60c1157effd4ff788a562ccde9 *R/reduc.R
 c944b7f21a64aa0299e10f1b5911e03a *R/reducs.R
-d4714a5ada7fc22f9eb895792f9646fc *R/rel.sys.R
+7a733775774170286262599ac532c3c2 *R/rel.sys.R
 61bb0a27ae03104dfe17a42cd661b737 *R/relabel.R
 a8f3668b6e06bd2a6a017bda5c163783 *R/rm.isol.R
 a0fc012265cf5ac6236a1362b46509bc *R/semigroup.R
@@ -70,10 +70,10 @@ bbffa3f43a271a541459a41432c61425 *data/incubA.RData
 f688f37e01dc4c81a68a1ee31ff327ad *data/incubC.RData
 c8d9ea762ae0cd337160302e9df3f093 *data/incubD.RData
 8f321bde646dcdad8c4afba9a6288d62 *data/incubs.RData
-08ec2ed625db8d8cd162a555fddd3652 *inst/CHANGELOG
-0dd4f4b0b64c29ac39186b568daf5c4f *inst/doc/TwoModeNetworks.Rnw
+c4a8bee115dc93941d1462b470dab92f *inst/CHANGELOG
+05969f5e8286bf66a767723245244c16 *inst/doc/TwoModeNetworks.Rnw
 0b193481179ee215a25b3173ffeb19de *inst/doc/TwoModeNetworks.pdf
-24a441cc8f04ce55b72f8a904c2ae569 *inst/doc/TwoModeNetworks.r
+91b5a6c7845a8edd6ffbef7fe25196c5 *inst/doc/TwoModeNetworks.r
 1298d497c41f6479d8049ce59c8eaf6a *man/as.semigroup.Rd
 35b837b8f7764900d61abf7c53822cd5 *man/as.signed.Rd
 6e80ed9080661ea14dc6f084080ae954 *man/as.strings.Rd
@@ -104,7 +104,7 @@ d38fd32aa2c0525c6aad66fc3c0cd7ac *man/jnt.Rd
 a61eff02e86dcf69feb567d150140956 *man/ltlw.Rd
 528b1ced4531c311e7dc97bd5d8e36fb *man/men.Rd
 e24646a18c80fb1a64a1cebde76d3fd7 *man/mnplx.Rd
-eb8c58e52c84369dccffd5e12307eebb *man/multiplex-package.Rd
+842464c0be1c66acddd59e1aab936de5 *man/multiplex-package.Rd
 42935de7c691950437a8657d5318ec67 *man/neighb.Rd
 43708488056e501d8c88c4a0b718f0dc *man/ngbs.Rd
 d059a2048adccc1257edbb647e62ebc2 *man/pacnet.Rd
@@ -140,4 +140,4 @@ b432907f32a9598d27e5de1c64a0f001 *man/write.gml.Rd
 e34949f367635f1b3c3c9a6e46a46510 *man/write.srt.Rd
 5f4cd8303af796392e88efe76dc92000 *man/zbind.Rd
 412ea21cc803c2732e293c67d286a431 *man/zbnd.Rd
-0dd4f4b0b64c29ac39186b568daf5c4f *vignettes/TwoModeNetworks.Rnw
+05969f5e8286bf66a767723245244c16 *vignettes/TwoModeNetworks.Rnw
