@@ -1,9 +1,9 @@
-a32125994cf83e12ff77887d0137d16d *DESCRIPTION
+161c5e873365113698de45fd772eabe6 *DESCRIPTION
 73c70605379f0577d2d253ca8e274ec7 *NAMESPACE
 9c60577b60f2067055614f0ef5a50bf3 *R/as.semigroup.R
 db28ce2e9ffeb516904129e48acfaace *R/as.signed.R
 21a86d96425c5209e504be2e42941489 *R/as.strings.R
-7de3127a50cef7be7d029339aee5989e *R/bnd.R
+98fd565184c729c789732a934c99f294 *R/bnd.R
 1b38a53ca715ced42a11dd4cb0f41fa5 *R/bundle.census.R
 b24ac34c9ca6a04acdb6073cf87cd1ca *R/bundles.R
 512a7b27a6b6e287e0468ede06a90def *R/cngr.R
@@ -70,7 +70,7 @@ bbffa3f43a271a541459a41432c61425 *data/incubA.RData
 f688f37e01dc4c81a68a1ee31ff327ad *data/incubC.RData
 c8d9ea762ae0cd337160302e9df3f093 *data/incubD.RData
 8f321bde646dcdad8c4afba9a6288d62 *data/incubs.RData
-c4a8bee115dc93941d1462b470dab92f *inst/CHANGELOG
+c9d6975776327cad386c3e2f5d38a723 *inst/CHANGELOG
 05969f5e8286bf66a767723245244c16 *inst/doc/TwoModeNetworks.Rnw
 0b193481179ee215a25b3173ffeb19de *inst/doc/TwoModeNetworks.pdf
 91b5a6c7845a8edd6ffbef7fe25196c5 *inst/doc/TwoModeNetworks.r
@@ -104,7 +104,7 @@ d38fd32aa2c0525c6aad66fc3c0cd7ac *man/jnt.Rd
 a61eff02e86dcf69feb567d150140956 *man/ltlw.Rd
 528b1ced4531c311e7dc97bd5d8e36fb *man/men.Rd
 e24646a18c80fb1a64a1cebde76d3fd7 *man/mnplx.Rd
-842464c0be1c66acddd59e1aab936de5 *man/multiplex-package.Rd
+50de15e6779e65f99eb2072d14d6aa0f *man/multiplex-package.Rd
 42935de7c691950437a8657d5318ec67 *man/neighb.Rd
 43708488056e501d8c88c4a0b718f0dc *man/ngbs.Rd
 d059a2048adccc1257edbb647e62ebc2 *man/pacnet.Rd

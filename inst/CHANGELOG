@@ -2,7 +2,7 @@
 'multiplex' PACKAGE
 
 
-versions 2.2.1 (17-October-2016)
+versions 2.4 (18-October-2016)
 --------------------------------
 
 ADDED FEATURES:
@@ -10,11 +10,14 @@ ADDED FEATURES:
 
 BUGS FIXED:
 	* n-tuple entrainments (n>2) where counted twice by 'bnd'
+	* selection with attributes with array has been fixed
 
 OTHER CHANGES:
 	+ Vigentte has been updated
 	+ Minor improvements in 'zbibnd', 'rel.sys', and 'jnt'
 
+
+(versions 2.2 and 2.3 skipped in log)
 
 
 version 2.1 (14-September-2016)

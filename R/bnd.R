@@ -204,9 +204,6 @@ function (x, xd, lbs, TRD, r, m, mlt, prsep)
     else {
         mixe <- TEinn <- TEout <- character(0)
     }
-    ifelse(isTRUE(r == 2L) == TRUE, return(list(asym = asym, 
-        recp = full, Eout = Eout, xchg = xchg, mixe = mixe, full = tripfl, 
-        out = out, tripfl = tripfl)), return(list(asym = asym, 
-        recp = recp, Eout = Eout, xchg = xchg, mixe = mixe, full = full, 
-        out = out, tripfl = tripfl)))
+    return(list(asym = asym, recp = recp, Eout = Eout, xchg = xchg, 
+        mixe = mixe, full = full, out = out, tripfl = tripfl))
 }
