@@ -13,7 +13,6 @@ frt <- data.frame(yellow = c(0,1,0,0,1,0,0,0), green = c(0,0,1,0,0,0,0,1), red =
 rownames(frt) <- c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime")
 frt
 
-
 ## ----loadmultiplex------------------------------------------------------------------------------------------
 ## Load first the package
 library("multiplex")
@@ -50,7 +49,7 @@ diagram(pogc)
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram.levels(pogcc) }
 
-## ----diaglevelsperm, echo=TRUE------------------------------------------------------------------------------
+## ----diaglevelsperm, echo=TRUE, message=FALSE, warning=FALSE------------------------------------------------
 ## Diagram levels with permutation
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram.levels(pogcc, perm = TRUE) }
@@ -59,33 +58,30 @@ diagram.levels(pogcc, perm = TRUE) }
 ## Principal filter of the third concept 
 fltr(3, pogc)
 
-
-## ----princfltrlbs, eval=FALSE------------------------------------------------------------------------------
+## ----princfltrlbs, echo=TRUE, eval=FALSE--------------------------------------------------------------------
+#  ## Principal filter of the concept with these labels
 #  fltr("PinkLady", pogc)
 #  fltr(c("red", "RedDelicious"), pogc)
 
-
-## ----filter, echo=TRUE-------------------------------------------------------------------------------------
+## ----filter, echo=TRUE--------------------------------------------------------------------------------------
 ## Filter of two concepts
 fltr(c("Lemon", "Lime"), pogc)
 
-
-## ----ideal, echo=TRUE--------------------------------------------------------------------------------------
+## ----ideal, echo=TRUE---------------------------------------------------------------------------------------
 ## Ideal of two concepts
 fltr(c(9, 11), pogc, ideal = TRUE)
-
 
 ## ----bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph'----
 ## Load the "multigraph" package
 library("multigraph")
+
 ## Plot bipartite graph
 bmgraph(frt, pch = 16:15, tcex = .8)
 
-
-## ----binp2, eval=FALSE-------------------------------------------------------------------------------------
-## Plot proyection of bipartite network
+## ----binp2, echo=TRUE, eval=FALSE---------------------------------------------------------------------------
+#  ## Plot proyection of bipartite network
 #  bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
 
-
 ## ----binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE----
-bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .8, vcol = 8, pch = 16:15)
+bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
+

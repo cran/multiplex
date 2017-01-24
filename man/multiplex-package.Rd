@@ -14,8 +14,8 @@ It is also possible to take the attributes of the actors in the analysis of mult
 \tabular{ll}{
 Package: \tab multiplex \cr
 Type: \tab Package \cr
-Version: \tab 2.4.1 \cr
-Date: \tab 18 October 2016 \cr
+Version: \tab 2.5 \cr
+Date: \tab 24 January 2017 \cr
 License: \tab GPL-3 \cr
 LazyLoad: \tab yes \cr
 }
@@ -40,13 +40,15 @@ J. Antonio Rivero Ostoic
 Maintainer: Antonio Rivero Ostoic <multiplex@post.com>
 }
 \references{
+Pattison, Philippa E. \emph{Algebraic Models for Social Networks}. Cambridge University Press. 1993.
+
+Boyd, John P. \emph{Social Semigroups. A unified theory of scaling and blockmodelling as applied to social networks}. George Mason University Press. 1991.
+
 Lorrain, François and Harrison C. White, `Structural Equivalence of Individuals in Social Networks.' \emph{Journal of Mathematical Sociology}, 1, 49-80. 1971
 
 Boorman, Scott A. and Harrison C. White, `Social Structure from Multiple Networks. II. Role Structures.' \emph{American Journal of Sociology}, 81 (6), 1384-1446. 1976.
 
-Boyd, John P. \emph{Social Semigroups. A unified theory of scaling and blockmodelling as applied to social networks}. George Mason University Press. 1991.
-
-Pattison, Philippa E. \emph{Algebraic Models for Social Networks}. Cambridge University Press. 1993.
+Ostoic, J.A.R. Creating context for social influence processes in multiplex networks. \emph{Network Science}, (forthcoming), doi:10.1017/nws.2016.28.
 }
 
 \seealso{

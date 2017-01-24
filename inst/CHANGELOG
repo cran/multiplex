@@ -2,27 +2,35 @@
 'multiplex' PACKAGE
 
 
-versions 2.4 (18-October-2016)
---------------------------------
+version 2.5 (24-January-2017)
+-----------------------------
+ADDED FEATURES:
+	+ Function 'read.srt' has the possibility to add isolates to the net
 
+BUGS FIXED:
+	* Selection now works properly in 'rel.sys' 
+
+OTHER CHANGES:
+	* For compatibility with the base package, "sel" is used to specify 
+	  the pairwise separator in various functions; "prsep" is DEPREACTED
+
+
+
+version 2.2 (12-October-2016)
+-----------------------------
 ADDED FEATURES:
 	+ Function 'read.srt' supports valued networks
 
 BUGS FIXED:
 	* n-tuple entrainments (n>2) where counted twice by 'bnd'
-	* selection with attributes with array has been fixed
 
 OTHER CHANGES:
-	+ Vigentte has been updated
 	+ Minor improvements in 'zbibnd', 'rel.sys', and 'jnt'
 
-
-(versions 2.2 and 2.3 skipped in log)
 
 
 version 2.1 (14-September-2016)
 -------------------------------
-
 ADDED FEATURES:
 	+ 'fltr' is not restricted only to `principal` filters or ideals
 	+ 'read.dl' can read unlabeled networks as well
@@ -42,7 +50,6 @@ OTHER CHANGES:
 
 version 2.0 (8-July-2016)
 -------------------------
-
 ADDED FEATURES:
 	+ NEW FUNCTION 'read.dl' to read Ucinet DL files
 	+ Combinations of bundle types is possible to specify in 'rel.sys'
@@ -61,7 +68,6 @@ OTHER CHANGES:
 
 version 1.9.3 (16-June-2016)
 ----------------------------
-
 ADDED FEATURES:
 	+ NEW FUNCTION 'mnplx' to make multiple networks as monoplex structures
 	+ Bonds argument in 'rel.sys' permits specifying particular bundle types
@@ -81,7 +87,6 @@ OTHER CHANGES:
 
 version 1.9 (29-Apr-2016)
 -------------------------
-
 ADDED FEATURES:
 	+ NEW FUNCTION 'comps' that returns the distinct components of the multiple
 	  network plus the isolates
@@ -99,7 +104,6 @@ OTHER CHANGES:
 
 version 1.8.2 (8-Mar-2016)
 --------------------------
-
 ADDED FEATURES:
 	+ 'rel.sys' allows transformations from arrays to pair-lists and vice-versa
 	+ 'perm' and 'reduc' accepts non-sequential integers, character, and NAs in 
