@@ -2,13 +2,29 @@
 'multiplex' PACKAGE
 
 
-version 2.5 (24-January-2017)
+version 2.6 (3-May-2017)
 -----------------------------
 ADDED FEATURES:
-	+ Function 'read.srt' has the possibility to add isolates to the net
+	+ Function 'transf' is extended to 3D arrays and lists of vectors
+
+BUG FIXED:
+	* 'zbind' handles correct arrays with arbitrary order in dimnames
+	* 'summaryBundles' works right bundles with costumized separators
+
+OTHER CHANGES:
+	+ Internal function 'trnf' ADDED (works like 'transf')
+	* Argument "lbs" replaces "labels" in various functions
+	* Argument "equat" replaces "print.eqs" in 'iinc'
+	+ Minor fixes in 'pi.rels' and improvements in updated functions
+
+
+version 2.5 (23-January-2017)
+-----------------------------
+ADDED FEATURES:
+	+ Function 'read.srt' has the possibility to add isolates
 
 BUGS FIXED:
-	* Selection now works properly in 'rel.sys' 
+	* Selection works now in 'rel.sys' 
 
 OTHER CHANGES:
 	* For compatibility with the base package, "sel" is used to specify 
@@ -25,7 +41,7 @@ BUGS FIXED:
 	* n-tuple entrainments (n>2) where counted twice by 'bnd'
 
 OTHER CHANGES:
-	+ Minor improvements in 'zbibnd', 'rel.sys', and 'jnt'
+	+ Minor improvements in 'zbind', 'rel.sys', and 'jnt'
 
 
 
