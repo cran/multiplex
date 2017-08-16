@@ -1,6 +1,15 @@
 
 'multiplex' PACKAGE
 
+version 2.7 (16-August-2017)
+-----------------------------
+
+CHANGES:
+	* 'perm' allows costumized labels
+	* 'comps' handles diagonal matrices
+	* 'as.signed' captures matrix labels
+	* Minor fixes in 'transf'
+
 
 version 2.6 (3-May-2017)
 -----------------------------
