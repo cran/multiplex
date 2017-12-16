@@ -1,9 +1,24 @@
 
 'multiplex' PACKAGE
 
+version 2.8 (16-December-2017)
+-----------------------------
+ADDED FEATURES:
+	+ Function 'as.semigroup' allows including generators
+	+ 'diagram' allows specifying costumized labels, shapes and 
+	  colors of vertices and edges
+	+ 'mnplx' allows specifying clustering information
+
+OTHER CHANGES:
+	+ 'edgeT' and 'wordT' produces respective class object
+	+ Internal function 'jnt' preserves order when "unique" is TRUE
+	* "diag" replaces "diag.incl" in various functions 
+	* Minor changes in 'pi.rels', 'zbind', 'transf', 'perm'
+	- Functions 'convert' and 'relabel' has been DEPREACTED
+
+
 version 2.7 (16-August-2017)
 -----------------------------
-
 CHANGES:
 	* 'perm' allows costumized labels
 	* 'comps' handles diagonal matrices
