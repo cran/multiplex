@@ -15,9 +15,11 @@
 %\lstset{breaklines=true}
 
 \begin{document}
+
 \title{\LARGE Working with Two-Mode Networks in `multiplex'}
 \author{ {\Large Antonio Rivero Ostoic} \\
-{\normalsize School of Business and Social Sciences} \\{\large Aarhus University} }
+{\normalsize CESU, \large University of San Sim\'{o}n} }
+
 \maketitle
 
 Social networks are systems defined by a collection of relationships among collective actors. In terms of set theory, a relation is an ordered pair such as $(x, y)$ that refers to a directed linkage from an element $x$ to an element $y$, where $x \in X$ and $y \in Y$ called the domain and codomain of the relation. The context of a binary relation $R$ is the overall relation set that result from the Cartesian product of the domain and codomain or $X \times Y$ of all ordered pairs $(x, y)$ where $R$ is a subset of the context.
@@ -50,6 +52,18 @@ frt
 @
 
 \newpage
+%Certainly another way to obtain such data table of objects and attributes can be with the command \texttt{read.table()} and specifying the names of the rows. Alternatively the function \texttt{read.srt()} will accomplish almost the same by setting the \texttt{attr} argument to \texttt{TRUE} and the \texttt{toarray} argument to \texttt{FALSE}.
+%
+%<<readtable, eval=FALSE>>=
+%read.table(file, header = TRUE, 
+%  row.names=c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime"))
+%@
+%\vspace{-10pt}
+%<<readsrt, eval=FALSE>>=
+%read.srt(file, header = TRUE, attr = TRUE, toarray = FALSE)
+%@
+%The advantage of the \texttt{read.srt()} function is that the first column does not appear as a ``Factor'' but it is automatically taken as the names of the rows in the data table.
+
 
 \subsection*{Galois derivations}
 The formal concept of a formal context is a pair of sets of objects $A$ and attributes $B$ that is maximally contained on each other. A \emph{Galois derivation} between $G$ and $M$ is defined for any subsets $A \subseteq G$ and $B \subseteq M$ by
@@ -100,7 +114,7 @@ For this, the function \texttt{partial.order()} now supports the ``\texttt{galoi
 
 <<partialorder, echo=-3>>=
 ## Partial ordering of the formal concepts with established labels
-pogcc <- partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
+pogcc <- partial.order(gc, type = "galois", lbs = paste("c", 1:length(gc$full), sep = ""))
 pogcc
 @
 
@@ -181,14 +195,20 @@ For a particular element $x \in P$, the upset $\uparrow\! x$ formed for all the 
 
 To illustrate these concepts, we apply the function \texttt{fltr()} of \textbf{multiplex} to the third element of the partial order represented by \texttt{pogc} that results in a proper principal filter for this formal concept with labels.
 
+%<<princfltr, echo=TRUE>>= 
+%## Principal filter of third concept
+%fltr(3, pogcc)
+%@
+%
+%In order to get the labels of the different concepts made of objects and attributes, we apply this function rather to object \texttt{pogc}, which embodies the partial order of the reduced context. 
 
-<<princfltr, echo=TRUE>>= 
+<<princfltrlbs, echo=TRUE>>= 
 ## Principal filter of the third concept 
 fltr(3, pogc)
 @
 
 We get the same result when introducing the one or more of the names of this concept.
-<<princfltrlbs, echo=TRUE, eval=FALSE>>= 
+<<princfltrlbs2, echo=TRUE, eval=FALSE>>= 
 ## Principal filter of the concept with these labels
 fltr("PinkLady", pogc)
 fltr(c("red", "RedDelicious"), pogc)
@@ -201,12 +221,15 @@ fltr(c("Lemon", "Lime"), pogc)
 @
 
 
+%\newpage
+
 Ideals and principal ideals are obtained in a similar way with this function provided that the argument \texttt{ideal} is set to \texttt{TRUE}.
 
 <<ideal, echo=TRUE>>= 
 ## Ideal of two concepts
 fltr(c(9, 11), pogc, ideal = TRUE)
 @
+%fltr(3, pogc, ideal = TRUE)
 
 
 
@@ -219,17 +242,17 @@ Two-mode network are depicted through \emph{bipartite graphs}, where the entitie
 library("multigraph")
 
 ## Plot bipartite graph
-bmgraph(frt, pch = 16:15, tcex = .8)
+bmgraph(frt, pch = 16:15)
 @
 
 Another possibility is to apply a force-directed layout to the binomial projection of this two-mode data set, below with some arguments for the vertices.
 
 <<binp2, echo=TRUE, eval=FALSE>>= 
 ## Plot proyection of bipartite network
-bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
+bmgraph(frt, layout = "stress", seed = 1, cex = 3, vcol = 8, pch = 16:15)
 @
 <<binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE>>=
-bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
+bmgraph(frt, layout = "force", seed = 1, cex = 3, vcol = 8, pch = 16:15)
 @
 
 
@@ -241,9 +264,9 @@ bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:
 \begin{thebibliography}{5}
 %
 \bibitem{Gant-Will96} Ganter, B. and R. Wille~\emph{ Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
-\bibitem{rgpahviz} Gentry, J, L. Long, R. Gentleman, S. Falcon, F. Hahne, D. Sarkar, and K.D. Hansen  ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package version 2.12.0
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Algebraic Tools for the Analysis of Multiple Social Networks}. R package v 2.2
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multigraph}: \emph{Plot and manipulate multigraphs}. R package v 0.40
+\bibitem{rgpahviz}  Hansen, K.D., J. Gentry, L. Long, R. Gentleman, S. Falcon, F. Hahne, and D. Sarkar   ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package version 2.12.0
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Algebraic Tools for the Analysis of Multiple Social Networks}. R package v 2.8
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multigraph}: \emph{Plot and manipulate multigraphs}. R package v 0.60
 %
 \end{thebibliography}
 

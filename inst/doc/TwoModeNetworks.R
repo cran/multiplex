@@ -30,7 +30,7 @@ str(gc$full)
 
 ## ----partialorder, echo=-3----------------------------------------------------------------------------------
 ## Partial ordering of the formal concepts with established labels
-pogcc <- partial.order(gc, type = "galois", labels = paste("c", 1:length(gc$full), sep = ""))
+pogcc <- partial.order(gc, type = "galois", lbs = paste("c", 1:length(gc$full), sep = ""))
 pogcc
 
 ## ----pogc---------------------------------------------------------------------------------------------------
@@ -54,11 +54,11 @@ diagram.levels(pogcc) }
 if( require("Rgraphviz", quietly = TRUE)) {
 diagram.levels(pogcc, perm = TRUE) }
 
-## ----princfltr, echo=TRUE-----------------------------------------------------------------------------------
+## ----princfltrlbs, echo=TRUE--------------------------------------------------------------------------------
 ## Principal filter of the third concept 
 fltr(3, pogc)
 
-## ----princfltrlbs, echo=TRUE, eval=FALSE--------------------------------------------------------------------
+## ----princfltrlbs2, echo=TRUE, eval=FALSE-------------------------------------------------------------------
 #  ## Principal filter of the concept with these labels
 #  fltr("PinkLady", pogc)
 #  fltr(c("red", "RedDelicious"), pogc)
@@ -76,12 +76,12 @@ fltr(c(9, 11), pogc, ideal = TRUE)
 library("multigraph")
 
 ## Plot bipartite graph
-bmgraph(frt, pch = 16:15, tcex = .8)
+bmgraph(frt, pch = 16:15)
 
 ## ----binp2, echo=TRUE, eval=FALSE---------------------------------------------------------------------------
 #  ## Plot proyection of bipartite network
-#  bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
+#  bmgraph(frt, layout = "stress", seed = 1, cex = 3, vcol = 8, pch = 16:15)
 
 ## ----binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE----
-bmgraph(frt, layout = "force", seed = 1, cex = 3, tcex = .7, vcol = 8, pch = 16:15)
+bmgraph(frt, layout = "force", seed = 1, cex = 3, vcol = 8, pch = 16:15)
 
