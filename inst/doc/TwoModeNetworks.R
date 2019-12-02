@@ -26,11 +26,11 @@ gc <- galois(frt, labeling = "reduced")
 galois(frt, labeling = "reduced")
 
 ## ----strgaloisReduc, size='scriptsize'----------------------------------------------------------------------
-str(gc$full)
+str(gc$gc$full)
 
 ## ----partialorder, echo=-3----------------------------------------------------------------------------------
 ## Partial ordering of the formal concepts with established labels
-pogcc <- partial.order(gc, type = "galois", lbs = paste("c", 1:length(gc$full), sep = ""))
+pogcc <- partial.order(gc, type = "galois", lbs = paste("c", 1:length(gc$gc$full), sep = ""))
 pogcc
 
 ## ----pogc---------------------------------------------------------------------------------------------------
@@ -40,48 +40,46 @@ pogc <- partial.order(gc, type = "galois")
 ## ----diagrampogc, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of the fruits and their characteristics', echo=-1, small.mar=TRUE----
 par(mar=c(0,0,0,0))
 ## Plot the lattice diagram
-if( require("Rgraphviz", quietly = TRUE)) {
+if( require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
 diagram(pogc)
 }
 
 ## ----diaglevels, echo=TRUE----------------------------------------------------------------------------------
 ## Diagram levels
-if( require("Rgraphviz", quietly = TRUE)) {
+if( require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
 diagram.levels(pogcc) }
 
 ## ----diaglevelsperm, echo=TRUE, message=FALSE, warning=FALSE------------------------------------------------
 ## Diagram levels with permutation
-if( require("Rgraphviz", quietly = TRUE)) {
+if( require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
 diagram.levels(pogcc, perm = TRUE) }
 
 ## ----princfltrlbs, echo=TRUE--------------------------------------------------------------------------------
-## Principal filter of the third concept 
+## Principal order filter of the third concept 
 fltr(3, pogc)
 
 ## ----princfltrlbs2, echo=TRUE, eval=FALSE-------------------------------------------------------------------
-#  ## Principal filter of the concept with these labels
+#  ## Principal order filter of the concept with these labels
 #  fltr("PinkLady", pogc)
 #  fltr(c("red", "RedDelicious"), pogc)
 
 ## ----filter, echo=TRUE--------------------------------------------------------------------------------------
-## Filter of two concepts
+## Order filter of two concepts
 fltr(c("Lemon", "Lime"), pogc)
 
 ## ----ideal, echo=TRUE---------------------------------------------------------------------------------------
 ## Ideal of two concepts
 fltr(c(9, 11), pogc, ideal = TRUE)
 
-## ----bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=4, fig.height=4, fig.align='center', fig.env='figure', fig.cap='Bipartite graph'----
-## Load the "multigraph" package
-library("multigraph")
-
-## Plot bipartite graph
-bmgraph(frt, pch = 16:15)
+## ----bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=3.0, fig.height=3.0, fig.align='center', fig.env='figure', fig.cap='Bipartite graph', small.mar=TRUE----
+## Load the "multigraph" package and plot bipartite graph
+require("multigraph")
+bmgraph(frt, pch = 16:15, fsize = 7)
 
 ## ----binp2, echo=TRUE, eval=FALSE---------------------------------------------------------------------------
 #  ## Plot proyection of bipartite network
-#  bmgraph(frt, layout = "stress", seed = 1, cex = 3, vcol = 8, pch = 16:15)
+#  bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:15, rot=45)
 
-## ----binp, fig.pos='H', fig.width=5, fig.height=5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE----
-bmgraph(frt, layout = "force", seed = 1, cex = 3, vcol = 8, pch = 16:15)
+## ----binp, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE, small.mar=TRUE----
+bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:15, rot=45)
 

@@ -8,7 +8,7 @@ Factorisation of semigroup structures
 A function to decompose partially ordered semigroups
 }
 \usage{
-fact(S, P, uniq = TRUE, fac, atoms, mc, atmc, patm, k)
+fact(S, P, uniq = TRUE, fac, atoms, mca, atmc, patm, k)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,8 +27,8 @@ the `factor' to be factorised, in case that input factorised partially ordered s
   \item{atoms}{
 (logical) whether or not include the atoms in the output
 }
-  \item{mc}{
-(logical) whether or not include the meet-complements in the output
+  \item{mca}{
+(logical) whether or not include the meet-complements of atoms in the output
 }
   \item{atmc}{
 (logical) whether or not include the atoms'  meet-complements in the output
@@ -52,7 +52,7 @@ An object of \code{"Ind.incl"} class having:
   \item{patm}{(optional) a vector with the potential atoms}
   \item{atm}{(optional) a vector with the atoms}
   \item{atmc}{(optional) array with meet-complements of atoms}
-  \item{mc}{(optional) meet-complements}
+  \item{mca}{(optional) meet-complements of atoms}
   \item{note}{(optional) induced inclusions without the substitution property}
 %% ...=iin,=ncomp,=patoms,=atm,atmc=mcl,mc=mmcs,note=znote
 }
