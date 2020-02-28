@@ -31,9 +31,9 @@ decomp(S, pr, type = c("mca", "pi", "at", "cc"), reduc, fac, force)
 }
 }
 \details{
-The \code{decomp} function is a reduction form of an algebraic structure like the semigroup that verifies which of the class members in the system are congruent to each other. The decomposed object then is made of congruent elements, which form part of the lattice of congruence classes in the algebraic structure. In case that the input data comes from the Pacnet program, then such elements are in form of \eqn{\pi}-relations or the  meet-complements of the atoms; otherwise these are simply equivalent elements satisfying the substitution property.
+The \code{decomp} function performs a reduction of an algebraic structure like the semigroup that verifies which of the class members in the system are congruent to each other. The decomposed object then is made of congruent elements, which form part of the lattice of congruence classes in the algebraic structure. In case that the input data comes from the Pacnet program, then such elements are in the form of  \eqn{\pi}-relations or the  meet-complements of the atoms. Otherwise, these are simply equivalent elements satisfying the substitution property.
 
-Sometimes a `\code{Semigroup}' class object contains not available data in the multiplication table, typically when it is an image from the \code{\link{fact}} function. In such case, it is possible to perform a reduction of the semigroup structure with the \code{force} option, which performs additional equations to the string relations in order to get rid of \code{NA}s in the semigroup data.
+Sometimes a `\code{Semigroup}' class object contains not available data in the multiplication table, typically when it is an image from the \code{\link{fact}} function. In such a case, it is possible to perform a reduction of the semigroup structure with the \code{force} option, which performs additional equations to the string relations in order to get rid of \code{NA}s in the semigroup data.
 }
 \value{
 An object of `\code{Decomp}' class having:

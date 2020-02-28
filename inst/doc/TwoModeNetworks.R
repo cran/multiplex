@@ -6,80 +6,79 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 })
 
 ## ----data, echo=-6------------------------------------------------------------------------------------------
-## Fruits data set with attributes
+# Fruits data set with attributes
 frt <- data.frame(yellow = c(0,1,0,0,1,0,0,0), green = c(0,0,1,0,0,0,0,1), red = c(1,0,0,1,0,0,0,0), 
                   orange = c(0,0,0,0,0,1,1,0), apple = c(1,1,1,1,0,0,0,0), citrus = c(0,0,0,0,1,1,1,1))
-## Label the objects
+# Label the objects
 rownames(frt) <- c("PinkLady","GrannySmith","GoldenDelicious","RedDelicious","Lemon","Orange","Mandarin","Lime")
 frt
 
 ## ----loadmultiplex------------------------------------------------------------------------------------------
-## Load first the package
+# Load first the package
 library("multiplex")
 
 ## ----galoisFull---------------------------------------------------------------------------------------------
-## Galois representation between objects and attributes
+# Galois representation between objects and attributes
 galois(frt)
 
 ## ----galoisReduc, echo=-2-----------------------------------------------------------------------------------
-gc <- galois(frt, labeling = "reduced")
+# Galois derivation with a reduced labeling
+gd <- galois(frt, labeling = "reduced")
 galois(frt, labeling = "reduced")
 
 ## ----strgaloisReduc, size='scriptsize'----------------------------------------------------------------------
-str(gc$gc$full)
+str(gd$gc$full)
 
 ## ----partialorder, echo=-3----------------------------------------------------------------------------------
-## Partial ordering of the formal concepts with established labels
-pogcc <- partial.order(gc, type = "galois", lbs = paste("c", 1:length(gc$gc$full), sep = ""))
-pogcc
+# Partial ordering of the formal concepts with established labels
+pogdc <- partial.order(gd, type = "galois", lbs = paste("c", seq_len(length(gd$gc$full)), sep = ""))
+pogdc
 
 ## ----pogc---------------------------------------------------------------------------------------------------
-## First we assign the partial order of the reduced context to 'pogc'
-pogc <- partial.order(gc, type = "galois")
+# First we assign the partial order of the reduced context to 'pogd'
+pogd <- partial.order(gd, type = "galois")
 
-## ----diagrampogc, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of the fruits and their characteristics', echo=-1, small.mar=TRUE----
+## ----diagrampogc, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.cap='Concept Lattice of fruits and color characteristics', echo=-1, small.mar=TRUE----
 par(mar=c(0,0,0,0))
-## Plot the lattice diagram
-if( require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
-diagram(pogc)
-}
+# Plot the lattice diagram
+suppressPackageStartupMessages(library("Rgraphviz", quietly = TRUE))
+diagram(pogd, main = "Fruits & Colors", fsize = 175, fcol = "red", col.main = "blue")
 
 ## ----diaglevels, echo=TRUE----------------------------------------------------------------------------------
-## Diagram levels
+# Diagram levels
 if( require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
-diagram.levels(pogcc) }
+diagram.levels(pogdc) }
 
 ## ----diaglevelsperm, echo=TRUE, message=FALSE, warning=FALSE------------------------------------------------
-## Diagram levels with permutation
+# Diagram levels with permutation
 if( require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
-diagram.levels(pogcc, perm = TRUE) }
+diagram.levels(pogdc, perm = TRUE) }
 
 ## ----princfltrlbs, echo=TRUE--------------------------------------------------------------------------------
-## Principal order filter of the third concept 
-fltr(3, pogc)
+# Principal order filter of the third concept 
+fltr(3, pogd)
 
 ## ----princfltrlbs2, echo=TRUE, eval=FALSE-------------------------------------------------------------------
-#  ## Principal order filter of the concept with these labels
-#  fltr("PinkLady", pogc)
-#  fltr(c("red", "RedDelicious"), pogc)
+#  # Principal order filter of the concept with these labels
+#  fltr(c("red", "RedDelicious"), pogd)
 
 ## ----filter, echo=TRUE--------------------------------------------------------------------------------------
-## Order filter of two concepts
-fltr(c("Lemon", "Lime"), pogc)
+# Order filter of two concepts
+fltr(c("Lemon", "Lime"), pogd)
 
 ## ----ideal, echo=TRUE---------------------------------------------------------------------------------------
-## Ideal of two concepts
-fltr(c(9, 11), pogc, ideal = TRUE)
+# Order ideal of two concepts
+fltr(c(9, 11), pogd, ideal = TRUE)
 
 ## ----bipp, echo=TRUE, eval=TRUE, fig.pos='H', fig.width=3.0, fig.height=3.0, fig.align='center', fig.env='figure', fig.cap='Bipartite graph', small.mar=TRUE----
-## Load the "multigraph" package and plot bipartite graph
-require("multigraph")
-bmgraph(frt, pch = 16:15, fsize = 7)
+# Load the "multigraph" package and plot bipartite graph
+suppressPackageStartupMessages(library("multigraph", quietly = TRUE))
+bmgraph(frt, pch = 16:15, fsize = 6)
 
 ## ----binp2, echo=TRUE, eval=FALSE---------------------------------------------------------------------------
-#  ## Plot proyection of bipartite network
-#  bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:15, rot=45)
+#  # Plot proyection of bipartite network
+#  bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:15, rot = 25)
 
-## ----binp, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with force-directed layout', echo=FALSE, small.mar=TRUE----
-bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:15, rot=45)
+## ----binp, fig.pos='H', fig.width=4.5, fig.height=4.5, fig.align='center', fig.env='figure', fig.cap='Bipartite graph with a force-directed layout', echo=FALSE, small.mar=TRUE----
+bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:15, rot = 25)
 
