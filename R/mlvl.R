@@ -8,80 +8,74 @@ function (x = NULL, y = NULL, type = c("bpn", "cn", "cn2", "list"),
     else {
         NA
     }
-    if (match.arg(type) == "cn") {
-        qmd <- "1M"
+    qmd <- vector()
+    if (is.array(x) == TRUE && is.na(dim(x)[3]) == FALSE) {
+        xx <- list()
+        for (i in seq_len(dim(x)[3])) {
+            xx[[i]] <- x[, , i]
+        }
+        rm(i)
+        attr(xx, "names") <- attr(x, "dimnames")[[3]]
+        qmd <- append(qmd, rep("1M", dim(x)[3]))
     }
     else {
-        qmd <- vector()
-        if (is.array(x) == TRUE && is.na(dim(x)[3]) == FALSE) {
-            xx <- list()
-            for (i in seq_len(dim(x)[3])) {
-                xx[[i]] <- x[, , i]
-            }
-            rm(i)
-            attr(xx, "names") <- attr(x, "dimnames")[[3]]
-            qmd <- append(qmd, rep("1M", dim(x)[3]))
+        if (is.list(x) == TRUE) {
+            xx <- x
+            ifelse(is.null(attr(x, "names")) == TRUE, attr(xx, 
+                "names") <- seq_len(length(x)), NA)
+            qmd <- append(qmd, rep("1M", length(x)))
         }
         else {
-            if (is.list(x) == TRUE) {
-                xx <- x
-                ifelse(is.null(attr(x, "names")) == TRUE, attr(xx, 
-                  "names") <- seq_len(length(x)), NA)
-                qmd <- append(qmd, rep("1M", length(x)))
-            }
-            else {
-                xx <- zbind(x)
-                attr(xx, "names") <- "1"
-                qmd <- append(qmd, "1M")
-            }
+            xx <- zbind(x)
+            attr(xx, "names") <- "1"
+            qmd <- append(qmd, "1M")
         }
     }
+    ifelse(match.arg(type) == "cn", qmd <- "1M", NA)
     if (match.arg(type) == "bpn") {
         vcn <- vector()
         for (k in seq_len(length(xx))) {
             vcn <- append(vcn, c(dimnames(xx[[k]])[[1]], dimnames(xx[[k]])[[2]]))
         }
         rm(k)
-        if (is.null(y) == FALSE) {
-            if (is.array(y) == TRUE && is.na(dim(y)[3]) == FALSE) {
-                yy <- list()
-                for (i in seq_len(dim(y)[3])) {
-                  yy[[i]] <- y[, , i]
-                }
-                rm(i)
-                attr(yy, "names") <- attr(y, "dimnames")[[3]]
-                qmd <- append(qmd, rep("2M", dim(y)[3]))
+    }
+    if (is.null(y) == FALSE) {
+        if (is.array(y) == TRUE && is.na(dim(y)[3]) == FALSE) {
+            yy <- list()
+            for (i in seq_len(dim(y)[3])) {
+                yy[[i]] <- y[, , i]
             }
-            else if (is.list(y) == TRUE && is.data.frame(y) == 
-                FALSE) {
-                for (k in seq_len(length(y))) {
-                  vcn <- append(vcn, c(dimnames(y[[k]])[[1]], 
-                    dimnames(y[[k]])[[2]]))
-                }
-                rm(k)
-                yytmp <- transf(transf(y, type = "tolist", lb2lb = TRUE), 
-                  type = "toarray", lbs = unique(vcn))
-                yy <- list()
-                for (k in seq_len(dim(yytmp)[3])) {
-                  yy[[k]] <- yytmp[, , k]
-                }
-                rm(k)
-                ifelse(is.null(attr(y, "names")) == TRUE, attr(yy, 
-                  "names") <- seq_len(length(y)), attr(yy, "names") <- attr(y, 
-                  "names"))
-                qmd <- append(qmd, rep("2M", length(y)))
+            rm(i)
+            attr(yy, "names") <- attr(y, "dimnames")[[3]]
+            qmd <- append(qmd, rep("2M", dim(y)[3]))
+        }
+        else if (is.list(y) == TRUE && is.data.frame(y) == FALSE) {
+            for (k in seq_len(length(y))) {
+                vcn <- append(vcn, c(dimnames(y[[k]])[[1]], dimnames(y[[k]])[[2]]))
             }
-            else {
-                yy <- zbind(y)
-                attr(yy, "names") <- length(xx) + 1L
-                qmd <- append(qmd, "2M")
-                ifelse(match.arg(type) == "bpn", vcn <- append(vcn, 
-                  c(dimnames(y)[[1]], dimnames(y)[[2]])), NA)
+            rm(k)
+            yytmp <- transf(transf(y, type = "tolist", lb2lb = TRUE), 
+                type = "toarray", lbs = unique(vcn))
+            yy <- list()
+            for (k in seq_len(dim(yytmp)[3])) {
+                yy[[k]] <- yytmp[, , k]
             }
+            rm(k)
+            ifelse(is.null(attr(y, "names")) == TRUE, attr(yy, 
+                "names") <- seq_len(length(y)), attr(yy, "names") <- attr(y, 
+                "names"))
+            qmd <- append(qmd, rep("2M", length(y)))
         }
         else {
-            stop("A 2-mode network should be placed in \"y\".")
+            yy <- zbind(y)
+            attr(yy, "names") <- length(xx) + 1L
+            qmd <- append(qmd, "2M")
+            ifelse(match.arg(type) == "bpn", vcn <- append(vcn, 
+                c(dimnames(y)[[1]], dimnames(y)[[2]])), NA)
         }
+    }
+    else {
+        stop("A 2-mode network should be placed in \"y\".")
     }
     if (match.arg(type) == "cn" || match.arg(type) == "cn2") {
         if (is.null(y) == FALSE && (is.matrix(y) == TRUE || is.array(y) == 

@@ -2,6 +2,16 @@
 'multiplex' PACKAGE
 
 
+version 2.9.5 (8-September-2021)
+-----------------------------
+Wiley Companion Webiste
+BUGS FIXED:
+	* Internal function 'transl' runs with R >4.0.0
+CHANGES:
+	* .rda replaces .RData
+	+ Minor fixes in 'partial.order' and 'fltr'
+
+
 version 2.9.4 (28-February-2020)
 -----------------------------
 CHANGES:

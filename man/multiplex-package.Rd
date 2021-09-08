@@ -14,12 +14,12 @@ In conjunction with the \CRANpkg{multigraph} package, it is possible to visualiz
 \tabular{ll}{
 Package: \tab multiplex \cr
 Type: \tab Package \cr
-Version: \tab 2.9.4 \cr
-Date: \tab 28 February 2020 \cr
+Version: \tab 2.9.6 \cr
+Date: \tab 8 September 2021 \cr
 License: \tab GPL-3 \cr
 LazyLoad: \tab yes \cr
 }
-To work with this package, we typically start with a specific algebraic structure. A \emph{semigroup} is a closed system made of a set of elements and an associative operation on it. 
+To work with \CRANpkg{multiplex}, we typically start with a specific algebraic structure. A \emph{semigroup} is a closed system made of a set of elements and an associative operation on it. 
 The \code{semigroup} function constructs this algebraic structure, and it takes an array of (usually but not necessarily) multiple binary relations, which are the generator relations. The Word Table and the Edge Table serve to describe the semigroup completely, and they are constructed with the functions \code{wordT} and \code{edgeT}, respectively. 
 The \code{strings} function gives unique relations of the complete semigroup and the \code{partial.order} function specifies the ordering of the string elements in the semigroup. For the visualization of the partial order structure, the function \code{diagram} produces the lattice of inclusions of a structure having ordered relations.
 
