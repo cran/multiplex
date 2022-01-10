@@ -2,6 +2,16 @@
 'multiplex' PACKAGE
 
 
+version 2.9.7 (10-January-2022)
+-----------------------------
+NEW INTERNAL: 'zbindd' to bind dynamic networks
+CHANGES:
+	+ new argument "sep" in function 'diagram' 
+	* 'read.srt' returns an ordered label array
+BUGS FIXED:
+	* improvements in 'transf', 'rel.sys', 'mlvl'
+
+
 version 2.9.5 (8-September-2021)
 -----------------------------
 Wiley Companion Webiste
@@ -101,7 +111,6 @@ BUGS FIXED:
 
 OTHER CHANGES:
 	+ Minor improvements in 'zbind', 'rel.sys', and 'jnt'
-
 
 
 version 2.1 (14-September-2016)
