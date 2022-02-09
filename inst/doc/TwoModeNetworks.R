@@ -42,7 +42,7 @@ pogd <- partial.order(gd, type = "galois")
 par(mar=c(0,0,0,0))
 # Plot the lattice diagram
 suppressPackageStartupMessages(library("Rgraphviz", quietly = TRUE))
-diagram(pogd, main = "Fruits & Colors", fsize = 175, fcol = "red", col.main = "blue")
+diagram(pogd, main = "Fruits & Colors", fsize = 17, fcol = "red", col.main = "blue")
 
 ## ----diaglevels, echo=TRUE----------------------------------------------------------------------------------
 # Diagram levels

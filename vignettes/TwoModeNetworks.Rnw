@@ -128,11 +128,8 @@ pogd <- partial.order(gd, type = "galois")
 par(mar=c(0,0,0,0))
 # Plot the lattice diagram
 suppressPackageStartupMessages(library("Rgraphviz", quietly = TRUE))
-diagram(pogd, main = "Fruits & Colors", fsize = 175, fcol = "red", col.main = "blue")
+diagram(pogd, main = "Fruits & Colors", fsize = 17, fcol = "red", col.main = "blue")
 @
-%if( require("Rgraphviz", quietly = TRUE, warn.conflicts = FALSE)) {
-%diagram(pogd, main = "Fruits & Colors", fsize = 175, fcol = "red", col.main = "blue")
-%}
 
 
 Since this is a reduced representation of the context, both objects and attributes are only given just once. Besides, labels are placed instead of the nodes rather than next to them as the typical representation of formal context. Moreover, in case that a concept does not have a label, which happens in most reduced contexts, then the number of the concept is placed as the node.
@@ -190,7 +187,7 @@ To illustrate these concepts, we apply the function \texttt{fltr()} to the third
 fltr(3, pogd)
 @
 
-%fltr("PinkLady", pogd)
+
 We get the same result when introducing the one or more of the names of this concept.
 <<princfltrlbs2, echo=TRUE, eval=FALSE>>= 
 # Principal order filter of the concept with these labels
@@ -212,7 +209,7 @@ Order ideals and principal order ideals are obtained similarly with this functio
 # Order ideal of two concepts
 fltr(c(9, 11), pogd, ideal = TRUE)
 @
-%fltr(3, pogd, ideal = TRUE)
+
 
 
 

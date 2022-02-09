@@ -25,9 +25,11 @@ function (file, header = TRUE, sep = "\t", toarray = TRUE, dichot = FALSE,
         rm(i)
     }
     if (isTRUE(toarray == TRUE) == TRUE) {
+        if (isTRUE((ncol(x) - 2L) == 0L) == TRUE) {
+            warning("One type of relation assumed.")
+            x <- cbind(x, t = rep(1L, nrow(x)))
+        }
         r <- (ncol(x) - 2L)
-        if (r == 0L) 
-            stop("You must specify at least one relation.")
         x <- x[complete.cases(x[, seq_len(2)]), ]
         lbs <- unique(c(as.vector(x[, 1]), as.vector(x[, 2])))
         if (isTRUE(lbs == "") == TRUE) {
@@ -139,28 +141,26 @@ function (file, header = TRUE, sep = "\t", toarray = TRUE, dichot = FALSE,
             if (isTRUE(length(xx) > 1L) == TRUE) {
                 YY <- vector()
                 for (i in seq_len(length(xx))) {
-                  YY <- rrel[, 2][which(rrel[, 1] == attr(nX, 
-                    "names")[i])]
+                  kual0 <- which(rrel[, 1] == attr(nX, "names")[i])
+                  kual1 <- which((as.vector(rownames(MAT)) == 
+                    xx[i]), arr.ind = TRUE)
+                  YY <- rrel[, 2][kual0]
                   if (isTRUE(length(YY) > 1L) == TRUE) {
                     for (j in seq_len(length(YY))) {
-                      tmp <- MAT[(which((as.vector(rownames(MAT)) == 
-                        xx[i]), arr.ind = TRUE)), (which(as.vector(colnames(MAT) == 
-                        YY[j]), arr.ind = TRUE))]
-                      MAT[(which((as.vector(rownames(MAT)) == 
-                        xx[i]), arr.ind = TRUE)), (which(as.vector(colnames(MAT) == 
-                        YY[j]), arr.ind = TRUE))] <- tmp + as.numeric(as.vector(factor(rrel[, 
-                        3][which(rrel[, 1] == attr(nX, "names")[i])])))[j]
+                      kual2 <- which(as.vector(colnames(MAT) == 
+                        YY[j]), arr.ind = TRUE)
+                      tmp <- MAT[kual1, kual2]
+                      MAT[kual1, kual2] <- tmp + as.numeric(as.vector(factor(rrel[, 
+                        3][kual0])))[j]
                     }
                     rm(j)
                   }
                   else if (isTRUE(length(YY) == 1L) == TRUE) {
-                    tmp <- MAT[(which((as.vector(rownames(MAT)) == 
-                      xx[i]), arr.ind = TRUE)), (which(as.vector(colnames(MAT) == 
-                      YY), arr.ind = TRUE))]
-                    MAT[(which((as.vector(rownames(MAT)) == xx[i]), 
-                      arr.ind = TRUE)), (which(as.vector(colnames(MAT) == 
-                      YY), arr.ind = TRUE))] <- tmp + as.numeric(as.vector(factor(rrel[, 
-                      3][which(rrel[, 1] == attr(nX, "names")[i])])))
+                    kual3 <- which(as.vector(colnames(MAT) == 
+                      YY), arr.ind = TRUE)
+                    tmp <- MAT[kual1, kual3]
+                    MAT[kual1, kual3] <- tmp + as.numeric(as.vector(factor(rrel[, 
+                      3][kual0])))
                   }
                 }
                 rm(i)
@@ -168,11 +168,14 @@ function (file, header = TRUE, sep = "\t", toarray = TRUE, dichot = FALSE,
             else if (isTRUE(length(xx) == 1L) == TRUE) {
                 YY <- rrel[, 2][which(rrel[, 1] == attr(nX, "names"))]
                 if (isTRUE(length(YY) > 1L) == TRUE) {
+                  kual4 <- which((as.vector(rownames(MAT)) == 
+                    xx), arr.ind = TRUE)
+                  kual5 <- which(rrel[, 1] == attr(nX, "names"))
                   for (j in seq_len(length(YY))) {
-                    MAT[(which((as.vector(rownames(MAT)) == xx), 
-                      arr.ind = TRUE)), (which(as.vector(colnames(MAT) == 
-                      YY[j]), arr.ind = TRUE)), 1] <- as.numeric(as.vector(rrel[, 
-                      3][which(rrel[, 1] == attr(nX, "names"))]))[j]
+                    kual2 <- (which(as.vector(colnames(MAT) == 
+                      YY[j]), arr.ind = TRUE))
+                    MAT[kual4, kual2] <- as.numeric(as.vector(rrel[, 
+                      3][kual5]))[j]
                   }
                   rm(j)
                 }
@@ -186,8 +189,8 @@ function (file, header = TRUE, sep = "\t", toarray = TRUE, dichot = FALSE,
         if (isTRUE(dichot == TRUE) == TRUE) {
             MAT <- dichot(MAT)
         }
-        return(MAT[, sort(colnames(MAT))][sort(rownames(MAT)), 
-            ])
+        ifelse(isTRUE(attr == FALSE) == TRUE, return(MAT[, sort(colnames(MAT))][sort(rownames(MAT)), 
+            ]), return(MAT))
     }
     else if (isTRUE(toarray == FALSE) == TRUE) {
         if (isTRUE(attr == TRUE) == TRUE) {

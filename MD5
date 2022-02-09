@@ -1,4 +1,4 @@
-db4af354cec05a9f0b898919c25cdf2f *DESCRIPTION
+455f70f5c1f75e8c4974b5534f7b9fb7 *DESCRIPTION
 43c5ddb3794318d7af91249e92bf2eb9 *NAMESPACE
 b80aaa3a0dbe4aa33c250a09f9f02157 *R/as.semigroup.R
 3f57b6c55aec3794d344106121c543af *R/as.signed.R
@@ -44,7 +44,7 @@ b491dc3bd4c33ef5b104e783a5c16d9b *R/print.reduced.R
 b368752595da0c1612709dd75bdec915 *R/rbox.R
 6cd8c6e48a6d5a5be255f8aab5ac819a *R/read.dl.R
 10e20f5ff3c35585bcc12ed37734a8c1 *R/read.gml.R
-61c90fec8161a79b113107699acb701b *R/read.srt.R
+5093388c16cf1dbc78e9544100f3e8fb *R/read.srt.R
 dc628dc24624c29bfcb2a4fa96513840 *R/redl.R
 1abcc3c6d4f8eb6ed4595fff284dcb89 *R/reduc.R
 5cc0bc3da6cee7509d86f58ef6e37576 *R/reducs.R
@@ -59,7 +59,7 @@ ce6861aed12b648a98b69a4aba508791 *R/sprt.R
 ca246a1c93d51bee88a2e5d3ed7addb4 *R/summaryBundles.R
 578f7c016922d5d37f85857e01163b96 *R/swp.R
 0be75d930d49f039036d10dd4ce36a30 *R/ti.R
-e66104a99b0254daf78af07847c539ca *R/transf.R
+0079c72b3416ce9cc049a2f0564aa2b4 *R/transf.R
 3969821d82b55d3810a2088b35bc3ab7 *R/transl.R
 622da8f09bde7590f22de48ff347767f *R/trnf.R
 d71b61e73a7271b5f0a0e622614750e1 *R/wordT.R
@@ -70,7 +70,7 @@ d441ab048dd72cbd5eb8ae8c788df5ba *R/write.gml.R
 90a78f81ff86bcc1dc01701fa61f360b *R/zbind.R
 037b67db28f7512daa139d1b823df02a *R/zbindd.R
 6d7942aad875a9df8fc9f4472766def2 *R/zbnd.R
-b5f8fc38072d62db2e8d22ed5cc85c69 *build/vignette.rds
+1fdf08107abb2e1852d330a3a9aafcad *build/vignette.rds
 0994bd3e00052cc9b670ff9873c7512f *data/incA.rda
 275ced8080e06070464e232571d41db0 *data/incB.rda
 aa2c6bc2936065fd2697729c34de8097 *data/incC.rda
@@ -80,11 +80,11 @@ df14dcce99dc620ef6bde2e37ee01019 *data/incD.rda
 461efc33caefb4e5823606f0e8c1c21f *data/incubC.rda
 74ff978c70edf47caf73414f586a6c55 *data/incubD.rda
 5edfcb25f80a0f563b4389583211723b *data/incubs.rda
-e725744b58980104de6c837f3b684fe7 *inst/CHANGELOG
+130ebf92de798954b30a0acbf3fa1949 *inst/CHANGELOG
 9c581a1fdac1d6be7b2f841b47ca9e09 *inst/CITATION
-cc6d4a16e89a34322af543f265ead94a *inst/doc/TwoModeNetworks.R
-8e8a2fde95f3e3305a614e32099d7482 *inst/doc/TwoModeNetworks.Rnw
-968ac5e98e9eb9051a96b24c90f62f4f *inst/doc/TwoModeNetworks.pdf
+ba14cc228d1fac2edd0ae85351bccad6 *inst/doc/TwoModeNetworks.R
+e600c5bc5f78399b5d86e42c95cb0a71 *inst/doc/TwoModeNetworks.Rnw
+b884dfb720c38103f8f421822190884c *inst/doc/TwoModeNetworks.pdf
 83fb00513853ad17432455a8bcd733a3 *man/as.semigroup.Rd
 602a16bf2b74cf90862ac467c3039635 *man/as.signed.Rd
 bdc87e9a70f343abd5d4762284f8b1a3 *man/as.strings.Rd
@@ -116,7 +116,7 @@ a05f928fd6be08ef8a5ed6c17c6b36ee *man/incubs.Rd
 51d0d6100af04fa1d7bd13af07f858cb *man/mlvl.Rd
 6d29b9055a51060b8ce51e8f05c005b5 *man/mmp.Rd
 5a355fe45b5dcbcb6ccdc3fa62d8f9b0 *man/mnplx.Rd
-805c3cab4bb601ebea7b1073cf1ff8fb *man/multiplex-package.Rd
+b89bf9a8d2401ab50d5d77c19205b222 *man/multiplex-package.Rd
 d18f0e715fc6c9732f4f0e71629480f8 *man/mxmn.Rd
 cc0cbfa89a72b73e38f615bb993af603 *man/neighb.Rd
 43708488056e501d8c88c4a0b718f0dc *man/ngbs.Rd
@@ -146,7 +146,7 @@ c1de389a1f7642e64092d7ee2a8651cc *man/strng.Rd
 515d66bacfa3110d05dee68e18449a81 *man/summaryBundles.Rd
 196d97891e9300157d2a22c0f3971620 *man/swp.Rd
 71caa78040d21f97fec2f6437204854b *man/ti.Rd
-33579ac7001efac7f2bed1b32c9219d4 *man/transf.Rd
+72a7533536b0589c3723450b373b5d6a *man/transf.Rd
 b46a4f8dd3bc194fc5be0caa0601a846 *man/transl.Rd
 a94308f957ff78f2e828f15f24dc2df5 *man/trnf.Rd
 52d454cb060e030768cb14ca32aa767a *man/wordT.Rd
@@ -157,4 +157,4 @@ e34949f367635f1b3c3c9a6e46a46510 *man/write.srt.Rd
 6491f9453787ea73ca9b1b136f67896f *man/zbind.Rd
 8b2e06fc67620acf3e6eb1bd586f515f *man/zbindd.Rd
 412ea21cc803c2732e293c67d286a431 *man/zbnd.Rd
-8e8a2fde95f3e3305a614e32099d7482 *vignettes/TwoModeNetworks.Rnw
+e600c5bc5f78399b5d86e42c95cb0a71 *vignettes/TwoModeNetworks.Rnw
