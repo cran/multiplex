@@ -1,13 +1,31 @@
 transf <-
 function (x, type = c("toarray", "tolist", "toarray2", "toedgel"), 
-    lbs = NULL, lb2lb, sep, ord, sort, sym, add, adc) 
+    lbs = NULL, lb2lb, sep, ord, sort, sym, add, adc, na.rm) 
 {
-    ifelse(missing(sep) == TRUE, sep <- ", ", NA)
     ifelse(is.list(x) == TRUE && isTRUE(length(x) == 1L) == TRUE, 
         x <- x[[1]], NA)
     if (match.arg(type) == "toarray" && is.data.frame(x) == TRUE) {
-        return(suppressWarnings(read.srt(x)))
+        if (missing(na.rm) == FALSE && isTRUE(na.rm == FALSE) == 
+            TRUE) {
+            if (any(is.na(x)) == TRUE) 
+                warning("Missing information in 'x' recorded as 'NA'.")
+            x[, 1] <- as.factor(x[, 1])
+            levels(x[, 1]) <- c(levels(x[, 1]), "NA")
+            x[, 1][is.na(x[, 1])] <- "NA"
+            x[, 2] <- as.factor(x[, 2])
+            levels(x[, 2]) <- c(levels(x[, 2]), "NA")
+            x[, 2][is.na(x[, 2])] <- "NA"
+        }
+        if (missing(add) == FALSE) {
+            xadd <- suppressWarnings(read.srt(x, add = add))
+            diag(xadd)[which(dimnames(xadd)[[1]] %in% add)] <- 0
+            return(xadd)
+        }
+        else {
+            return(suppressWarnings(read.srt(x)))
+        }
     }
+    ifelse(missing(sep) == TRUE, sep <- ", ", NA)
     if (match.arg(type) == "toedgel") {
         if (is.array(x) == TRUE) {
             if (is.na(dim(x)[3]) == TRUE) {
@@ -59,11 +77,12 @@ function (x, type = c("toarray", "tolist", "toarray2", "toedgel"),
         }
     }
     if (match.arg(type) == "tolist") {
-        if (is.array(x) == TRUE) {
-            if (isTRUE(sum(x) > 0L) == FALSE | isTRUE(max(x) < 
-                1L) == TRUE) 
-                return(NULL)
-        }
+        if (isTRUE(is.character(x) == TRUE) == TRUE | (is.array(x) == 
+            TRUE && is.null(dim(x)) == TRUE)) 
+            return(x)
+        if ((isTRUE(sum(x) > 0L) == FALSE | isTRUE(max(x) < 1L) == 
+            TRUE) && is.array(x) == TRUE) 
+            return(NULL)
         ifelse(missing(lb2lb) == FALSE && isTRUE(lb2lb == TRUE) == 
             TRUE, lb2lb <- TRUE, lb2lb <- FALSE)
         if (is.list(x) == TRUE && is.data.frame(x) == FALSE) {
@@ -82,7 +101,7 @@ function (x, type = c("toarray", "tolist", "toarray2", "toedgel"),
         else {
             ifelse(is.null(dimnames(x)[[1]]) == TRUE, lbsr <- seq_len(dim(x)[1]), 
                 lbsr <- dimnames(x)[[1]])
-            ifelse(is.null(dimnames(x)[[2]]) == TRUE, lbsr <- seq_len(dim(x)[2]), 
+            ifelse(is.null(dimnames(x)[[2]]) == TRUE, lbsc <- seq_len(dim(x)[2]), 
                 lbsc <- dimnames(x)[[2]])
         }
         rws <- vector()

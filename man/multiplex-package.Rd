@@ -14,8 +14,8 @@ In conjunction with the \CRANpkg{multigraph} package, it is possible to visualiz
 \tabular{ll}{
 Package: \tab multiplex \cr
 Type: \tab Package \cr
-Version: \tab 2.9.8 \cr
-Date: \tab 9 February 2022 \cr
+Version: \tab 2.9.9 \cr
+Date: \tab 30 June 2022 \cr
 License: \tab GPL-3 \cr
 LazyLoad: \tab yes \cr
 }

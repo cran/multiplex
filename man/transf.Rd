@@ -8,7 +8,7 @@ Function to transform data from/to matrix/list formats representing a network.
 }
 \usage{
 transf(x, type = c("toarray", "tolist", "toarray2", "toedgel"), lbs = NULL, 
-       lb2lb, sep, ord, sort, sym, add, adc)
+       lb2lb, sep, ord, sort, sym, add, adc, na.rm)
 }
 \arguments{
   \item{x}{
@@ -43,13 +43,14 @@ transf(x, type = c("toarray", "tolist", "toarray2", "toedgel"), lbs = NULL,
   \item{adc}{
    (optional) add elements in the array's ``codomain''
   }
+  \item{na.rm}{
+   (optional and logical) remove NAs?
+  }
 }
 \details{
-The option \code{"tolist"} is to transform a matrix or an array to a list of pair elements. In case that the \code{lb2lb} is enabled in this type of transformation, then \code{lbs} must be provided, whereas the pair separator is optional. On the other hand, \code{"toarray"} will produce a matrix from a list of pair elements, and in this case is advisable to specify the order of the structure. Three-dimensional structures are now supported.
+The option \code{"tolist"} is to transform a matrix or an array into a list of pair elements. In case the \code{lb2lb} is enabled in this type of transformation, then \code{lbs} must be provided, whereas the pair separator is optional. On the other hand, \code{"toarray"} will produce a matrix from a list of pair elements, and in this case, is advisable to specify the order of the structure. Three-dimensional structures are now supported.
 
-Data frames are also accepted for the \code{"tolist"} option, and in case that such information is given as a list of pair relations, the output will be a square matrix. 
-
-
+Data frames are also accepted for the \code{"tolist"} option, and in case such information is given as a list of pair relations, the output will be a square matrix. By deactivating the option na.rm, it is possible to retain missing data in the data frame for the transformation even if both sender and receiver labels are not available.
 }
 \value{
 Depending on the input data, the result is either a list of pair relations or a matrix of relations.

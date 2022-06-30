@@ -8,40 +8,46 @@ function (x = NULL, y = NULL, type = c("bpn", "cn", "cn2", "list"),
     else {
         NA
     }
-    ifelse(is.null(dimnames(x)[[1]]) == TRUE, dimnames(x)[[1]] <- seq_len(dim(x)[1]), 
-        NA)
-    ifelse(is.null(dimnames(x)[[2]]) == TRUE, dimnames(x)[[2]] <- seq_len(dim(x)[2]), 
-        NA)
-    qmd <- vector()
-    if (is.array(x) == TRUE && is.na(dim(x)[3]) == FALSE) {
-        xx <- list()
-        for (i in seq_len(dim(x)[3])) {
-            xx[[i]] <- x[, , i]
-        }
-        rm(i)
-        attr(xx, "names") <- attr(x, "dimnames")[[3]]
-        qmd <- append(qmd, rep("1M", dim(x)[3]))
-    }
-    else {
-        if (is.list(x) == TRUE) {
-            xx <- x
-            ifelse(is.null(attr(x, "names")) == TRUE, attr(xx, 
-                "names") <- seq_len(length(x)), NA)
-            qmd <- append(qmd, rep("1M", length(x)))
+    ifelse(match.arg(type) == "cn", qmd <- "1M", NA)
+    if (is.null(x) == FALSE) {
+        ifelse(is.null(dimnames(x)[[1]]) == TRUE, dimnames(x)[[1]] <- seq_len(dim(x)[1]), 
+            NA)
+        ifelse(is.null(dimnames(x)[[2]]) == TRUE, dimnames(x)[[2]] <- seq_len(dim(x)[2]), 
+            NA)
+        qmd <- vector()
+        if (is.array(x) == TRUE && is.na(dim(x)[3]) == FALSE) {
+            xx <- list()
+            for (i in seq_len(dim(x)[3])) {
+                xx[[i]] <- x[, , i]
+            }
+            rm(i)
+            attr(xx, "names") <- attr(x, "dimnames")[[3]]
+            qmd <- append(qmd, rep("1M", dim(x)[3]))
         }
         else {
-            xx <- zbind(x)
-            attr(xx, "names") <- "1"
-            qmd <- append(qmd, "1M")
+            if (is.list(x) == TRUE) {
+                xx <- x
+                ifelse(is.null(attr(x, "names")) == TRUE, attr(xx, 
+                  "names") <- seq_len(length(x)), NA)
+                qmd <- append(qmd, rep("1M", length(x)))
+            }
+            else {
+                xx <- zbind(x)
+                attr(xx, "names") <- "1"
+                qmd <- append(qmd, "1M")
+            }
+        }
+        if (match.arg(type) == "bpn") {
+            vcn <- vector()
+            for (k in seq_len(length(xx))) {
+                vcn <- append(vcn, c(dimnames(xx[[k]])[[1]], 
+                  dimnames(xx[[k]])[[2]]))
+            }
+            rm(k)
         }
     }
-    ifelse(match.arg(type) == "cn", qmd <- "1M", NA)
-    if (match.arg(type) == "bpn") {
-        vcn <- vector()
-        for (k in seq_len(length(xx))) {
-            vcn <- append(vcn, c(dimnames(xx[[k]])[[1]], dimnames(xx[[k]])[[2]]))
-        }
-        rm(k)
+    else {
+        NA
     }
     if (is.null(y) == FALSE) {
         ifelse(is.null(dimnames(y)[[1]]) == TRUE, dimnames(y)[[1]] <- seq_len(dim(y)[1]), 
@@ -78,7 +84,9 @@ function (x = NULL, y = NULL, type = c("bpn", "cn", "cn2", "list"),
             ifelse(is.data.frame(y) == TRUE, y <- as.matrix(y), 
                 NA)
             yy <- zbind(y)
-            attr(yy, "names") <- length(xx) + 1L
+            if (is.null(x) == FALSE) {
+                attr(yy, "names") <- length(xx) + 1L
+            }
             qmd <- append(qmd, "2M")
             ifelse(match.arg(type) == "bpn", vcn <- append(vcn, 
                 c(dimnames(y)[[1]], dimnames(y)[[2]])), NA)
@@ -123,7 +131,12 @@ function (x = NULL, y = NULL, type = c("bpn", "cn", "cn2", "list"),
                 NA)
         }
     }
-    X <- list(xx, yy)
+    if (is.null(x) == FALSE) {
+        X <- list(xx, yy)
+    }
+    else {
+        X <- yy
+    }
     if (is.list(y) == TRUE && is.data.frame(y) == FALSE) {
         ifelse(any(rownames(yy[[1]]) %in% colnames(yy[[2]])) == 
             TRUE, Lbs <- list(dm = (unique(c(colnames(yy[[1]]), 
@@ -177,8 +190,13 @@ function (x = NULL, y = NULL, type = c("bpn", "cn", "cn2", "list"),
             }
             rm(k)
         }
-        lbs3d <- attr(c(xx, yy), "names")
-        dimnames(bmat)[[3]] <- lbs3d
+        if (missing(lbs) == FALSE && isTRUE(length(lbs) == dim(bmat)[3]) == 
+            TRUE) {
+            dimnames(bmat)[[3]] <- lbs
+        }
+        else {
+            dimnames(bmat)[[3]] <- attr(c(xx, yy), "names")
+        }
         if (missing(symCdm) == FALSE && isTRUE(symCdm == TRUE) == 
             TRUE) {
             for (i in which(qmd == "2M")) {
