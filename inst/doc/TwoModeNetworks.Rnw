@@ -130,11 +130,11 @@ To plot this type of lattice diagram with the labeling corresponding to the redu
 \vspace{-10pt}
 <<diagrampogc, fig.pos="H", fig.width=4.5, fig.height=4.5, fig.align="center", fig.cap="Concept Lattice of fruits and color characteristics", echo=-1, small.mar=TRUE>>=  %
 par(mar=c(0,0,0,0))
-# Plot the lattice diagram
+# plot concept lattice diagram
 suppressPackageStartupMessages(require("Rgraphviz", quietly = TRUE))
 frt |> galois(labeling = "reduced") |> 
   partial.order(type = "galois") |> 
-  diagram(main = "Fruits & Colors", fsize = 17, fcol = "red", col.main = "blue")
+  diagram(type = "concept", main = "Fruits & Colors", fsize = 17, fcol = "red", col.main = "blue")
 @
 
 
@@ -158,7 +158,7 @@ frt |>
   diagram.levels() 
 @
 
-Hence concepts $7$ and $12$ make a class of their own, whereas the rest of the concepts belong either to class $2$ or to class $3$.
+Hence, concepts $7$ and $12$ make a class of their own, whereas the rest of the concepts belong either to class $2$ or to class $3$.
 
 \bigbreak
 
@@ -262,10 +262,10 @@ bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:
 
 \begin{thebibliography}{5}
 %
-\bibitem{Gant-Will96} Ganter, B. and R. Wille~\emph{ Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
-\bibitem{rgpahviz} Hansen KD, Gentry J, Long L, Gentleman R, Falcon S, Hahne F and Sarkar D  ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package version 2.24.0
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Algebraic Tools for the Analysis of Multiple Social Networks}. R package v 3.0.0
-\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multigraph}: \emph{Plot and manipulate multigraphs}. R package v 0.99
+\bibitem{Gant-Will96} Ganter, B. and R. Wille~\emph{Formal Concept Analysis -- Mathematical Foundations}. Springer. 1996.
+\bibitem{rgpahviz} Hansen KD, Gentry J, Long L, Gentleman R, Falcon S, Hahne F and Sarkar D  ~\textbf{Rgraphviz}: \emph{Provides plotting capabilities for R graph objects}. R package v 2.24.0
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multiplex}: \emph{Algebraic Tools for the Analysis of Multiple Social Networks}. R package v 3.3
+\bibitem{multiplex} Ostoic, J.A.R. ~\textbf{multigraph}: \emph{Plot and Manipulate Multigraphs}. R package v 0.99-4
 %
 \end{thebibliography}
 

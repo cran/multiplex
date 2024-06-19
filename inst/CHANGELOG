@@ -1,6 +1,17 @@
 
 'multiplex' PACKAGE
 
+
+version 3.3 (19-June-2024)
+-----------------------------
+ADDED FEATURES:
+	+ NEW ALIAS FUNCTION 'hasse' for Hasse diagrams
+	+ new argument "type" in function 'diagram'
+BUGS FIXED:
+	* fix bug in 'zbind' "force" option
+	* improvements in 'transf'
+
+
 version 3.1.1 (16-November-2023)
 -----------------------------
 BUGS FIXED:

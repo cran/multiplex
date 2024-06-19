@@ -39,11 +39,11 @@ pogdc
 
 ## ----diagrampogc, fig.pos="H", fig.width=4.5, fig.height=4.5, fig.align="center", fig.cap="Concept Lattice of fruits and color characteristics", echo=-1, small.mar=TRUE----
 par(mar=c(0,0,0,0))
-# Plot the lattice diagram
+# plot concept lattice diagram
 suppressPackageStartupMessages(require("Rgraphviz", quietly = TRUE))
 frt |> galois(labeling = "reduced") |> 
   partial.order(type = "galois") |> 
-  diagram(main = "Fruits & Colors", fsize = 17, fcol = "red", col.main = "blue")
+  diagram(type = "concept", main = "Fruits & Colors", fsize = 17, fcol = "red", col.main = "blue")
 
 ## ----diaglevels, echo=TRUE----------------------------------------------------------------------------------
 # Diagram levels using native pipeing
