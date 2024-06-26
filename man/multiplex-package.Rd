@@ -18,8 +18,8 @@ For instance, the network exposure of the actors can be taken in the context of 
 \tabular{ll}{
 Package: \tab multiplex \cr
 Type: \tab Package \cr
-Version: \tab 3.3 \cr
-Date: \tab 19 June 2024 \cr
+Version: \tab 3.3-2 \cr
+Date: \tab 26 June 2024 \cr
 License: \tab GPL-3 \cr
 LazyLoad: \tab yes \cr
 }
@@ -94,9 +94,9 @@ semigroup(arr) |> green.rel()
 strings(arr)
 
 }
-\keyword{ models }
-\keyword{ attribute }
-\keyword{ manip }
-\keyword{ IO }
-\keyword{ data }
-\keyword{ file }
+\keyword{models}
+\keyword{attribute}
+\keyword{manip}
+\keyword{IO}
+\keyword{data}
+\keyword{file }

@@ -2,15 +2,15 @@
 \alias{write.edgel}
 \alias{write.srt}
 \title{
-Write edge list files
+Write Edge-List Files
 }
 \description{
-A function to write edge list files having columns for sender, receiver, and the ties for multiplex networks.
+A function to write edge-list files having columns for sender, receiver, and the ties for multiplex networks.
 }
 \usage{
 write.edgel(x, file = NULL, sep = "\t", header = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+%
 \arguments{
   \item{x}{
   an object representing the multiple network
@@ -33,21 +33,18 @@ and the different types of tie for multiplex networks, one column for each type 
 A file with the edge list format
 }
 %\references{
-%
 %}
 \author{
 Antonio Rivero Ostoic
 }
 %\note{
-%
 %}
 \seealso{
 \code{\link{edgel}}, , \code{\link{write.dl}}
 }
 
 %\examples{
-%
 %}
-\keyword{ IO }
-\keyword{ data }
-\keyword{ file }
+\keyword{IO}
+\keyword{data}
+\keyword{file }
