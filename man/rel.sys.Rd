@@ -8,8 +8,8 @@ Create the Relation System of a multiplex network.
 }
 \usage{
 rel.sys(x, type = c("tolist", "toarray"), bonds = c("entire", "strong", "weak", 
-        "asym", "recp", "txch", "tent", "mixd", "full"), sel = NULL, 
-        loops = FALSE, att = NULL, sep)
+        "asym", "recp", "txch", "tent", "mixd", "full"), loops = FALSE, 
+        sel = NULL, att = NULL, sep)
 }
 \arguments{
   \item{x}{
@@ -25,7 +25,7 @@ rel.sys(x, type = c("tolist", "toarray"), bonds = c("entire", "strong", "weak",
   \item{bonds}{
    the type of bonds to be used in the creation of the relational system 
   \itemize{ 
-    \item \code{entire} for the `entire' network (default, same as \code{full})
+    \item \code{entire} for whole network (default, same as \code{full})
     \item \code{strong} for strong bonds
     \item \code{weak} for weak bonds
     \item \code{asym} for asymmetric ties
@@ -36,14 +36,14 @@ rel.sys(x, type = c("tolist", "toarray"), bonds = c("entire", "strong", "weak",
     \item \code{full} for the `entire' network (same as \code{entire})
   }
 }
-  \item{sel}{
-   (optional) the set of actors to be selected. For \code{"toarray"} \code{att} and \code{noatt} also supported (see details)
-}
   \item{loops}{
    (logical) whether or not the loops should be considered in the relational system
 }
+  \item{sel}{
+   (optional) the set of actors to be selected
+}
   \item{att}{
-   the arrays in \code{x} corresponding to attributes
+   array(s) in \code{x} that correspond(s) to node attributes
 }
   \item{sep}{
    (optional) the pair separator for the pairwise relations
@@ -52,7 +52,7 @@ rel.sys(x, type = c("tolist", "toarray"), bonds = c("entire", "strong", "weak",
 \details{
 When the type of bonds chosen is \code{entire} then the nodes with ties are considered in the relational system without isolated nodes. \code{strong} bonds are relational bundles with a mutual character, whereas \code{weak} bonds are those patterns exclusively without mutual character.
 
-When choosing from a list with actor attributes, it is also possible to select the network members having or \emph{not} having the attribute that is specified in the \code{Attrs} output by using in argument \code{sel} for the two options \code{att} or \code{noatt}.
+When choosing from a list with actor attributes, it is also possible to select the network members having or \emph{not} having the attribute that is specified in the \code{Attrs} output by using in argument \code{sel}.
 }
 \value{
 An object of `\code{Rel.System}' class for the \code{type = "tolist"} (default) option.
@@ -72,7 +72,6 @@ The items are:
    \item{Attrs}{if \code{att} is not \code{NULL}, the actors with the chosen attribute(s)}
 
 For \code{type = "toarray"} the output is a dichotomous 2D or 3D array recording the relations among the actors in the network.
-%% ...
 }
 \references{
 Ostoic, J.A.R. ``Creating context for social influence processes in multiplex networks.'' \emph{Network Science}, 5(1), 1-29.
@@ -89,18 +88,15 @@ Antonio Rivero Ostoic
 \code{\link{expos}}, \code{\link{bundles}}, \code{\link{neighb}}
 }
 \examples{
-## Create the data: two binary relations among three elements
+## create the data: two binary relations among three elements
 arr <- round( replace( array( runif(18), c(3 ,3, 2) ), array( runif(18),
        c(3, 3, 2) ) > .9, 3 ) )
 
-## Determine the system of strong bonds
+## system of strong bonds
 rel.sys(arr, bonds = "strong")
 
-## the first array is for attributes
+## first array is for attributes
 rel.sys(arr, att = 1)
-
-## select the first node
-rel.sys(arr, sel = 1)
 
 }
 

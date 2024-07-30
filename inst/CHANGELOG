@@ -2,6 +2,13 @@
 'multiplex' PACKAGE
 
 
+version 3.4 (30-July-2024)
+-----------------------------
+BUGS FIXED:
+	* patch in 'mlvl' because of v3.3
+	* fix bug in 'rel.sys' with "att"
+
+
 version 3.3 (19-June-2024)
 -----------------------------
 ADDED FEATURES:

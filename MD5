@@ -1,6 +1,6 @@
-b36ef68a05eac61ee6cdc999b407dbbe *DESCRIPTION
+ee1039995809dc6d5296093812747429 *DESCRIPTION
 73c70605379f0577d2d253ca8e274ec7 *NAMESPACE
-2bc8a985d71bdf037286e235e5849c2a *R/as.semigroup.R
+5b0802f2b9062eca34b08126e4ebd273 *R/as.semigroup.R
 3f57b6c55aec3794d344106121c543af *R/as.signed.R
 d00f4e0cde830422374df28d886f93cb *R/as.strings.R
 424b0703fe891c7e90bc44b473247ed2 *R/bnd.R
@@ -25,12 +25,12 @@ e0f0f79071e78d6204caec70e33eda0d *R/fact.R
 b3a108cc811e2719354de1ef4d5d5f1b *R/flt.R
 dbaa68e14d84694573e6203b6c4da293 *R/fltr.R
 979242171bd48da387ffd4f31bf878f2 *R/galois.R
-06b9a6e3ab888d6fc39004bd343920e5 *R/green.rel.R
+a9c39aa5514b689a329c187f62dd970d *R/green.rel.R
 68ff0103f77785c9fbc83cc4dd3290e1 *R/hasse.R
 b1a86668b4df4a7348d3440d145f2c9d *R/hierar.R
 b02dbe0db3a6b4bded2dff7e93b1d143 *R/jnt.R
 bd2768dd8344ecfde98fb1d1994535ba *R/men.R
-d52c4dcca30cc2f026e8aed4d49aebb8 *R/mlvl.R
+32b93fb30b4534e47cce711908f06840 *R/mlvl.R
 0cb1e97e24a6d13dd422da7131fbb66f *R/mmp.R
 dbadad3e4c52f07976d3cc752a2569af *R/mnplx.R
 4afbd79b3b253eb8a8896ae55f465204 *R/mxmn.R
@@ -50,7 +50,7 @@ b368752595da0c1612709dd75bdec915 *R/rbox.R
 dc628dc24624c29bfcb2a4fa96513840 *R/redl.R
 1abcc3c6d4f8eb6ed4595fff284dcb89 *R/reduc.R
 5cc0bc3da6cee7509d86f58ef6e37576 *R/reducs.R
-7debe7b23df852295b53f6dee2930fcb *R/rel.sys.R
+1dc1da10065de1df65576a6f9651744c *R/rel.sys.R
 a724146b892d0c38247bbdb1e7cb5a27 *R/rm.isol.R
 dd8de545231bb2c8f2e5c28d44190c42 *R/semigroup.R
 72a70866c78eea18f73e7971837e4625 *R/semiring.R
@@ -81,11 +81,11 @@ df14dcce99dc620ef6bde2e37ee01019 *data/incD.rda
 461efc33caefb4e5823606f0e8c1c21f *data/incubC.rda
 74ff978c70edf47caf73414f586a6c55 *data/incubD.rda
 5edfcb25f80a0f563b4389583211723b *data/incubs.rda
-6cbf0666c6324d5c1dc687f7eb85d01f *inst/CHANGELOG
+e4f53c0caaa930b313c5adef7f055c77 *inst/CHANGELOG
 b34ef7cb2fefe1778fd6a38d33318745 *inst/CITATION
 90dfea1743f9e574b7fced40a34f39b5 *inst/doc/TwoModeNetworks.R
 d7b42f34226fd0db359b9a8884d353f9 *inst/doc/TwoModeNetworks.Rnw
-22d4d15cde4621780add52c5bf385e5a *inst/doc/TwoModeNetworks.pdf
+44ea7fbd148cf53ed3f8f36872ac346f *inst/doc/TwoModeNetworks.pdf
 580e02f01e978d35cfd0e938a18259bc *man/as.semigroup.Rd
 47dec65c3e1e2d45466ac3f5727f2c32 *man/as.signed.Rd
 2cf84a67fe9e23c6eb24af85202ea4aa *man/as.strings.Rd
@@ -120,7 +120,7 @@ bfbc4ad473647cfc1e8e94ffa3ed039c *man/men.Rd
 06e3d2641eef807341214cb8e35506da *man/mlvl.Rd
 a4c6901537dc4c34c3b7d43aed3117bb *man/mmp.Rd
 b5c3db5d56b304afada7f019c0dd5acc *man/mnplx.Rd
-e6b0a8a88157a6e76f7532efe6b568d6 *man/multiplex-package.Rd
+8e2b45b6760968bddac5aa4103e81335 *man/multiplex-package.Rd
 6d8eb1a7521d087cf45390a6b5e627b8 *man/mxmn.Rd
 4cb18b9fedd03eb045cee5c14f283150 *man/neighb.Rd
 b1cb714f358c977fead4f51e77dd414d *man/ngbs.Rd
@@ -138,7 +138,7 @@ a8773a382e652e3cfebe7e600719243b *man/read.gml.Rd
 a72acaf5bd53875cdd9c3ee0781502c0 *man/redl.Rd
 da4298788d0783ae92e3b98a2980bad7 *man/reduc.Rd
 b66a504848b790ae9d30bfdc87f8d126 *man/reducs.Rd
-fdaf66cbef6a5c06caaa7def675f15e6 *man/rel.sys.Rd
+8d4fdebbc4c4ab5132f7ac89e000268c *man/rel.sys.Rd
 004aa93193e7a87d13f129fc9eb35f2e *man/rm.isol.Rd
 30f1a964c0ff03d7bf85a91461dcfa70 *man/semigroup.Rd
 59d2bfcd4b4e4e12e40791b75d92e991 *man/semiring.Rd
