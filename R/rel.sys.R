@@ -122,6 +122,10 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
                   }
                 }
                 rm(k)
+                inn <- inn[which(unlist(lapply(lapply(as.list(inn), 
+                  dhc), length)) == 2L)]
+                out <- out[which(unlist(lapply(lapply(as.list(swp(out)), 
+                  dhc), length)) == 2L)]
             }
             else {
                 NA
@@ -188,7 +192,8 @@ function (x, type = c("tolist", "toarray"), bonds = c("entire",
                 stb <- ntsel
             }
             else {
-                stb <- c(inn, out)
+                ifelse(is.na(dim(x)[3]) == TRUE, stb <- unique(c(inn, 
+                  out)), stb <- c(inn, out))
                 ties <- unique(dhc(stb))
             }
         }

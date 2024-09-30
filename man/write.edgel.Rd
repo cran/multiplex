@@ -2,10 +2,10 @@
 \alias{write.edgel}
 \alias{write.srt}
 \title{
-Write Edge-List Files
+Write edge list files
 }
 \description{
-A function to write edge-list files having columns for sender, receiver, and the ties for multiplex networks.
+A function to write edge list files having columns for sender, receiver, and the ties for multiplex networks.
 }
 \usage{
 write.edgel(x, file = NULL, sep = "\t", header = TRUE)
