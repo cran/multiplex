@@ -27,14 +27,16 @@ frt |> galois(labeling = "reduced")
 
 ## ----strgaloisReduc, size="scriptsize"----------------------------------------------------------------------
 # structure of Galois derivation with full labeling
-galois(frt, labeling = "reduced") |> 
+frt |> 
+  galois(labeling = "reduced") |> 
   getElement("gc") |> 
   getElement("full") |> 
   str()
 
-## ----partialorder, echo=-4----------------------------------------------------------------------------------
+## ----partialorder, echo=-5----------------------------------------------------------------------------------
 # partial ordering of the formal concepts with established labels
-pogdc <- galois(frt, labeling = "reduced") |> 
+pogdc <- frt |> 
+  galois(labeling = "reduced") |> 
   partial.order(type = "galois", lbs = paste("c", seq_len(12), sep = ""))
 pogdc
 
@@ -68,9 +70,9 @@ pogd <- frt |> galois(labeling = "reduced") |>
 # principal order filter of the third concept 
 fltr(3, pogd)
 
-## ----princfltrlbs2, echo=TRUE, eval=FALSE-------------------------------------------------------------------
-#  # principal order filter of the concept with these labels
-#  fltr(c("red", "RedDelicious"), pogd)
+## ----princfltrlbs2, echo=TRUE, eval=TRUE--------------------------------------------------------------------
+# principal order filter of the concept with these labels
+fltr(c("red", "RedDelicious"), pogd)
 
 ## ----filter, echo=TRUE--------------------------------------------------------------------------------------
 # order filter of two concepts
@@ -80,13 +82,14 @@ fltr(c("Lemon", "Lime"), pogd)
 # order ideal of two concepts
 fltr(c(9, 11), pogd, ideal = TRUE)
 
-## ----bipp, echo=TRUE, eval=TRUE, fig.pos="H", fig.width=3.0, fig.height=3.0, fig.align="center", fig.env="figure", fig.cap="Bipartite graph of fruits with attributes", small.mar=TRUE----
+## ----bipp, echo=TRUE, eval=TRUE, fig.pos="H", fig.width=3.5, fig.height=3.5, fig.align="center", fig.env="figure", fig.cap="Bipartite graph of fruits with attributes", small.mar=TRUE----
 # load "multigraph" package and plot bipartite graph
 suppressPackageStartupMessages(library("multigraph", quietly = TRUE))
-bmgraph(frt, pch = 16:15, lwd = 2, fsize = 6)
+multigraph::bmgraph(frt, pch = 16:15, lwd = 2, fsize = 6)
 
 ## ----binp2, echo=TRUE, eval=FALSE---------------------------------------------------------------------------
 #  # plot proyection of bipartite graph
+#  require(multigraph)
 #  bmgraph(frt, layout = "force", seed = 1, cex = 3, fsize = 7, vcol = 8, pch = 16:15, lwd = 2, rot = 15)
 
 ## ----binp, fig.pos="H", fig.width=4.4, fig.height=4.4, fig.align="center", fig.env="figure", fig.cap="Bipartite graph of fruit attributes with a force-directed layout", echo=FALSE, small.mar=TRUE----
