@@ -8,21 +8,16 @@ function (x, gens = NA, lbs, numerical, edgeT)
         stop("Class of \"x\" is not supported.")
     if (is.null(dimnames(x)) == TRUE && isTRUE("Semigroup" %in% 
         attr(x, "class")) == FALSE && missing(numerical) == TRUE) 
-        stop("Dimnames in \"x\" not found.")
+        stop("Dimnames in \"x\" are not found.")
     ifelse(missing(numerical) == FALSE && isTRUE(numerical == 
         TRUE) == TRUE, numerical <- TRUE, numerical <- FALSE)
     if (isTRUE("Semigroup" %in% attr(x, "class")) == TRUE) {
-        message(paste0("Semigroup in \"x\"", paste0(" is a \"", 
-            attr(x, "class")[2], "\" class object.")))
         if (isTRUE(is.array(x$gens) == TRUE) == TRUE) {
             ifelse(missing(gens) == FALSE, NA, gens <- x$st[seq_len(dim(x$gens)[3])])
         }
         else {
             ifelse(missing(gens) == FALSE, NA, gens <- x$gens)
         }
-        ifelse(missing(lbs) == FALSE, NA, lbs <- x$st)
-        dim <- x$dim
-        x <- x$S
     }
     else {
         if (is.null(dimnames(x)) == TRUE && isTRUE(numerical == 
@@ -31,7 +26,7 @@ function (x, gens = NA, lbs, numerical, edgeT)
             dimnames(x)[[1]] <- seq_len(nrow(x))
             dimnames(x)[[2]] <- seq_len(ncol(x))
         }
-        dim <- NA
+        NA
     }
     if (missing(edgeT) == FALSE && isTRUE(edgeT == TRUE) == TRUE) {
         ifelse(isTRUE(attr(x, "class") == "EdgeTable") == TRUE, 
@@ -40,8 +35,22 @@ function (x, gens = NA, lbs, numerical, edgeT)
     if ((missing(lbs) == TRUE && isTRUE(numerical == TRUE) == 
         FALSE)) {
         if (isTRUE("Semigroup" %in% attr(x, "class")) == TRUE) {
-            ifelse(is.na(gens) == TRUE, NA, x$gens <- gens)
-            return(x)
+            if (isTRUE("symbolic" %in% attr(x, "class")) == TRUE) {
+                return(x)
+            }
+            else if (isTRUE("numerical" %in% attr(x, "class")) == 
+                TRUE) {
+                s <- x$S
+                colnames(s) <- rownames(s) <- x$st
+                for (i in seq_along(dimnames(x$S)[[1]])) {
+                  s[s == i] <- x$st[i]
+                }
+                rm(i)
+                lst <- list(ord = length(x$st), st = x$st, gens = x$gens, 
+                  S = as.data.frame(s))
+                class(lst) <- c("Semigroup", "symbolic")
+                return(lst)
+            }
         }
         else {
             if (is.null(attr(x, "class")) == TRUE) {
@@ -75,7 +84,11 @@ function (x, gens = NA, lbs, numerical, edgeT)
     }
     else if ((missing(lbs) == TRUE && isTRUE(numerical == TRUE) == 
         TRUE)) {
-        if (isTRUE("Semigroup" %in% attr(x, "class")) == TRUE) {
+        if (isTRUE("numerical" %in% attr(x, "class")) == TRUE) {
+            return(x)
+        }
+        else if (isTRUE("Semigroup" %in% attr(x, "class")) == 
+            TRUE) {
             lbs <- seq_along(x$st)
         }
         else {
@@ -92,10 +105,8 @@ function (x, gens = NA, lbs, numerical, edgeT)
         ord <- x$ord
         ifelse(isTRUE(numerical == TRUE) == TRUE, Sst <- lbs, 
             Sst <- x$st)
-        ifelse(is.na(gens) == TRUE, NA, x$gens <- gens)
         ifelse(is.numeric(gens) == TRUE && any(gens %in% x$st) == 
             FALSE, gens <- x$st[gens], NA)
-        gens <- x$gens
     }
     else {
         if (is.array(x) == FALSE && is.data.frame(x) == FALSE) 
@@ -171,8 +182,8 @@ function (x, gens = NA, lbs, numerical, edgeT)
         NA
     }
     Sdf <- as.data.frame(s)
-    if (is.null(dimnames(s)) == TRUE && isTRUE(dim(s)[1] == dim(s)[2]) == 
-        TRUE) {
+    if (isTRUE(numerical == TRUE) == TRUE || is.null(dimnames(s)) == 
+        TRUE && isTRUE(dim(s)[1] == dim(s)[2]) == TRUE) {
         dimnames(Sdf)[[1]] <- dimnames(Sdf)[[2]] <- lbs
     }
     else {

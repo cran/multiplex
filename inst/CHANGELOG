@@ -2,6 +2,14 @@
 'multiplex' PACKAGE
 
 
+version 3.9 (29-January-2025)
+-----------------------------
+BUGS FIXED:
+	* "numerical" option in 'as.semigroup' works as well dependencies 
+	  in 'cngr', 'fact', 'decomp' and internals 'reducs' and 'sprt'
+	* fix "toarray" in 'rel.sys' for actor attributes
+
+
 version 3.8-3 (6-November-2024)
 -----------------------------
 ADDED FEATURES:

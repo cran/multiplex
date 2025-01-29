@@ -18,8 +18,8 @@ For instance, the network exposure of the actors can be taken in the context of 
 \tabular{ll}{
 Package: \tab multiplex \cr
 Type: \tab Package \cr
-Version: \tab 3.8-3 \cr
-Date: \tab 6 November 2024 \cr
+Version: \tab 3.9 \cr
+Date: \tab 29 January 2025 \cr
 License: \tab GPL-3 \cr
 LazyLoad: \tab yes \cr
 }

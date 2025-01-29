@@ -7,10 +7,10 @@ Green's Relations of Abstract Semigroups
 A function to produce the Green's relations of a semigroup object. 
 }
 \usage{
-green.rel(S)
+green.rel(x)
 }
 \arguments{
-  \item{S}{
+  \item{x}{
      an object of a \sQuote{\code{Semigroup}} class
 }
 }
