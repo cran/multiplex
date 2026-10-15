@@ -58,9 +58,9 @@ diagram.levels(pogdc, perm = TRUE) }
 # Principal order filter of the third concept 
 fltr(3, pogd)
 
-## ----princfltrlbs2, echo=TRUE, eval=FALSE-------------------------------------------------------------------
-# # Principal order filter of the concept with these labels
-# fltr(c("red", "RedDelicious"), pogd)
+## ----princfltrlbs2, echo=TRUE-------------------------------------------------------------------------------
+# Principal order filter of the concept with these labels
+fltr(c("red", "RedDelicious"), pogd)
 
 ## ----filter, echo=TRUE--------------------------------------------------------------------------------------
 # Order filter of two concepts

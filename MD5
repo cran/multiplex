@@ -1,4 +1,4 @@
-72fe5dfd69fb790b926d9f70b1de82e7 *DESCRIPTION
+d0188eca3ed4983d20f32a5053531703 *DESCRIPTION
 6d810e679807888d21623c1229116b1d *NAMESPACE
 72f21e8371ad969c8a66d96315ea2f24 *R/as.semigroup.R
 cab9814076430eb5add4d758f9b28531 *R/as.signed.R
@@ -30,7 +30,7 @@ ed89e609469e9c97ce515bce137d0349 *R/hasse.R
 b8f76f808413616bb78657f5a6170a6c *R/hierar.R
 b736e36ad5c9436b3604325c70c0090f *R/jnt.R
 c9b2a2724e2afa0ec224f8f17495dc67 *R/men.R
-2edb3b09e7d5b5390d425ff1c89a36a9 *R/mlvl.R
+001e2b8fe25dd6116a74a7543dd5b0a6 *R/mlvl.R
 528fe8e33dc59510ed8a46bd0cf73034 *R/mmp.R
 b2346b290f89708e69bdf6b4aa33c5b0 *R/mnplx.R
 79ce84aa2d641a0e849982b983e1fd13 *R/mxmn.R
@@ -47,7 +47,7 @@ b8b4abdd89b9ce6175465c7450405876 *R/print.gml.R
 d3fc1af89d1b1e8ee98674097f08eb0a *R/read.dl.R
 d8bb322fd84e0dbf2fad1acf4fe83bd5 *R/read.gml.R
 c3223cc30e0593d24ea0543092ddb700 *R/redl.R
-4ee7e45292849bccf92d6501b698eee8 *R/reduc.R
+03db96046eef730848dd1f5ca6c7ff2f *R/reduc.R
 5ac1ca787d1e8cadc48eee05eb571015 *R/reducs.R
 4c73888bbc4043afc12837e890393cfc *R/rel.sys.R
 85b0387a8af92b77785323b110495449 *R/rm.isol.R
@@ -71,7 +71,7 @@ d07d1d8c93ee9988f638750d67fb3840 *R/transf.R
 39d0cc79e79b504ca85f9d499f68cc38 *R/write.gml.R
 6715094e823936087b8a5658a978aca5 *R/zbind.R
 02421d1f67a171f06a84fb9b0c2615e4 *R/zbnd.R
-13fd9652268ca6881c6e3856625f5947 *build/partial.rdb
+12daf390ca26589af3f605db96845127 *build/partial.rdb
 070ca0709cc2a3d7d2cbcd289dc41273 *build/vignette.rds
 0994bd3e00052cc9b670ff9873c7512f *data/incA.rda
 275ced8080e06070464e232571d41db0 *data/incB.rda
@@ -82,11 +82,11 @@ df14dcce99dc620ef6bde2e37ee01019 *data/incD.rda
 461efc33caefb4e5823606f0e8c1c21f *data/incubC.rda
 74ff978c70edf47caf73414f586a6c55 *data/incubD.rda
 5edfcb25f80a0f563b4389583211723b *data/incubs.rda
-055387fad194308538de2918783ae285 *inst/CHANGELOG
+bae252c428ea9fc29e805ae9d377d730 *inst/CHANGELOG
 9c581a1fdac1d6be7b2f841b47ca9e09 *inst/CITATION
-52402db91287c4ad2b98b13f5cf15fd7 *inst/doc/AffiliationNetworks.R
-d5856387f2b289c8fbde1253fda6ccba *inst/doc/AffiliationNetworks.Rnw
-534321a8a99ad727e45445171c29726c *inst/doc/AffiliationNetworks.pdf
+63559bfba542ca34278871a2269934d4 *inst/doc/AffiliationNetworks.R
+21a1f037d961d8aedfeb4ecc00a7d63e *inst/doc/AffiliationNetworks.Rnw
+a730269a52b5699c318e1ad547b1cf95 *inst/doc/AffiliationNetworks.pdf
 1204d22ba073a7d0008d59d670b7e863 *man/as.semigroup.Rd
 9b5101b065fa1cb3a4bcd6a326e51b88 *man/as.signed.Rd
 c1236e7397bcfb048d576fb17ef3ff1b *man/as.strings.Rd
@@ -121,7 +121,7 @@ a5a7b157c2f540f0a7ae8814b5c42c44 *man/jnt.Rd
 d85eb310bc28764b24679055e839941d *man/mlvl.Rd
 6d335b46dd24d90167a5c613599a8e10 *man/mmp.Rd
 5468bb7e349e97e0eeb568ffbc3a4952 *man/mnplx.Rd
-344d7b47b866356e2778512f49e39beb *man/multiplex-package.Rd
+9ead1fc15cfbe72d816deb925e9fac74 *man/multiplex-package.Rd
 6c3d6d4cd9ed043d6a9c11a28be10505 *man/mxmn.Rd
 7b1dc7e55800022cf95e87c12ab34c97 *man/neighb.Rd
 7262b9d2813fb8ce7611793b54606c6a *man/ngbs.Rd
@@ -134,7 +134,7 @@ ea6a079c15efea4d8cc92bbc769ff8de *man/print.gml.Rd
 489e41600613ff3d51d9e39f92903cb6 *man/print.reduced.Rd
 654cb5c379342feb2eb20212b2b30f50 *man/rbox.Rd
 006c94ae863e4ec608df45fcf87de61b *man/read.dl.Rd
-a2c25d10db89de385ced6b3aaf992703 *man/read.gml.Rd
+5e675660dec64c4328cbe2be6cc41168 *man/read.gml.Rd
 f39b2e4b1953245fe118466b9c4489ac *man/redl.Rd
 0f207919563d4d9b531910c19376c336 *man/reduc.Rd
 f4451f7afff79e75698e029a20bc16b7 *man/reducs.Rd
@@ -160,4 +160,4 @@ db22b3e8ab162a562a5ce848d137676d *man/trnl.Rd
 15e59166cbb49092b88a1dcf8b9d755b *man/write.gml.Rd
 205ffd83bcac74042c6ab6b618117b63 *man/zbind.Rd
 1a03bd9ac1576a19a0a7887d9b1e9aee *man/zbnd.Rd
-d5856387f2b289c8fbde1253fda6ccba *vignettes/AffiliationNetworks.Rnw
+21a1f037d961d8aedfeb4ecc00a7d63e *vignettes/AffiliationNetworks.Rnw

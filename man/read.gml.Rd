@@ -34,7 +34,7 @@ Depending the option chosen, the output is either a data frame or an array repre
 If the coordenates are chosen then these are part of the obejct structure, but they are not visible.
 }
 \references{
-\pkg{visone}: \emph{Software for the analysis and visualization of social networks}. \url{http://visone.info}
+\pkg{visone}: \emph{Software for the analysis and visualization of social networks}. \url{https://visone.ethz.ch/}
 }
 %\author{} ~
 %\note{} ~
